@@ -14,6 +14,7 @@ import threading
 import pygame
 import sys
 import os
+import signal
 
 # options={
 #    'model':'./cfg/yolo.cfg',     #specifying the path of model
@@ -84,6 +85,19 @@ rotationAngle = 3
 # Gap between vehicles
 gap = 15    # stopping gap
 gap2 = 15   # moving gap
+
+# Global flag to control simulation running state
+running = True
+
+def signal_handler(sig, frame):
+    global running
+    print("\n[INFO] Ctrl+C detected. Stopping simulation...")
+    running = False
+    pygame.quit()
+    sys.exit(0)
+
+# Set up signal handler for Ctrl+C
+signal.signal(signal.SIGINT, signal_handler)
 
 pygame.init()
 simulation = pygame.sprite.Group()
@@ -323,8 +337,10 @@ def setTime():
     signals[(currentGreen+1)%(noOfSignals)].green = greenTime
    
 def repeat():
-    global currentGreen, currentYellow, nextGreen
-    while(signals[currentGreen].green>0):   # while the timer of current green signal is not zero
+    global currentGreen, currentYellow, nextGreen, running
+    while(signals[currentGreen].green>0 and running):   # while the timer of current green signal is not zero
+        if not running:
+            return
         printStatus()
         updateValues()
         if(signals[(currentGreen+1)%(noOfSignals)].red==detectionTime):    # set time of next green signal 
@@ -333,6 +349,8 @@ def repeat():
             thread.start()
             # setTime()
         time.sleep(1)
+    if not running:
+        return
     currentYellow = 1   # set yellow signal on
     vehicleCountTexts[currentGreen] = "0"
     # reset stop coordinates of lanes and vehicles 
@@ -340,10 +358,14 @@ def repeat():
         stops[directionNumbers[currentGreen]][i] = defaultStop[directionNumbers[currentGreen]]
         for vehicle in vehicles[directionNumbers[currentGreen]][i]:
             vehicle.stop = defaultStop[directionNumbers[currentGreen]]
-    while(signals[currentGreen].yellow>0):  # while the timer of current yellow signal is not zero
+    while(signals[currentGreen].yellow>0 and running):  # while the timer of current yellow signal is not zero
+        if not running:
+            return
         printStatus()
         updateValues()
         time.sleep(1)
+    if not running:
+        return
     currentYellow = 0   # set yellow signal off
     
     # reset all signal times of current signal to default times
@@ -354,7 +376,8 @@ def repeat():
     currentGreen = nextGreen # set next signal as green signal
     nextGreen = (currentGreen+1)%noOfSignals    # set next green signal
     signals[nextGreen].red = signals[currentGreen].yellow+signals[currentGreen].green    # set the red time of next to next signal as (yellow time + green time) of next signal
-    repeat()     
+    if running:
+        repeat()     
 
 # Print the signal timers on cmd
 def printStatus():                                                                                           
@@ -382,7 +405,10 @@ def updateValues():
 
 # Generating vehicles in the simulation
 def generateVehicles():
-    while(True):
+    global running
+    while(running):
+        if not running:
+            break
         vehicle_type = random.randint(0,4)
         if(vehicle_type==4):
             lane_number = 0
@@ -410,8 +436,10 @@ def generateVehicles():
         time.sleep(0.75)
 
 def simulationTime():
-    global timeElapsed, simTime
-    while(True):
+    global timeElapsed, simTime, running
+    while(running):
+        if not running:
+            break
         timeElapsed += 1
         time.sleep(1)
         if(timeElapsed==simTime):
@@ -423,10 +451,14 @@ def simulationTime():
             print('Total vehicles passed: ',totalVehicles)
             print('Total time passed: ',timeElapsed)
             print('No. of vehicles passed per unit time: ',(float(totalVehicles)/float(timeElapsed)))
+            running = False
+            pygame.quit()
             os._exit(1)
     
 
 class Main:
+    global running  # Make sure running is accessible in Main class
+    
     thread4 = threading.Thread(name="simulationTime",target=simulationTime, args=()) 
     thread4.daemon = True
     thread4.start()
@@ -460,10 +492,20 @@ class Main:
     thread3.daemon = True
     thread3.start()
 
-    while True:
+    while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:  # ESC key to quit
+                    running = False
+                    pygame.quit()
+                    sys.exit()
+        
+        if not running:
+            break
 
         screen.blit(background,(0,0))   # display background in simulation
         for i in range(0,noOfSignals):  # display signal and set timer according to current status: green, yello, or red
@@ -501,6 +543,10 @@ class Main:
 
         timeElapsedText = font.render(("Time Elapsed: "+str(timeElapsed)), True, black, white)
         screen.blit(timeElapsedText,(1100,50))
+        
+        # Add instructions text
+        instructionText = font.render("Press ESC or Ctrl+C to exit", True, black, white)
+        screen.blit(instructionText,(10,10))
 
         # display the vehicles
         for vehicle in simulation:  
@@ -509,6 +555,19 @@ class Main:
             vehicle.move()
         pygame.display.update()
 
-Main()
+# Clean exit when script ends
+if __name__ == "__main__":
+    try:
+        Main()
+    except KeyboardInterrupt:
+        print("\n[INFO] Simulation interrupted by user (Ctrl+C)")
+        running = False
+        pygame.quit()
+        sys.exit(0)
+    except Exception as e:
+        print(f"\n[ERROR] Simulation error: {e}")
+        running = False
+        pygame.quit()
+        sys.exit(1)
 
   
