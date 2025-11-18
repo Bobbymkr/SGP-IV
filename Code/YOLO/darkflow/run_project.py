@@ -68,8 +68,7 @@ def run_traffic_simulation():
     print("  - Real-time statistics and vehicle counts")
     print()
     print("Controls:")
-    print("  - Press ESC or Ctrl+C to stop the simulation")
-    print("  - Close the window to exit")
+    print("  - Close the window or press Ctrl+C to stop")
     print("  - Simulation runs for 300 seconds by default")
     print()
     
@@ -82,7 +81,7 @@ def run_traffic_simulation():
         return True
         
     except KeyboardInterrupt:
-        print_status("Simulation stopped by user (Ctrl+C)", "INFO")
+        print_status("Simulation stopped by user", "INFO")
         return True
     except Exception as e:
         print_status(f"Error running simulation: {e}", "ERROR")
