@@ -1,0 +1,93 @@
+{
+  "timestamp": "2025-11-25T16:19:21.551711",
+  "summary": {
+    "total_tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "success_rate": 100.0,
+    "total_duration": 1.6401548385620117
+  },
+  "results": [
+    {
+      "test_name": "Weather API Connectivity",
+      "success": true,
+      "duration": 0.43434572219848633,
+      "details": {
+        "locations_tested": 3,
+        "data_points": 7
+      },
+      "error": null
+    },
+    {
+      "test_name": "Air Quality API",
+      "success": true,
+      "duration": 0.1092977523803711,
+      "details": {
+        "aqi_value": 153.69501700239383,
+        "category": "Unhealthy"
+      },
+      "error": null
+    },
+    {
+      "test_name": "Road Condition Detection",
+      "success": true,
+      "duration": 0.3122844696044922,
+      "details": {
+        "conditions_tested": 4,
+        "extreme_test": true
+      },
+      "error": null
+    },
+    {
+      "test_name": "Traffic Impact Calculations",
+      "success": true,
+      "duration": 0.31261324882507324,
+      "details": {
+        "scenarios_tested": 4,
+        "worst_case_test": true
+      },
+      "error": null
+    },
+    {
+      "test_name": "Environmental Alert System",
+      "success": true,
+      "duration": 0.12638592720031738,
+      "details": {
+        "alerts_generated": 4,
+        "prioritization_test": true
+      },
+      "error": null
+    },
+    {
+      "test_name": "Historical Data Analysis",
+      "success": true,
+      "duration": 0.17319130897521973,
+      "details": {
+        "analysis_period_days": 30,
+        "correlation_analysis": true
+      },
+      "error": null
+    },
+    {
+      "test_name": "Traffic System Integration",
+      "success": true,
+      "duration": 0.06262993812561035,
+      "details": {
+        "signal_adjustment": true,
+        "speed_adjustment": true
+      },
+      "error": null
+    },
+    {
+      "test_name": "Error Handling and Fallbacks",
+      "success": true,
+      "duration": 0.1094064712524414,
+      "details": {
+        "api_failure": true,
+        "data_validation": true,
+        "timeout_handling": true
+      },
+      "error": null
+    }
+  ]
+}

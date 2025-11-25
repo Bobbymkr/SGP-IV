@@ -1,0 +1,41 @@
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - alertmanager:9093
+global:
+  evaluation_interval: 15s
+  scrape_interval: 15s
+rule_files:
+- rules/*.yml
+scrape_configs:
+- job_name: traffic-controller
+  metrics_path: /metrics
+  scrape_interval: 10s
+  static_configs:
+  - targets:
+    - traffic-controller:8000
+- job_name: vehicle-detection
+  metrics_path: /metrics
+  scrape_interval: 5s
+  static_configs:
+  - targets:
+    - vehicle-detection:8001
+- job_name: streaming-service
+  metrics_path: /metrics
+  scrape_interval: 5s
+  static_configs:
+  - targets:
+    - streaming-service:8002
+- job_name: analytics-service
+  metrics_path: /metrics
+  scrape_interval: 30s
+  static_configs:
+  - targets:
+    - analytics-service:8003
+- job_name: environmental-service
+  metrics_path: /metrics
+  scrape_interval: 60s
+  static_configs:
+  - targets:
+    - environmental-service:8004
