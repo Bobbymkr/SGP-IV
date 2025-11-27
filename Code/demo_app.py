@@ -1,3 +1,9 @@
+import streamlit as st
+import numpy as np
+import pandas as pd
+import altair as alt
+import time
+
 def show_dashboard():
     st.markdown("<h1 class='main-header'>System Dashboard</h1>", unsafe_allow_html=True)
     
@@ -84,7 +90,7 @@ def show_dashboard():
         with col1:
             # Mock CPU usage over time
             cpu_data = pd.DataFrame({
-                'Time': pd.date_range(start='2023-01-01', periods=24, freq='H'),
+                'Time': pd.date_range(start='2023-01-01', periods=24, freq='h'),
                 'CPU Usage (%)': 30 + 15 * np.sin(np.linspace(0, 4*np.pi, 24)) + np.random.normal(0, 3, 24)
             })
             
@@ -98,12 +104,12 @@ def show_dashboard():
                 height=200
             )
             
-            st.altair_chart(cpu_chart, use_container_width=True)
+            st.altair_chart(cpu_chart, width='stretch')
         
         with col2:
             # Mock memory usage over time
             memory_data = pd.DataFrame({
-                'Time': pd.date_range(start='2023-01-01', periods=24, freq='H'),
+                'Time': pd.date_range(start='2023-01-01', periods=24, freq='h'),
                 'Memory Usage (GB)': 2 + 1.2 * np.sin(np.linspace(0, 2*np.pi, 24)) + np.random.normal(0, 0.2, 24)
             })
             
@@ -128,7 +134,7 @@ def show_dashboard():
                 height=200
             )
             
-            st.altair_chart(memory_chart, use_container_width=True)
+            st.altair_chart(memory_chart, width='stretch')
         
         # Network status
         st.subheader("Network Status")
@@ -153,7 +159,7 @@ def show_dashboard():
             else:
                 return 'background-color: #f8d7da; color: #721c24'
         
-        st.dataframe(network_df.style.applymap(color_status, subset=['Status']), use_container_width=True)
+        st.dataframe(network_df.style.map(color_status, subset=['Status']), width='stretch')
     
     with tabs[1]:
         st.subheader("Real-time Traffic Metrics")
@@ -193,10 +199,10 @@ def show_dashboard():
             y=alt.Y('Intersection:N', sort='-x'),
             x=alt.X('Current Volume:Q', title='Vehicles per Hour'),
             color=alt.condition(
-                alt.datum['Utilization (%)'] > 80,
+                'datum["Utilization (%)"] > 80',
                 alt.value('#dc3545'),  # red for high utilization
                 alt.condition(
-                    alt.datum['Utilization (%)'] > 60,
+                    'datum["Utilization (%)"] > 60',
                     alt.value('#ffc107'),  # yellow for medium utilization
                     alt.value('#28a745')  # green for low utilization
                 )
@@ -219,7 +225,7 @@ def show_dashboard():
         # Combine the charts
         combined_chart = volume_chart + capacity_lines
         
-        st.altair_chart(combined_chart, use_container_width=True)
+        st.altair_chart(combined_chart, width='stretch')
         
         # Traffic patterns over time
         st.subheader("Traffic Patterns (24-hour)")
@@ -250,7 +256,7 @@ def show_dashboard():
             height=300
         )
         
-        st.altair_chart(pattern_chart, use_container_width=True)
+        st.altair_chart(pattern_chart, width='stretch')
     
     with tabs[2]:
         st.subheader("Performance Analytics")
@@ -308,7 +314,7 @@ def show_dashboard():
             height=250
         )
         
-        st.altair_chart(comparison_chart, use_container_width=True)
+        st.altair_chart(comparison_chart, width='stretch')
         
         # System efficiency over time
         st.subheader("System Efficiency Over Time")
@@ -352,7 +358,7 @@ def show_dashboard():
         # Combine the charts
         combined_efficiency_chart = efficiency_chart + trend_line
         
-        st.altair_chart(combined_efficiency_chart, use_container_width=True)
+        st.altair_chart(combined_efficiency_chart, width='stretch')
     
     with tabs[3]:
         st.subheader("Alerts & Notifications")

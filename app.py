@@ -1,14 +1,24 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import altair as alt
 import time
 import cv2
 from PIL import Image
 
 # Import the dashboard function from demo_app.py
-from Code.demo_app import show_dashboard
+try:
+    from Code.demo_app import show_dashboard
+except ImportError as e:
+    st.error(f"Error importing dashboard: {e}")
+    show_dashboard = None
+
+# Import the enhanced demo function
+try:
+    from enhanced_demo import show_enhanced_demo
+except ImportError as e:
+    st.error(f"Error importing enhanced demo: {e}")
+    show_enhanced_demo = None
 
 # Set page configuration
 st.set_page_config(
@@ -37,7 +47,7 @@ st.markdown("""
 
 # Sidebar navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "Dashboard", "Simulation", "Settings"])
+page = st.sidebar.radio("Go to", ["Home", "Dashboard", "Enhanced Demo", "Simulation", "Settings"])
 
 if page == "Home":
     st.markdown("<h1 class='main-header'>Adaptive Traffic Signal Timer</h1>", unsafe_allow_html=True)
@@ -57,6 +67,14 @@ if page == "Home":
         - Traffic flow optimization algorithms
         - Comprehensive monitoring dashboard
         - Historical data analysis
+        
+        ### Try Our Enhanced Demo
+        For a more comprehensive demonstration of advanced AI features, visit the **Enhanced Demo** section
+        in the sidebar. It includes:
+        - Interactive traffic simulation
+        - Algorithm performance comparison
+        - Environmental impact visualization
+        - Advanced features showcase
         """)
         
         st.markdown("### How It Works")
@@ -74,12 +92,29 @@ if page == "Home":
         except:
             st.info("Image not found. Please ensure 'traffic-signal.jpg' is in the project root directory.")
         
+        # Display Demo.gif if available
+        try:
+            st.markdown("### 🎥 System in Action")
+            st.image("Demo.gif", caption="Adaptive Traffic Signal System Demo", use_column_width=True)
+        except:
+            st.info("Demo animation not available.")
+        
         st.markdown("### System Status")
         st.success("System is operational")
         
 elif page == "Dashboard":
     # Call the dashboard function from demo_app.py
-    show_dashboard()
+    if show_dashboard:
+        show_dashboard()
+    else:
+        st.error("Dashboard module is not available.")
+    
+elif page == "Enhanced Demo":
+    # Run the enhanced demo
+    if show_enhanced_demo:
+        show_enhanced_demo()
+    else:
+        st.error("Enhanced demo module is not available.")
     
 elif page == "Simulation":
     st.markdown("<h1 class='main-header'>Traffic Simulation</h1>", unsafe_allow_html=True)
