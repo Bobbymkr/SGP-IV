@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "jetro": {
+      "type": "stdio",
+      "command": "C:\\Users\\Admin\\.jetro\\runtime\\node-win32-x64.exe",
+      "args": [
+        "C:\\Users\\Admin\\.jetro\\mcp-server\\index.js"
+      ],
+      "env": {
+        "JET_WORKSPACE": "c:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer",
+        "JET_API_URL": "https://api.jetro.ai",
+        "PATH": "C:\\Users\\Admin\\.jetro\\runtime;C:\\Program Files\\Alacritty\\;C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.10.7-hotspot\\bin;C:\\oraclexe\\app\\oracle\\product\\10.2.0\\server\\bin;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\MinGW\\bin;C:\\Users\\Admin\\Downloads\\jre-8u431-windows-x64.exe;C:\\Program Files\\MongoDB\\Server\\7.0\\bin;C:\\Program Files (x86)\\Eclipse\\Sumo\\bin\\;C:\\Program Files (x86)\\Eclipse\\Sumo\\tools\\;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Program Files\\GitHub CLI\\;C:\\Program Files\\Amazon\\AWSCLIV2\\;C:\\Users\\Admin\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Users\\Admin\\.grok\\bin;C:\\Users\\Admin\\.minimax\\bin;C:\\Users\\Admin\\.cargo\\bin;C:\\Users\\Admin\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts;C:\\Users\\Admin\\AppData\\Local\\hermes\\bin;C:\\Users\\Admin\\AppData\\Local\\jcode\\bin;C:\\Users\\Admin\\AppData\\Local\\agy\\bin;C:\\Users\\Admin\\.local\\bin;C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\;C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\;c:\\Users\\Admin\\AppData\\Local\\Programs\\Trae\\bin;C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\;C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python313\\;C:\\Users\\Admin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\CodeBlocks\\share\\CodeBlocks\\compilers;C:\\MinGW\\bin;C:\\Program Files\\Java\\jdk-22\\bin;C:\\Users\\Admin\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Admin\\AppData\\Local\\Programs\\Ollama;C:\\Users\\Admin\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\Admin\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\JetBrains\\PyCharm 2025.1.1.1\\bin;C:\\Users\\Admin\\AppData\\Local\\Programs\\Qoder\\bin;C:\\flutter\\bin;C:\\Users\\Admin\\.bun\\bin;C:\\Users\\Admin\\.bun\\bin;C:\\Users\\Admin\\AppData\\Local\\Programs\\Warp\\bin;C:\\Users\\Admin\\AppData\\Local\\Programs\\Antigravity\\bin;C:\\Users\\Admin\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-8.0.1-full_build\\bin;C:\\Program Files (x86)\\Nmap;C:\\Users\\Admin\\AppData\\Local\\Programs\\Lyzo AI\\bin;C:\\Users\\Admin\\AppData\\Local\\Programs\\Antigravity IDE\\bin;C:\\Users\\Admin\\AppData\\Local\\Microsoft\\WinGet\\Links;C:\\Users\\Admin\\AppData\\Local\\nvm;C:\\nvm4w\\nodejs;C:\\Users\\Admin\\AppData\\Roaming\\npm;C:\\Users\\Admin\\AppData\\Local\\Kiro-Cli\\;C:\\Users\\Admin\\AppData\\Local\\Programs\\Orca\\resources\\bin"
+      }
+    }
+  }
+}

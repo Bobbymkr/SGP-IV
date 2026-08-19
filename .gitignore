@@ -1,34 +1,45 @@
+# OS files
 .DS_Store
+/.DS_Store
+/Thumbs.db
+/ehthumbs.db
+/.ehthumbs.db
 
- Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+/**.pyc
+/**.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+venv/
+
+# Package distribution
+dist/
+build/
+downloads/
+*.egg-info/
+/.Python
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
 
 # C extensions
 *.so
-
-# Distribution / packaging
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
+*.pyd
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
 
@@ -36,14 +47,14 @@ var/
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
+# Test / coverage reports
 htmlcov/
 .tox/
 .coverage
 .coverage.*
 .cache
 nosetests.xml
-coverage.xml
+.coverage.xml
 *,cover
 .hypothesis/
 
@@ -51,50 +62,66 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
-*.log
-local_settings.py
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# IPython Notebook
-.ipynb_checkpoints
-
-# pyenv
-.python-version
-
-# celery beat schedule file
+# Celery
 celerybeat-schedule
 
-# dotenv
+# Env files
 .env
 
-# virtualenv
-venv/
-ENV/
+# Streamlit
+.st/
 
-# Spyder project settings
-.spyderproject
+# Docker
+.dockerinit
+.docker/
 
-# Rope project settings
-.ropeproject
+# Large binaries - demo/gif files (keep only compressed versions in docs, not generated)
+/Demo.gif
+/ Demo_enhanced_version.gif
+/traffic-signal.jpg
+/vehicle-detection.png
+*.pdf
 
-# vim swap files:
-*.swp
+# Models and datasets (use DVC or Git LFS instead)
+/data/models/
+/data/datasets/
+/data/*.zip
+/data/*.tar.gz
+/data/*.tar.bz2
 
-# Visual Studio Code
-.vscode/
+# Simulation outputs
+/output_images/
+/output_*.jpg
 
-#pyCharm code
-.idea/
+# Demo assets - generated files
+/Demo*.gif
+/*.gif
+
+# Temporary / cache
+/tmp/
+/temp/
+
+# IDE specific
+.c9/
+root/
+
+# Project-specific generated files
+comprehensive_test_execution_report.json
+
+# MCP config (runtime only)
+.mcp.json
+
+# Agent configurations
+.agents/
+
+# Windsurf rules
+.windsurfrules
+
+# YOLO/CV cache
+.yolo_cache/
+.darknet/
+.yolo/
+
+# Pygame simulation cache
+.pygame/
+_simulation_cache/

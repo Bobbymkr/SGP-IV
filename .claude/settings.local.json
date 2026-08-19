@@ -1,0 +1,62 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:www.nvidia.com)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "WebFetch(domain:arxiv.org)",
+      "WebFetch(domain:wow.groq.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:registry.modelcontextprotocol.io)",
+      "WebFetch(domain:groq.com)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "jetro"
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ruff check --select=E,F,W,I,N,UP,B,C4,PL --quiet ${FILE_PATH} 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ruff format --quiet ${FILE_PATH} 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mypy --strict --ignore-missing-imports ${FILE_PATH} 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Compacting context...' && python -c \"import json; print(json.dumps({'session_end': True}))\""
+          }
+        ]
+      }
+    ]
+  }
+}
