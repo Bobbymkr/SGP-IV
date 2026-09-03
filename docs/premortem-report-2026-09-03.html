@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Premortem — Adaptive Traffic Signal Timer · 2026-09-03</title>
+<style>
+:root{--ink:#1a1f2e;--muted:#5b6472;--line:#e3e6ec;--bg:#f6f7f9;--card:#ffffff;--accent:#0f62fe;--hi:#b42318;--med:#b54708;--lo:#067647;--chip:#eef2f7}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+main{max-width:960px;margin:0 auto;padding:32px 20px 64px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--muted);font-size:14px;margin-bottom:24px}
+h2{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:32px 0 10px}
+.synth{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.synth h3{margin:14px 0 4px;font-size:15px}
+.synth h3:first-child{margin-top:0}
+.k{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:99px;margin-right:8px;vertical-align:middle}
+.k.likely{background:#fdead7;color:var(--med)}
+.k.danger{background:#fee4e2;color:var(--hi)}
+.k.assump{background:#e0f2fe;color:#026aa2}
+.lead{margin:4px 0 0;font-size:15px}
+.card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:18px 20px;margin:14px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card h3{margin:0 0 6px;font-size:16px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 10px}
+.pill{font-size:11px;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--chip);color:var(--muted)}
+.pill.high{background:#fee4e2;color:var(--hi)}
+.pill.med{background:#fdead7;color:var(--med)}
+.pill.low{background:#dcfae6;color:var(--lo)}
+.card p{margin:8px 0;font-size:14px}
+.lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+ol.rev,ul.chk{margin:8px 0 0;padding-left:20px;font-size:14px}
+ol.rev li,ul.chk li{margin:7px 0}
+.map{color:var(--muted);font-size:12px}
+footer{margin-top:36px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:14px}
+code{background:var(--chip);padding:1px 5px;border-radius:4px;font-size:12.5px}
+</style>
+</head>
+<body><main>
+<h1>Premortem — Adaptive Traffic Signal Timer</h1>
+<div class="sub">2026-09-03 · Klein-method premortem on the remaining plan (Phases 5 / 6 / T + the deployment path). Frame: it is 6 months from now (≈ March 2027) and the plan has failed. Context brief: <code>docs/premortem-context.md</code>.</div>
+
+<h2>Synthesis</h2>
+<div class="synth">
+<h3><span class="k likely">Most likely</span>F1 · The footage never comes</h3>
+<p class="lead">Phase T stays "ready (blocked on footage)" for six months because "authorities provide annotated data" is a verbal commitment with no named owner, no date, and no fallback. The model registry stays empty, <code>device.yaml</code> points at artifacts that don't exist, and OnnxDetector is never run on a real frame.</p>
+<h3><span class="k danger">Most dangerous</span>F3 · Sim-to-real credibility gap</h3>
+<p class="lead">Every headline claim (+76.5% wait reduction on 5-way, queue-error gradient 0.00→1.32) is synthetic-only. The first serious pilot question — "show me this on real footage" — has no answer, and the eval matrix loses its authority in one meeting. (Runner-up: F2 int8 accuracy collapse.)</p>
+<h3><span class="k assump">Hidden assumption</span></h3>
+<p class="lead">The plan treats synthetic simulation results as sufficient validation for real-world deployment claims.</p>
+</div>
+
+<h2>Revised plan</h2>
+<div class="card">
+<ol class="rev">
+<li><strong>De-risk the footage dependency now.</strong> Send a written data request with a named owner and a delivery date; simultaneously run a footage-independent fallback — execute convert→train→export→int8→registry→eval end-to-end on any small real/public Indian traffic set (or ~500 self-captured frames at one junction) so the pipeline is proven before the real batch lands. <span class="map">→ guards F1, F7</span></li>
+<li><strong>Define D6's tolerance as a number.</strong> Write "queue_error ≤ X per scenario class" into the master plan / <code>configs/</code> and enforce it in <code>evals/runner.py</code> regression flagging, so a tier-low breach is machine-detected, not debated. <span class="map">→ guards F2, F8</span></li>
+<li><strong>Record a real bench-detect row + one hardware-in-the-loop run.</strong> Run <code>make bench-detect</code> on CPU with a frame stream, record it in <code>docs/BENCHMARKS.md</code>, and profile one second machine (even the dev box as "low tier") via <code>profile_device.py</code> to validate tier auto-detection end to end. <span class="map">→ guards F4</span></li>
+<li><strong>Buy credibility incrementally.</strong> The moment any real clip exists — even unannotated — run a qualitative backtest (OnnxDetector → engine vs fixed-time plan on the same frames) and store the result next to the synthetic scorecard. <span class="map">→ guards F3</span></li>
+<li><strong>Anti-rot gates.</strong> Add a staleness gate to the Orca pipeline (re-run <code>make eval</code> if the scorecard is older than the last engine commit) and a self-rule: no Orca/graph tooling change in a week without a <code>core/</code> change in the same week. <span class="map">→ guards F5, F9</span></li>
+<li><strong>Reproducibility insurance.</strong> Once: fresh clone on a clean VM/second machine, get <code>make verify</code> green from the README alone; fix whatever breaks. <span class="map">→ guards F6</span></li>
+</ol>
+</div>
+
+<h2>Pre-launch checklist</h2>
+<div class="card">
+<ul class="chk">
+<li><strong>C1.</strong> Written data request sent — named owner + delivery date; fallback micro-dataset run scheduled if no response in 30 days. <span class="map">prevents F1, detects F1 early</span></li>
+<li><strong>C2.</strong> D6 queue-error tolerance written as a number and enforced in eval regression flagging. <span class="map">prevents F2 and F8 from going unnoticed</span></li>
+<li><strong>C3.</strong> bench-detect row recorded in <code>docs/BENCHMARKS.md</code> + one <code>profile_device</code> run on a second machine. <span class="map">prevents F4</span></li>
+<li><strong>C4.</strong> One real-clip qualitative backtest result stored in <code>docs/</code>. <span class="map">directly counters F3</span></li>
+<li><strong>C5.</strong> <code>make eval</code> staleness gate wired into Orca pipeline + one fresh-clone <code>make verify</code> green. <span class="map">prevents F5, F6; exposes F9 drift</span></li>
+</ul>
+</div>
+<h2>Failure deep-dives</h2>
+
+<div class="card">
+<h3>F1 · Phase T footage deadlock</h3>
+<div class="meta"><span class="pill high">probability: high</span><span class="pill high">impact: high</span></div>
+<p><span class="lbl">The failure story.</span> August 2026: the status board reads "🔶 ready (blocked on footage)". The Colab notebook, converters, and OnnxDetector are finished and dry-run on mock data — but the one thing they wait for, annotated footage from authorities, was a verbal commitment with no owner and no date. Nobody chases it because everything else is green. By March 2027 <code>models/registry/india-yolov8n/</code> is still empty; <code>device.yaml</code> points at artifacts that don't exist; int8 quantization has never been calibrated on Indian frames; OnnxDetector's real-frame decode path has never executed outside the mock dry-run. A pilot inquiry arrives and the "deploy-anywhere" claim can't be demonstrated even once.</p>
+<p><span class="lbl">Underlying assumption.</span> An authority will hand over usable annotated footage without a contract, date, or named owner.</p>
+<p><span class="lbl">Early warning signs.</span> (1) Phase T row in MASTER_PLAN §7 unchanged for &gt;30 days with no chase action logged. (2) No named contact or written data request exists anywhere in <code>docs/</code> or <code>vault/</code>.</p>
+</div>
+
+<div class="card">
+<h3>F2 · int8 quantization accuracy collapse</h3>
+<div class="meta"><span class="pill med">probability: medium-high</span><span class="pill high">impact: high</span></div>
+<p><span class="lbl">The failure story.</span> Footage does arrive — late. Training goes well until the notebook's int8 static-quantization step: <code>auto</code> and <code>motorcycle</code> — small, dense, irregular — lose 10+ mAP50 points after calibration on ~200 frames. The low tier (<code>device.yaml</code>: int8, 5 fps, interpolation-only per D6) now feeds systematically undercounted queues into the controller. D6's escape hatch — "hybrid detector if eval shows queue error above tolerance" — can't trigger, because the tolerance was never written down as a number, so nobody agrees a breach happened. The failure is invisible by construction.</p>
+<p><span class="lbl">Underlying assumption.</span> int8 static quantization holds acceptable accuracy on Indian imagery with a ~200-frame calibration set.</p>
+<p><span class="lbl">Early warning signs.</span> (1) Per-class mAP50 for auto/motorcycle drops &gt;5–10 pts in the notebook's quantized-vs-fp32 comparison. (2) Eval queue_error for tier-low scenarios exceeds the level that made D6's authors write the hybrid clause.</p>
+</div>
+
+<div class="card">
+<h3>F3 · Sim-to-real credibility gap</h3>
+<div class="meta"><span class="pill high">probability: high</span><span class="pill high">impact: high</span></div>
+<p><span class="lbl">The failure story.</span> The scorecard is impressive: adaptive cuts average wait 76.5% on 5-way, 31% on 3-way; queue error climbs cleanly with weather severity. But every number comes from the same synthetic engine, synthetic weather (D3), and synthetic discipline presets. Early 2027: a city ATCS program asks for one real-junction result before a pilot. There is none — no backtest on a real clip, no real detector fps, no hardware-in-the-loop run. The honest answer, "it's all simulation," ends the conversation. The project's core claim is discounted exactly when it matters most.</p>
+<p><span class="lbl">Underlying assumption.</span> Synthetic scenario results transfer to real deployments, or at least persuade real stakeholders.</p>
+<p><span class="lbl">Early warning signs.</span> (1) Zero real entries in <code>meta/captures.json</code> and zero bench-detect rows in <code>docs/BENCHMARKS.md</code>. (2) Any deployment/pilot conversation stalls at "where is the real-data validation?"</p>
+</div>
+
+<div class="card">
+<h3>F4 · Device portability claimed, never exercised</h3>
+<div class="meta"><span class="pill med">probability: medium</span><span class="pill high">impact: high</span></div>
+<p><span class="lbl">The failure story.</span> D5's promise: the same codebase serves a CPU-only box → Jetson via <code>device.yaml</code> alone. The tiers exist on paper; the TensorRT adapter is "pending Phase 5"; <code>active_tier: auto</code> has never run against a real machine. The first real deployment in 2027 is a legacy x86 IPC: the onnxruntime CPU provider delivers 2 fps, not the 5 fps target, because bench-detect was never recorded and MJPEG capture resolution/framerate assumptions were never tested. <code>profile_device.py</code> misclassifies the box, and the ring-buffer pipeline — designed but never stressed — deadlocks under real camera cadence. The portability claim fails at first contact.</p>
+<p><span class="lbl">Underlying assumption.</span> ONNX tiering plus <code>profile_device.py</code> and config-level tiering suffice without physical hardware-in-the-loop tests.</p>
+<p><span class="lbl">Early warning signs.</span> (1) <code>docs/BENCHMARKS.md</code>'s Detection table still has zero rows. (2) <code>docs/device-tiers.md</code> (Phase 6) still unwritten when the first deployment conversation starts.</p>
+</div>
+
+<div class="card">
+<h3>F5 · Success-criteria erosion / plan rot</h3>
+<div class="meta"><span class="pill med">probability: medium</span><span class="pill med">impact: medium</span></div>
+<p><span class="lbl">The failure story.</span> Baseline sim is 57× over target, so Phase 5 feels optional and stays "🔶 partial" forever; Phase 6 "continuous" never produces <code>device-tiers.md</code>. The maintenance rule — update MASTER_PLAN after every phase, BENCHMARKS after every bench run — quietly dies around September 2026 (last updated 2026-08-26). Six months later the plan document no longer reflects reality: the eval matrix hasn't been re-run since engine changes because <code>loop-fast</code> stays green, the change log stopped, and the status board lies. The paper trail that made the project auditable decays.</p>
+<p><span class="lbl">Underlying assumption.</span> Verification discipline and documentation habits survive after the initial sprint novelty wears off.</p>
+<p><span class="lbl">Early warning signs.</span> (1) MASTER_PLAN change log and BENCHMARKS rows stop advancing while commits continue. (2) <code>make eval</code> results older than the latest engine commit.</p>
+</div>
+
+<div class="card">
+<h3>F6 · Single-environment fragility</h3>
+<div class="meta"><span class="pill low">probability: low-medium</span><span class="pill med">impact: medium-high</span></div>
+<p><span class="lbl">The failure story.</span> The entire loop lives on one Windows box: OneDrive-synced workspace, one venv, one <code>.graph-mem</code> brain, PowerShell scripts (<code>resume.ps1</code>, <code>auto-graph.ps1</code>), a freelm <code>.env</code> pool. A Python minor upgrade breaks a pinned wheel; OneDrive sync conflicts <code>graphify-out/</code> mid-run; the venv corrupts. Six months in, a full week is lost reconstructing the environment — because the README's setup path was never exercised end-to-end from a fresh clone by anyone, on any machine.</p>
+<p><span class="lbl">Underlying assumption.</span> The dev-loop environment is stable and reproducible from scratch.</p>
+<p><span class="lbl">Early warning signs.</span> (1) <code>loop-fast</code> or graphify needs manual repair after any OS/Python update. (2) Git status shows recurring sync conflicts in <code>graphify-out/</code> or <code>checkpoints/</code>.</p>
+</div>
+
+<div class="card">
+<h3>F7 · Class-schema mismatch discovered too late</h3>
+<div class="meta"><span class="pill med">probability: medium</span><span class="pill med">impact: medium</span></div>
+<p><span class="lbl">The failure story.</span> <code>DATASET_SPEC.md</code> v1 locks 6 classes and honestly flags them provisional. When footage finally arrives, the delivered annotations lump tempos and e-rickshaws into "car", and the authority's annotation tool exports a fixed 11-class COCO schema. The "append new ids at END" contract assumes control of an annotation pipeline the project doesn't have. <code>prepare_dataset.py --check</code> rejects 40% of the first batch; retraining is forced, the calibration set is invalidated, and Phase T slips another cycle.</p>
+<p><span class="lbl">Underlying assumption.</span> Received annotations will map cleanly onto the 6-class contract.</p>
+<p><span class="lbl">Early warning signs.</span> (1) <code>--check</code> failure rate &gt;10% on the first real batch. (2) Delivered annotation format differs from the requested YOLO layout, or <code>meta/captures.json</code> is absent.</p>
+</div>
+
+<div class="card">
+<h3>F8 · Eval-matrix false confidence</h3>
+<div class="meta"><span class="pill med">probability: medium</span><span class="pill med">impact: medium-high</span></div>
+<p><span class="lbl">The failure story.</span> "Eval matrix covers geometry × discipline × weather × incident × tier" gets checked off — 11 scenarios. But incidents are only <code>sensor_failure</code> and <code>lane_block</code>; the documented India taxonomy (autorickshaw_block, cattle_on_road, religious_crowd, political_rally) never became scenarios. Tier is "simulated via degraded confidence/latency" — the real detector never feeds the matrix. And both arms (adaptive and fixed) share the same queue estimator, so the comparison measures scheduling, not perception. Six months on, the matrix "proves" a robustness the real system doesn't have — and the gap surfaces during the pilot, not in CI.</p>
+<p><span class="lbl">Underlying assumption.</span> Simulated degradation approximates real detector degradation closely enough to validate control quality.</p>
+<p><span class="lbl">Early warning signs.</span> (1) No scenario consumes a real detection stream or real frames. (2) queue_error is exactly 0.00 in clear/disciplined scenarios — a cleanliness real sensors never produce.</p>
+</div>
+
+<div class="card">
+<h3>F9 · Meta-work drift while the core freezes</h3>
+<div class="meta"><span class="pill med">probability: medium</span><span class="pill med">impact: medium</span></div>
+<p><span class="lbl">The failure story.</span> With Phase T blocked, effort flows to what's unblocked and fun: Orca autobuild phases, graph tooling, vault mirrors, the freelm pool. Commits to <code>src/adaptive_traffic/core/</code> trend toward zero while <code>scripts/</code> and <code>vault/</code> flourish. It all feels like progress — the loop is more automated than ever — but the product core (detection on real data) is frozen, and the drift compounds exactly like a wrong-buyer pull: built for the loop, not for the signal.</p>
+<p><span class="lbl">Underlying assumption.</span> Meta-infrastructure work compounds toward deployment rather than substituting for it.</p>
+<p><span class="lbl">Early warning signs.</span> (1) 30-day rolling commit share: <code>core/</code> &lt;20% while <code>scripts/</code>/<code>vault/</code> grow. (2) Orca/graph pipeline gains features in the same weeks Phase T shows no movement.</p>
+</div>
+
+<footer>
+Method: Gary Klein, "Performing a Project Premortem," Harvard Business Review (2007); Daniel Kahneman, <em>Thinking, Fast and Slow</em> (2011) — prospective hindsight. Adapted run of the <em>claude-premortem-skill</em> method (b1rdmania): deep-dive sub-agents replaced by in-context analysis; plan context written once to <code>docs/premortem-context.md</code>. Synthesis gate verified: every failure maps to ≥1 revised-plan item; every checklist item names the failure it guards against; hidden assumption is one unhedged sentence; most-likely (F1) ≠ most-dangerous (F3).
+</footer>
+</main>
+</body>
+</html>

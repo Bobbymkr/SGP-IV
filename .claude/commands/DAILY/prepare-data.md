@@ -43,7 +43,7 @@ for video_path in video_dir.rglob('*.mp4'):
     cap = cv2.VideoCapture(str(video_path))
     video_fps = cap.get(cv2.CAP_PROP_FPS)
     frame_interval = int(video_fps / fps)
-    
+
     frame_idx = 0
     while cap.isOpened():
         ret, frame = cap.read()
@@ -55,13 +55,13 @@ for video_path in video_dir.rglob('*.mp4'):
             scale = min(640/w, 640/h)
             new_w, new_h = int(w*scale), int(h*scale)
             resized = cv2.resize(frame, (new_w, new_h))
-            
+
             # Letterbox
             canvas = np.full((640, 640, 3), 114, dtype=np.uint8)
             x_off = (640 - new_w) // 2
             y_off = (640 - new_h) // 2
             canvas[y_off:y_off+new_h, x_off:x_off+new_w] = resized
-            
+
             # Save
             split = 'train' if frame_count % 10 < 7 else ('val' if frame_count % 10 < 9 else 'test')
             out_path = output_dir / split / 'images' / f'{video_path.stem}_{frame_count:06d}.jpg'

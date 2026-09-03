@@ -2,11 +2,13 @@
 Live Interactive Demo Page
 """
 
-import streamlit as st
+import time
+
+import altair as alt
 import numpy as np
 import pandas as pd
-import altair as alt
-import time
+import streamlit as st
+
 from adaptive_traffic.config.settings import get_settings
 
 
@@ -16,12 +18,15 @@ def show_live_demo():
 
     st.markdown("<h1 class='main-header'>🎮 Live Interactive Demo</h1>", unsafe_allow_html=True)
 
-    st.markdown("""
+    st.markdown(
+        """
     <div class="explanation-box">
     Adjust traffic parameters below to see how the AI adapts signal timing in real-time.
     The simulation runs a virtual 4-way intersection with configurable traffic flows.
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     # Controls
     col1, col2 = st.columns([1, 2])
@@ -42,9 +47,7 @@ def show_live_demo():
         st.markdown("**Simulation Settings**")
         sim_speed = st.slider("Simulation Speed", 0.5, 5.0, 1.0, 0.5)
         controller = st.selectbox(
-            "Controller Algorithm",
-            ["DQN (AI)", "Fixed Time", "Webster", "Fuzzy Logic"],
-            index=0
+            "Controller Algorithm", ["DQN (AI)", "Fixed Time", "Webster", "Fuzzy Logic"], index=0
         )
 
         show_detection = st.checkbox("Show Vehicle Detection", True)
@@ -79,24 +82,30 @@ def show_live_demo():
         col_ns, col_ew = st.columns(2)
 
         with col_ns:
-            st.markdown(f"""
+            st.markdown(
+                f"""
             <div class="metric-card" style="border-left: 5px solid #28a745;">
                 <h4>🟢 North-South Phase</h4>
                 <h2>{ns_green}s Green</h2>
                 <p>Traffic: {north + south} veh/min</p>
                 <p>Queue est: {max(0, (north + south) - ns_green * 0.5):.0f} vehicles</p>
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         with col_ew:
-            st.markdown(f"""
+            st.markdown(
+                f"""
             <div class="metric-card" style="border-left: 5px solid #1E88E5;">
                 <h4>🔵 East-West Phase</h4>
                 <h2>{ew_green}s Green</h2>
                 <p>Traffic: {east + west} veh/min</p>
                 <p>Queue est: {max(0, (east + west) - ew_green * 0.5):.0f} vehicles</p>
             </div>
-            """, unsafe_allow_html=True)
+            """,
+                unsafe_allow_html=True,
+            )
 
         st.markdown("---")
 
@@ -116,8 +125,16 @@ def show_live_demo():
             throughput = total_traffic
 
         m1, m2, m3 = st.columns(3)
-        m1.metric("Avg Wait Time", f"{avg_wait:.0f}s", f"{((avg_wait_fixed - avg_wait) / avg_wait_fixed * 100):.0f}% better")
-        m2.metric("Throughput", f"{throughput:.0f} veh/hr", f"{((throughput - total_traffic) / total_traffic * 100):.0f}% gain")
+        m1.metric(
+            "Avg Wait Time",
+            f"{avg_wait:.0f}s",
+            f"{((avg_wait_fixed - avg_wait) / avg_wait_fixed * 100):.0f}% better",
+        )
+        m2.metric(
+            "Throughput",
+            f"{throughput:.0f} veh/hr",
+            f"{((throughput - total_traffic) / total_traffic * 100):.0f}% gain",
+        )
         m3.metric("Cycle Time", f"{cycle_time}s", "Fixed")
 
         # Visualization
@@ -125,21 +142,32 @@ def show_live_demo():
 
         # Simulate queue buildup
         time_steps = np.arange(0, 300, 10)
-        ns_queue = np.maximum(0, (north + south) * time_steps / 60 - ns_green * (time_steps // cycle_time))
-        ew_queue = np.maximum(0, (east + west) * time_steps / 60 - ew_green * (time_steps // cycle_time))
+        ns_queue = np.maximum(
+            0, (north + south) * time_steps / 60 - ns_green * (time_steps // cycle_time)
+        )
+        ew_queue = np.maximum(
+            0, (east + west) * time_steps / 60 - ew_green * (time_steps // cycle_time)
+        )
 
-        queue_df = pd.DataFrame({
-            'Time (s)': np.concatenate([time_steps, time_steps]),
-            'Queue Length': np.concatenate([ns_queue, ew_queue]),
-            'Direction': ['North-South'] * len(time_steps) + ['East-West'] * len(time_steps)
-        })
+        queue_df = pd.DataFrame(
+            {
+                "Time (s)": np.concatenate([time_steps, time_steps]),
+                "Queue Length": np.concatenate([ns_queue, ew_queue]),
+                "Direction": ["North-South"] * len(time_steps) + ["East-West"] * len(time_steps),
+            }
+        )
 
-        queue_chart = alt.Chart(queue_df).mark_area(opacity=0.6).encode(
-            x='Time (s):Q',
-            y='Queue Length:Q',
-            color='Direction:N',
-            tooltip=['Time (s):Q', 'Queue Length:Q', 'Direction:N']
-        ).properties(height=300, title='Predicted Queue Lengths')
+        queue_chart = (
+            alt.Chart(queue_df)
+            .mark_area(opacity=0.6)
+            .encode(
+                x="Time (s):Q",
+                y="Queue Length:Q",
+                color="Direction:N",
+                tooltip=["Time (s):Q", "Queue Length:Q", "Direction:N"],
+            )
+            .properties(height=300, title="Predicted Queue Lengths")
+        )
 
         st.altair_chart(queue_chart, use_container_width=True)
 

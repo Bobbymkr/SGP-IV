@@ -4,26 +4,28 @@ Adaptive Traffic Signal Timer Dashboard
 """
 
 import streamlit as st
+
 from adaptive_traffic.config.settings import get_settings
+from adaptive_traffic.ui.pages.advanced import show_advanced
+from adaptive_traffic.ui.pages.comparison import show_comparison
+from adaptive_traffic.ui.pages.dashboard import show_dashboard
+from adaptive_traffic.ui.pages.live_demo import show_live_demo
+from adaptive_traffic.ui.pages.metrics import show_metrics
 
 # Import page modules
 from adaptive_traffic.ui.pages.overview import show_overview
-from adaptive_traffic.ui.pages.dashboard import show_dashboard
-from adaptive_traffic.ui.pages.live_demo import show_live_demo
-from adaptive_traffic.ui.pages.comparison import show_comparison
-from adaptive_traffic.ui.pages.metrics import show_metrics
-from adaptive_traffic.ui.pages.advanced import show_advanced
 
 # Page configuration
 st.set_page_config(
     page_title="Adaptive Traffic Signal Timer",
     page_icon="🚦",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
 # Custom CSS
-st.markdown("""
+st.markdown(
+    """
 <style>
 .main-header {
     font-size: 2.5rem;
@@ -44,7 +46,9 @@ st.markdown("""
     text-align: center;
 }
 </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 # Initialize settings
 settings = get_settings()
@@ -61,8 +65,8 @@ page = st.sidebar.radio(
         "🎮 Live Demo",
         "📈 Algorithm Comparison",
         "🌍 Impact Metrics",
-        "⚙️ Settings"
-    ]
+        "⚙️ Settings",
+    ],
 )
 
 # Route to appropriate page

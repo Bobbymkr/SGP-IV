@@ -1,3 +1,8 @@
+---
+name: jetson-deployment-patterns
+description: "Project-specific patterns for deploying the traffic signal system to NVIDIA Jetson Orin."
+---
+
 # Jetson Deployment Patterns
 
 Project-specific patterns for deploying the traffic signal system to NVIDIA Jetson Orin.
@@ -24,20 +29,20 @@ morth:
   standards: ["IS 14241", "NTCIP 1202"]
   # IS 14241 = Indian Standard for traffic signal systems
   # NTCIP 1202 = V2X Vehicle Signal Priority
-  
+
   # Required OIDs for Indian NTCIP compliance
   oids:
     cycle_length: ".1.3.6.1.4.1.30692.2.1.1.1.1.1"  # MORTH-standard OID
     current_phase: ".1.3.6.1.4.1.30692.2.1.1.1.1.2"
     green_duration: ".1.3.6.1.4.1.30692.2.1.1.1.1.3"
-    
+
   # SNMP community string for Indian deployments
   community: "public"  # or "morth_readonly" depending on setup
-  
+
   # SPaT broadcast settings (UDP 1736, J2735 standard)
   spat_port: 1736
   cycle_length: 120  # typical Indian urban intersection cycle
-  
+
   # Minimum green times per MORTH guidelines
   min_green: 7  # for two-wheelers/authoric rickshaws
   max_green: 50
@@ -339,7 +344,7 @@ deployment:
     input_shape: [1, 3, 640, 640]
     classes: 8  # Indian: car, bus, truck, two_wheeler, autorickshaw, cycle, tractor, bus_pedigree
     morth_compliance: true  # NEW
-  
+
   detector:
     batch_size: 1
     conf_threshold: 0.25
@@ -347,7 +352,7 @@ deployment:
     max_det: 300  # Indian: higher than 100 (sparser Western traffic)
     device: "cuda:0"
     fps_target: 30
-  
+
   controller:
     min_green: 7  # Indian MORTH
     max_green: 50  # Indian MORTH
@@ -356,7 +361,7 @@ deployment:
     intervention_freq: 10  # seconds (can be 7 for high-volatility sites)
     safety_wrapper: true
     morth_compliance: true
-  
+
   cameras:
     - id: "north"
       rtsp: "rtsp://192.168.1.10:554/stream"
@@ -378,14 +383,14 @@ deployment:
       approach: "west"
       calibration: "config/calib/west.yaml"
       morth_road_class: "urban"
-  
+
   networking:
     detector_port: 8081
     controller_port: 8082
     spat_port: 1736
     prometheus_port: 9090
     grafana_port: 3000
-  
+
   morth:
     enable: true
     standard: "IS14241"
@@ -395,7 +400,7 @@ deployment:
     max_green: 50
     yellow: 3.5
     all_red: 3
-  
+
   healthchecks:
     interval: 30s
     timeout: 10s
@@ -420,5 +425,5 @@ deployment:
   - SNMP community string configured for Indian deployments
   - Agent ID set via `MORTH_AGENT_ID` env var
   - Cycle length typical for Indian urban intersections (90-120s)
-- **Fallback**: If MORTH compatibility layer not available, gracefully degrade to 
+- **Fallback**: If MORTH compatibility layer not available, gracefully degrade to
   standard NTCIP 1202 operation (tool auto-detects and switches modes)

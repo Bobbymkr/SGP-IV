@@ -1,0 +1,4538 @@
+[
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_clear_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_clear_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_clear_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_light_rain_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_light_rain_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_light_rain_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_heavy_monsoon_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_heavy_monsoon_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_heavy_monsoon_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_waterlogged_disciplined",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_waterlogged_typical_urban",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_3way_waterlogged_aggressive_metro",
+    "junction_type": "3way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_clear_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_clear_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_clear_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_light_rain_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_light_rain_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_light_rain_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_heavy_monsoon_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_heavy_monsoon_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_heavy_monsoon_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_waterlogged_disciplined",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_waterlogged_typical_urban",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_4way_waterlogged_aggressive_metro",
+    "junction_type": "4way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_clear_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_clear_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "clear",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_clear_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "clear",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_light_rain_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_light_rain_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "light_rain",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_light_rain_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "light_rain",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_heavy_monsoon_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_heavy_monsoon_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_heavy_monsoon_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "heavy_monsoon",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_waterlogged_disciplined",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "disciplined",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_waterlogged_typical_urban",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "typical_urban",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j00_2026-01-01_morning_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j01_2026-01-04_night_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j02_2026-01-07_evening_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j04_2026-01-03_evening_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j05_2026-01-06_noon_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j07_2026-01-02_noon_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j08_2026-01-05_morning_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j10_2026-01-01_morning_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 8.5,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j11_2026-01-04_night_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "night",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j12_2026-01-07_evening_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j14_2026-01-03_evening_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "evening",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j15_2026-01-06_noon_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j17_2026-01-02_noon_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 6.0,
+    "weather": "waterlogged",
+    "time_of_day": "noon",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  },
+  {
+    "clip_id": "j18_2026-01-05_morning_5way_waterlogged_aggressive_metro",
+    "junction_type": "5way",
+    "camera_height_m": 7.0,
+    "weather": "waterlogged",
+    "time_of_day": "morning",
+    "discipline": "aggressive_metro",
+    "city": "synthetic"
+  }
+]

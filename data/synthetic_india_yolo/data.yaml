@@ -1,0 +1,11 @@
+path: C:/Users/Admin/OneDrive/Desktop/IDEA/Adaptive-Traffic-Signal-Timer/data/synthetic_india_yolo
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: car
+  1: motorcycle
+  2: bus
+  3: truck
+  4: bicycle
+  5: auto

@@ -1,0 +1,93 @@
+{
+  "name": "delhi",
+  "lanes_per_approach": 4,
+  "vehicle_mix": {
+    "car": 0.50,
+    "bus": 0.10,
+    "truck": 0.07,
+    "two_wheeler": 0.20,
+    "autorickshaw": 0.08,
+    "cycle": 0.03,
+    "tractor": 0.01,
+    "bus_pedigree": 0.01
+  },
+  "vehicle_lengths": {
+    "car": 4.5,
+    "bus": 12.0,
+    "truck": 10.0,
+    "two_wheeler": 2.0,
+    "autorickshaw": 3.0,
+    "cycle": 1.8,
+    "tractor": 6.0,
+    "bus_pedigree": 12.0
+  },
+  "signal_bounds": {
+    "min_green": 15,
+    "max_green": 80,
+    "yellow": 5,
+    "all_red": 2
+  },
+  "behavior_preset": "typical_urban",
+  "weather_profile": "clear",
+  "incident_weights": {
+    "sensor_failure": 1.0,
+    "lane_block": 1.5,
+    "power_outage": 2.0,
+    "weather_degradation": 1.0
+  },
+  "detector_calibration": {
+    "north": 0.05,
+    "south": 0.05,
+    "east": 0.05,
+    "west": 0.05
+  },
+  "ntcip_config": {
+    "controller_ip": "127.0.0.1",
+    "stmp_port": 5000,
+    "snmp_port": 161,
+    "community": "public",
+    "phase_mapping": {
+      "north": 1,
+      "south": 2,
+      "east": 3,
+      "west": 4
+    },
+    "detector_mapping": {
+      "1": "north",
+      "2": "south",
+      "3": "east",
+      "4": "west"
+    }
+  },
+  "intersection_geometry": {
+    "approaches": ["north", "south", "east", "west"],
+    "lanes_per_approach": 4,
+    "lane_width": 3.5,
+    "stop_line_positions": {}
+  },
+  "detection_thresholds": {
+    "car": 0.5,
+    "bus": 0.45,
+    "truck": 0.45,
+    "two_wheeler": 0.4,
+    "autorickshaw": 0.4,
+    "cycle": 0.35,
+    "tractor": 0.4,
+    "bus_pedigree": 0.45
+  },
+  "class_mapping": {
+    "0": "car",
+    "1": "bus",
+    "2": "truck",
+    "3": "two_wheeler",
+    "4": "autorickshaw",
+    "5": "cycle",
+    "6": "tractor",
+    "7": "bus_pedigree"
+  },
+  "queue_estimation": {
+    "vehicle_length_buffer": 1.0,
+    "min_gap": 2.0,
+    "queue_zone_distance": 50.0
+  }
+}

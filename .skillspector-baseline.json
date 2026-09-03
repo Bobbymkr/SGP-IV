@@ -1,0 +1,693 @@
+﻿{
+    "version":  2,
+    "scanner_version":  "2.11.0",
+    "rules":  [
+
+              ],
+    "fingerprints":  [
+                         {
+                             "hash":  "sha256:1b61c4372e1fbd41ec0e360114e99dfb86444e2ddff181cadec716671279e606",
+                             "rule_id":  "RP1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:1404a2851b98ad443874e365b5ed419905ae3fbd761d559d4f19ec64a1523ec7",
+                             "rule_id":  "TM1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:62b748ef3422d128be69bd1a2ed650bdfe44f40185cbdf4d5f9fe0896bb8ad53",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:08bd86c69eef9f4a60cc8c0ed81a499f1729a23ee6432c36bbdb27140d070bdd",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:ce5bbe553d688eb4f5593bb104e9a5a237901d41f34a7386ed5c67a3248f80f7",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:88278b3c7552bccbcdf2d02c96d89e261139b9d79ffa7a752e1fe6129ef5848c",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:921b8829396ee139887f0498477abb32baf7563b0ca2128757195ca7f70e0238",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:4d1b4f0113a2ec8e8a582247f9838851ee5f7e5acc0efe1dcd21a38300c1ae35",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:41dccf601531dae00b95b394f8726b6ecb85494ce390063a011b6a59b4af2d6c",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:35e4593b99fa53106d24faba0197de38a19c4c8beb9b0188ec0682c77e09869f",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:ad51f7e5e649b8c91196148f15295fe1b9611a804ba5f34beb7731791b38a2d5",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:3d149e024908e71d61a86cceface530bd49c577c66e6b7fee1ed9711389922ec",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:952f2173c3c658b675c32c019abc3ac285b132ebfaa7b47df24395a2a0d4c2e1",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:640f22b499dc07cb7fbd9b3c7cfdbecea63da145a7199dde27e8bddb6408337c",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:7a3a73e62cfcdc6dc5c250480b7a9ffbe0a4593d81c966db921ed99d996c3225",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:c7b0cc47b1f39aa8da46242e0f397aed6858ae3b7d91c6f67c7c74ce7ec0c613",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:c3842762c1313aca73b75d0aa1694a7861b8ab91670c7e538761c2f02361b547",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:efbbebb603f3b4bee99a726f54cf6a21c6889fb841bfea88b9cd64fb25afc6de",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:969e1873f59414ee31f1259897923e019c8485da91cc7fb282a8bb1f4c084b4b",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:ab8dc595eb857a0e3d1d1a05565a5ed1281c4316355187d997a025a0dd3d7949",
+                             "rule_id":  "EA5",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:b72fb019db64f4fe682b0b58621ed2ad9190d5e54fefb37c7487555ede3c7880",
+                             "rule_id":  "RA2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:0b7da32b064da1897f7a5253a3535f5ddbe3815efe4e51d7a8507fc506cbefc7",
+                             "rule_id":  "TM1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:0bd91b116c9aa2f51e5f0b6c0e2f2b7309538b562f58d472cad0546027786a4b",
+                             "rule_id":  "P2",
+                             "file":  "scripts/server.cjs",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:4f48354406dad77dbaf913d3f22afe82d5cefaccc8d248afa547c933e1c47390",
+                             "rule_id":  "TM1",
+                             "file":  "scripts/stop-server.sh",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:e481f05e2dd4d7ec1460c6595a6895ef37bed812c473d002d0d6b67c12305367",
+                             "rule_id":  "LP3",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:026bd7923e4857028ff16de772b3263659b1c765e72e6339da341a3670eb65df",
+                             "rule_id":  "RA2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:f9cbfeafcca72fe9d002828888e5812cd9db7218c704f49889b5ab3e23a90d13",
+                             "rule_id":  "RA2",
+                             "file":  "scripts/start-server.sh",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:43ff6d570484f711129e53cdee9566009bd9e8d9847e3f4fb7cf06aea23f7edc",
+                             "rule_id":  "PE2",
+                             "file":  "scripts/start-server.sh",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:cc49e46365fdc6118b2e71cb5597d11482dcdc52921bcc93c4f59414c8519653",
+                             "rule_id":  "RA2",
+                             "file":  "scripts/start-server.sh",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:08dc4deb5410a2fe40db4ec0fb0feeb5cac4451f9ab054e2e1543bc01a37f8b3",
+                             "rule_id":  "TM1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:da70eed61062e4d70b1ec3486c21045d28f76ba1137bf6a834c395d42e73d8be",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:e618d1fa42b2d22ac4c898af8249a3307dab0da65081f009182df21f25a689bd",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:0e5a35234be6517da93983fbe25ae3fbd37c469d332051cdfe556b63720e583b",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:ebebe81c609d473e8a0d3df9fd0160b3406d94edb94cd46b290e822ad0bd4ef2",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:dc59a8c8258c5fd7753a288949eeadb2db9c3d58dfd799f59b04d9bef2f12016",
+                             "rule_id":  "AS1",
+                             "file":  "hooks/observe.sh",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:48d305a113b319fdbe84ed85a91f5dc002a2262a1e5a113a306a3d865e48bbff",
+                             "rule_id":  "AS1",
+                             "file":  "scripts/migrate-homunculus.sh",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:385eef71be656c7edd582f0c236fccfeb9ec66cff0c260a46b76db8c94b8dc88",
+                             "rule_id":  "AS1",
+                             "file":  "scripts/migrate-homunculus.sh",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:cca671a0c7d7d6ec44587a4758ec42cb9472c6366c9f2a46fccb2451fd7417c4",
+                             "rule_id":  "LP3",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:7c31a4c6ef2f08eff47c4cea14d88ee9e4ae1e97f8ae728d3c7e0e1384cd945b",
+                             "rule_id":  "RA2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:ccac155b8ef3d28bb2460debc378abf50a0c61e40dfcd185b22477fde43b18ce",
+                             "rule_id":  "EA2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:767bbd95ebba07f0d05f24c19970343c301ef5b0c4e4d52d5fce070a07b34447",
+                             "rule_id":  "RA2",
+                             "file":  "agents/observer.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:d6311824b91b876825e3b7148e0a2509d702325725bf7da9977633522895b25f",
+                             "rule_id":  "RA2",
+                             "file":  "agents/start-observer.sh",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:f2b64fed6c278de6b179653993bb69bbeedad9b45758090ad24b770f634738e0",
+                             "rule_id":  "AST4",
+                             "file":  "scripts/instinct-cli.py",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:4c293a8f400545777e7e6a240849242b1824935dd4daa60cd18db543ce6703c4",
+                             "rule_id":  "AST4",
+                             "file":  "scripts/instinct-cli.py",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:c913ae955570094fce121d69b617284d32595ca5646b8492e29f2dc2ceffadd2",
+                             "rule_id":  "TT2",
+                             "file":  "scripts/instinct-cli.py",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:935e75f25f5cc69d29b4e48d785a0f4f5de8e4db5a4a7e311b30c165cda67ac5",
+                             "rule_id":  "AST4",
+                             "file":  "scripts/instinct-cli.py",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:9499ef23f774a9faa3744b3a09681036b1c542def125050f91dc99f9e403dfc7",
+                             "rule_id":  "TT2",
+                             "file":  "scripts/instinct-cli.py",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:c95459c671d3ce13cdc73842763fde3d00c539a063e660b7d87826442d4c8ad6",
+                             "rule_id":  "EA2",
+                             "file":  "scripts/instinct-cli.py",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:daff07ec9e15ecf160ffe9b99690c5f98e3668dad4ce88e583bf84f6a3a6b147",
+                             "rule_id":  "RP1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:095bb2ab1a4726f0965ebe791bf2655f08dbac96fc986649f491932c01827c32",
+                             "rule_id":  "RP1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:a09a7a5121a19657e93d3572b972fa15669b09b8b20331b2bbdb911576260677",
+                             "rule_id":  "SSRF2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:b39f4d450645f8bfe03cd4ed38d5d52332d7336ecc1a3cdba1e63cb88cd5d723",
+                             "rule_id":  "RP1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:58e094609e225e9b167f146e6971f8f6cd3e8377817053a888eea89cc95b2bb0",
+                             "rule_id":  "PE3",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:60f91a7b289dc7d5423178bc7541d86c6f84dd1cc82be4f870d6ea7068775d0c",
+                             "rule_id":  "PE3",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:05f6ea5210a73acd6d0f2ec8fd51a87a6df712b703b6452a6b35c2c67169c2e0",
+                             "rule_id":  "TM3",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:af4be09e5d67816b5b4a4b320045194f3e8f87124b0780017e63914fa6a49211",
+                             "rule_id":  "TM2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:06f9b980b98550fcd65e03e22417db9c983cd71216dfdfe896727d07c727de22",
+                             "rule_id":  "TM2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:fcfe67861528e4e5aa66524e9db45f7fa353c4cd9a63dab4e7cdb0f6851c888c",
+                             "rule_id":  "SSRF2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:ef1e7a8b99ee88b5bf8d338b64c25537834c3bf774a7a255d770741393bffc8f",
+                             "rule_id":  "PE2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:5cd6846ee56d24c825d1d40b4e26a194f93fbcf1444924511d5c348722a8f41c",
+                             "rule_id":  "RA2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:93264498bba8bde8e8062849856939d0dd3706bd291a29aa5723ec14b660aa37",
+                             "rule_id":  "PE2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:c0de4a234db4625a03e453da550ab810ec8249833fff3c243b1134b63aac14e6",
+                             "rule_id":  "TM1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:f07865950e1dba79d8239116c619fb9971b32c13c76ad74478fe0451ccc3c749",
+                             "rule_id":  "TM1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:4a5324d5f68719eff3b7dabd772979b5eeb6a8d9e9c917acda1a5631c4f6ace0",
+                             "rule_id":  "TM2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:14cbdaa069e9d76ae85a42ba0a6954cab50e16332d8fb38075019c31dacf3c54",
+                             "rule_id":  "P6",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:c48b532b689621af8655669dccdd70cc8ad9941e94141acbff72365f4e7abf71",
+                             "rule_id":  "AE4",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:13854e39408ead257e6a0157f31b4ba4a702a55adc5fee05ca252eb91a0afb34",
+                             "rule_id":  "EA2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:f346c0edb43426d62c144aef7c3a0cec09ae7e500d67a03c819927db0e3efded",
+                             "rule_id":  "AS1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:0d63aa64c1abd5c72c4aec2dfdeb0586fcb21c3bf6a633bd6e60a526a3a2877d",
+                             "rule_id":  "AS3",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:ef27bf54d1361076fe6ef0416f65f410dac9bccf2a67bdab68be688128bfb40d",
+                             "rule_id":  "EA2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:b414984b5d475841336dbebe937485f218cd0f0d27026284568ef85504269d2c",
+                             "rule_id":  "OH1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:7b5b2f9d7dadbd95142edd9f82a24b4ace8e52e9ce4c1467f35d6e35621cc4eb",
+                             "rule_id":  "PE3",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:8abd124969503b7e2a91d2712c81cf28d329099ca689e4a9dfb9e7e255bdaaf6",
+                             "rule_id":  "PE3",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:f67ef47f00bc6d43e724b998c894f5319b6abb8da85e87b920a6bd607dcf097f",
+                             "rule_id":  "E4",
+                             "file":  "defense-in-depth.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:e442579f0b76d7ad506afc35a5876ad373fbf34435e7929d6b76a2647283f515",
+                             "rule_id":  "EA4",
+                             "file":  "condition-based-waiting.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:9f19460c30e9a1ec8263c64846a528519106c793fd411a7d09120ca1b6a6cb62",
+                             "rule_id":  "RP1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:99490147c34639d911eea2bd9f5c23e0d3757bf48abba16e1a557520016f5e5e",
+                             "rule_id":  "TM2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:cefd6281821e44c9c0f8db724e7431e99787479ccf81955ceadb18a3ba4af6f7",
+                             "rule_id":  "PE2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:2bc8e8df5638900c01bf5d75ce85fa0d3d7196086e6042329ade2305c2555df3",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:c89daaa7e74b9e569087ecf1fc984ce4559a3604495605cf69cc05c6ccfc2393",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:dd7c5a40b7cf5634a40d2b8ba3e49c5ff19588588e765082e8504fd8ce18a177",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:bf1530f4d8e65ede755493a9f37345e07b56557e932155341821d72df6b46863",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:65c13abe6ad633136ab61ab3e3db9b42e646abf6f8cedd4bc386236ebc25cc2b",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:59b7e91c7f6a39c07cc6fd12681c5943366191fe73c01c606a5723bab0bae11c",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:6c21ddb30f7bb0201bfd8b25a2d8f60789e9de1dc09c8f698e94c08494333b3c",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:8e8374621e018edc41bbef9e64b0b5c731bf67ff4ee4174dd64b1a69ce236eab",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:38afcb9e04696eeca50c924cd462aa7097cefcbc0346dd0f4fe713b44694b62d",
+                             "rule_id":  "AR2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:c6d4d33c302e666c1403530d612d0e4f00f895b0a937daf8a7855c3d2bf19d4e",
+                             "rule_id":  "EA1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:c088ce12a842c5b73e42f6189fa251bc1510f42abb446c6aeb45b7e3f7908bb6",
+                             "rule_id":  "EA2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:6a1523e40911b37de12cb2dafe96ce7937a31696f98c55026d85c9b4d4e4164c",
+                             "rule_id":  "RP1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:a8a4bd2565e27f5c823e644c28d61b08440087a156c9882e783d5cc6869d737c",
+                             "rule_id":  "EA2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:5b5e445753fa69a4f5fd6016ae1d6e427a0a0b974e3d2321c1dbf53d68dd323a",
+                             "rule_id":  "EA2",
+                             "file":  "references/add-watch.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:45ffaa965d73e172b238743b3652840af45cbc6dd2afc4411f07752b2e2951f3",
+                             "rule_id":  "E1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:51df2021d274e8f63b027ee9e9aaa277e5874406a8518ce87fcad35d12938458",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:b1575859f72a732df385c6b66ddef020f43f82990f2ee921f4cadf09ed8c5df9",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:0894aab725901714ee098ba523e1c32fb8eb8c9a8b5296bdc5fad3f35479547b",
+                             "rule_id":  "AE1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:16f6cb940cc38d8eac3eb3e17aea31e8924af82b3d05b81b04da3ad18e7510d4",
+                             "rule_id":  "P2",
+                             "file":  "references/angular-aria.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:627871305e737405faaff22fd48779639e0e89201d80a7f4a6321fa32ee3023a",
+                             "rule_id":  "P2",
+                             "file":  "references/show-routes-with-outlets.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:a2c5686e4987d6c72af3d5ac1705f9cae571df995c2d9072814efdd1cdcfb48f",
+                             "rule_id":  "P2",
+                             "file":  "references/signal-forms.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:f61ebec4c7a423451cc530f8e27070792ca71a7957f6797fddeea6855560c893",
+                             "rule_id":  "P2",
+                             "file":  "references/signal-forms.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:912b16c3a10ebe670d8c048d3c50739174f291d1d012a98258bd4e19eaedd65f",
+                             "rule_id":  "EA2",
+                             "file":  "references/angular-animations.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:a6714f83771f8ca8b6bcf370baae4647e2199b4bf22b32db509b34f8ed51322a",
+                             "rule_id":  "P4",
+                             "file":  "references/cli.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:adcc81856a0b9cb3788fd2651463cb7deee5b1e2a6e16a8b511300d3928a276e",
+                             "rule_id":  "EA2",
+                             "file":  "references/cli.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:8b1c716b7ac7512f75051532300f3ea1b9ceb2944bcabe13ad026e22fbe0323d",
+                             "rule_id":  "P9",
+                             "file":  "references/cli.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:98fc7af96d858cce64dd0da4f773a25f833de31c6fcbae35b3a00a1a38a843fa",
+                             "rule_id":  "P9",
+                             "file":  "references/component-styling.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:eb318579a736a68c9c9c41a7d91345708a7c522128200883fc339cf4c8dc5b09",
+                             "rule_id":  "P9",
+                             "file":  "references/mcp.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:069dc15ac89951e951018a7d058b1833cd55f23f01f41f3b78016fbce8238c5e",
+                             "rule_id":  "RP1",
+                             "file":  "references/mcp.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:af08374e7582ccd5fb4bf78bf21b3f6593a05a154c79e3a396a43cfe36eed242",
+                             "rule_id":  "RA2",
+                             "file":  "references/mcp.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:dacd2cb45a11777af5650dc0a4014dc31a624196c00ee1f7234098fd1f4102dd",
+                             "rule_id":  "PE3",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:0d246dc8a6afe0c1025a9d28e49473abc77184887ebc32e99d9a0f3c42adec79",
+                             "rule_id":  "E1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:04d96550ce4d89004e91a3429a45c5c034e41c3074b788314fe586a097c9aa5c",
+                             "rule_id":  "RP1",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:6c5a0eb781630ab7faa570830b6cdc58f8d48895575524ca1113bf7deaf34360",
+                             "rule_id":  "AR2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:2b5db290eade404d3039f8e990e031969dc6d1237aafca94b22f87f82fc39666",
+                             "rule_id":  "AR2",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         },
+                         {
+                             "hash":  "sha256:09c7acc42b6b1271658b7f718e42e1ebf3eb1cea8f1197ed70183cfb922200bf",
+                             "rule_id":  "AS3",
+                             "file":  "SKILL.md",
+                             "reason":  "Accepted finding (auto-generated baseline)"
+                         }
+                     ]
+}

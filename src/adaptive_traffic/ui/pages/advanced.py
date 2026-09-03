@@ -2,9 +2,9 @@
 Advanced Features Page
 """
 
-import streamlit as st
-import numpy as np
 import pandas as pd
+import streamlit as st
+
 from adaptive_traffic.config.settings import get_settings
 
 
@@ -12,15 +12,19 @@ def show_advanced():
     """Display advanced features and settings"""
     settings = get_settings()
 
-    st.markdown("<h1 class='main-header'>⚙️ Advanced Features & Settings</h1>", unsafe_allow_html=True)
+    st.markdown(
+        "<h1 class='main-header'>⚙️ Advanced Features & Settings</h1>", unsafe_allow_html=True
+    )
 
-    tabs = st.tabs([
-        "🚑 Emergency Vehicle Priority",
-        "🌤️ Weather Adaptation",
-        "🚶 Pedestrian & Cyclist Detection",
-        "🔧 System Configuration",
-        "📡 API & Integration"
-    ])
+    tabs = st.tabs(
+        [
+            "🚑 Emergency Vehicle Priority",
+            "🌤️ Weather Adaptation",
+            "🚶 Pedestrian & Cyclist Detection",
+            "🔧 System Configuration",
+            "📡 API & Integration",
+        ]
+    )
 
     with tabs[0]:
         show_emergency_priority()
@@ -57,9 +61,7 @@ def show_emergency_priority():
         detection_range = st.slider("Detection Range (meters)", 100, 1000, 300)
         priority_duration = st.slider("Green Extension (seconds)", 10, 120, 30)
         preemption_mode = st.selectbox(
-            "Preemption Mode",
-            ["Immediate", "Next Cycle", "Coordinated"],
-            index=0
+            "Preemption Mode", ["Immediate", "Next Cycle", "Coordinated"], index=0
         )
 
         st.markdown("### Supported Vehicle Types")
@@ -98,13 +100,23 @@ def show_weather_adaptation():
     with col1:
         st.markdown("### Weather Impact Matrix")
 
-        weather_data = pd.DataFrame({
-            'Condition': ['Clear', 'Light Rain', 'Heavy Rain', 'Snow', 'Ice', 'Fog', 'High Wind'],
-            'Visibility Factor': [1.0, 0.85, 0.65, 0.55, 0.45, 0.60, 0.90],
-            'Traction Factor': [1.0, 0.80, 0.60, 0.40, 0.25, 1.0, 0.95],
-            'Speed Adjustment': [0, -10, -25, -35, -50, -20, -15],
-            'Gap Increase': [0, 2, 5, 8, 12, 4, 3]
-        })
+        weather_data = pd.DataFrame(
+            {
+                "Condition": [
+                    "Clear",
+                    "Light Rain",
+                    "Heavy Rain",
+                    "Snow",
+                    "Ice",
+                    "Fog",
+                    "High Wind",
+                ],
+                "Visibility Factor": [1.0, 0.85, 0.65, 0.55, 0.45, 0.60, 0.90],
+                "Traction Factor": [1.0, 0.80, 0.60, 0.40, 0.25, 1.0, 0.95],
+                "Speed Adjustment": [0, -10, -25, -35, -50, -20, -15],
+                "Gap Increase": [0, 2, 5, 8, 12, 4, 3],
+            }
+        )
 
         st.dataframe(weather_data, use_container_width=True)
 
@@ -150,13 +162,22 @@ def show_pedestrian_cyclist():
     with col1:
         st.markdown("### Detection Zones")
 
-        zones = pd.DataFrame({
-            'Zone': ['Crosswalk N', 'Crosswalk E', 'Crosswalk S', 'Crosswalk W', 'Bike Lane N', 'Bike Lane S'],
-            'Type': ['Pedestrian'] * 4 + ['Cyclist'] * 2,
-            'Active': [True, True, True, True, True, True],
-            'Count (hr)': [145, 98, 167, 123, 45, 38],
-            'Avg Wait (s)': [12, 18, 15, 22, 8, 10]
-        })
+        zones = pd.DataFrame(
+            {
+                "Zone": [
+                    "Crosswalk N",
+                    "Crosswalk E",
+                    "Crosswalk S",
+                    "Crosswalk W",
+                    "Bike Lane N",
+                    "Bike Lane S",
+                ],
+                "Type": ["Pedestrian"] * 4 + ["Cyclist"] * 2,
+                "Active": [True, True, True, True, True, True],
+                "Count (hr)": [145, 98, 167, 123, 45, 38],
+                "Avg Wait (s)": [12, 18, 15, 22, 8, 10],
+            }
+        )
 
         st.dataframe(zones, use_container_width=True)
 
@@ -204,7 +225,9 @@ def show_system_config():
     with col2:
         st.markdown("**Detection Settings**")
         det_time = st.number_input("Advance Detection (s)", 1, 15, settings.detection_time)
-        det_conf = st.slider("Detection Confidence", 0.1, 1.0, settings.yolo_confidence_threshold, 0.05)
+        det_conf = st.slider(
+            "Detection Confidence", 0.1, 1.0, settings.yolo_confidence_threshold, 0.05
+        )
         det_iou = st.slider("Detection IoU Threshold", 0.1, 1.0, settings.yolo_iou_threshold, 0.05)
 
     st.markdown("### Controller Settings")
@@ -215,7 +238,7 @@ def show_system_config():
         controller = st.selectbox(
             "Active Controller",
             ["dqn", "fixed", "webster", "fuzzy"],
-            index=["dqn", "fixed", "webster", "fuzzy"].index(settings.controller_type)
+            index=["dqn", "fixed", "webster", "fuzzy"].index(settings.controller_type),
         )
 
         if controller == "dqn":
@@ -241,7 +264,7 @@ def show_system_config():
         if st.button("📤 Export Config (YAML)"):
             st.download_button("Download", "config.yaml", "adaptive_traffic_config.yaml")
     with c2:
-        uploaded = st.file_uploader("📥 Import Config", type=['yaml', 'yml'])
+        uploaded = st.file_uploader("📥 Import Config", type=["yaml", "yml"])
         if uploaded:
             st.success("Configuration imported!")
 
@@ -252,43 +275,49 @@ def show_api_integration():
 
     st.markdown("### REST API Endpoints")
 
-    endpoints = pd.DataFrame({
-        'Endpoint': [
-            'GET /api/v1/signals',
-            'GET /api/v1/signals/{id}',
-            'POST /api/v1/signals/{id}/timing',
-            'GET /api/v1/detection/live',
-            'GET /api/v1/traffic/metrics',
-            'GET /api/v1/analytics/forecast',
-            'WS /api/v1/stream'
-        ],
-        'Description': [
-            'List all signal controllers',
-            'Get signal status and timing',
-            'Update signal timing plan',
-            'Live vehicle detection feed',
-            'Real-time traffic metrics',
-            'Traffic flow predictions',
-            'WebSocket live updates'
-        ],
-        'Auth': ['Bearer'] * 7
-    })
+    endpoints = pd.DataFrame(
+        {
+            "Endpoint": [
+                "GET /api/v1/signals",
+                "GET /api/v1/signals/{id}",
+                "POST /api/v1/signals/{id}/timing",
+                "GET /api/v1/detection/live",
+                "GET /api/v1/traffic/metrics",
+                "GET /api/v1/analytics/forecast",
+                "WS /api/v1/stream",
+            ],
+            "Description": [
+                "List all signal controllers",
+                "Get signal status and timing",
+                "Update signal timing plan",
+                "Live vehicle detection feed",
+                "Real-time traffic metrics",
+                "Traffic flow predictions",
+                "WebSocket live updates",
+            ],
+            "Auth": ["Bearer"] * 7,
+        }
+    )
 
     st.dataframe(endpoints, use_container_width=True)
 
     st.markdown("### Authentication")
-    st.code("""
+    st.code(
+        """
 # API Key Header
 Authorization: Bearer YOUR_API_KEY
 
 # Or JWT Token
 Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
-    """, language="bash")
+    """,
+        language="bash",
+    )
 
     st.markdown("### Integration Examples")
 
     with st.expander("🐍 Python Client"):
-        st.code("""
+        st.code(
+            """
 import httpx
 
 client = httpx.Client(
@@ -305,31 +334,39 @@ client.post("/api/v1/signals/1/timing", json={
     "green_time": 30,
     "yellow_time": 5
 })
-        """, language="python")
+        """,
+            language="python",
+        )
 
     with st.expander("🌐 JavaScript/TypeScript"):
-        st.code("""
+        st.code(
+            """
 const response = await fetch('/api/v1/signals', {
   headers: { 'Authorization': 'Bearer YOUR_KEY' }
 });
 const signals = await response.json();
-        """, language="typescript")
+        """,
+            language="typescript",
+        )
 
     with st.expander("📊 WebSocket Stream"):
-        st.code("""
+        st.code(
+            """
 const ws = new WebSocket('wss://api.adaptivesignal.io/api/v1/stream');
 ws.onmessage = (event) => {
   const data = JSON.parse(event.data);
   console.log('Live detection:', data);
 };
-        """, language="javascript")
+        """,
+            language="javascript",
+        )
 
     st.markdown("### Webhook Configuration")
     webhook_url = st.text_input("Webhook URL", placeholder="https://your-system.com/webhook")
     events = st.multiselect(
         "Subscribe to Events",
         ["signal_change", "detection_alert", "traffic_anomaly", "system_health", "evp_activated"],
-        default=["signal_change", "traffic_anomaly"]
+        default=["signal_change", "traffic_anomaly"],
     )
 
     if st.button("💾 Save Webhook"):

@@ -1,3 +1,8 @@
+---
+name: queue-estimation-patterns
+description: "Project-specific patterns for converting YOLOv8 detections to per-lane queue lengths."
+---
+
 # Queue Estimation Patterns
 
 Project-specific patterns for converting YOLOv8 detections to per-lane queue lengths.
@@ -27,7 +32,7 @@ default_stops = {
 # (vs 2 in Western counterparts)
 # Configure per intersection class:
 #   INTERSECTION_CLASS_MINOR = 2 lanes per approach
-#   INTERSECTION_CLASS_MAIN = 3 lanes per approach  
+#   INTERSECTION_CLASS_MAIN = 3 lanes per approach
 #   INTERSECTION_CLASS_MAJOR = 4 lanes per approach
 LANES_PER_APPROACH = 3  # Change to 4 for major intersections like Mumbai/Tolkappan
 
@@ -79,14 +84,14 @@ class QueueEstimator:
         self.default_stops = config.default_stops
         self.lanes_per_approach = lanes_per_approach  # 3 or 4 for India
         self.lane_coords = self._compute_lane_polygons(config)
-        
+
         # Vehicle lengths (meters) for queue length calc - Indian adaptation
         self.vehicle_lengths = {
             'car': 4.5, 'bus': 12.0, 'truck': 10.0,
-            'two_wheeler': 1.8, 'autorickshaw': 2.8, 
+            'two_wheeler': 1.8, 'autorickshaw': 2.8,
             'cycle': 1.9, 'tractor': 3.5
         }
-        
+
         # Pixel to meter calibration (approach-specific)
         # Indian calibrations typically: 0.04-0.06 px/m (denser traffic = smaller px/m)
         self.px_to_m = {
@@ -95,10 +100,10 @@ class QueueEstimator:
             'east': 0.05,
             'west': 0.05
         }
-        
+
         # EWMA alpha adjusted for noisier Indian traffic (more smoothing)
         self.ewma_alpha = 0.25  # vs 0.3 for Western traffic
-    
+
     def _compute_lane_polygons(self, config):
         """Create lane polygons from x_coords/y_coords and stop lines"""
         polys = {}
@@ -108,52 +113,52 @@ class QueueEstimator:
                 x = config.x_coords[approach][lane]
                 y = config.y_coords[approach][lane]
                 polys[approach].append({
-                    'x_range': (min(x, config.stop_lines[approach]), 
+                    'x_range': (min(x, config.stop_lines[approach]),
                                max(x, config.stop_lines[approach])),
-                    'y_range': (min(y, config.stop_lines[approach]), 
+                    'y_range': (min(y, config.stop_lines[approach]),
                                max(y, config.stop_lines[approach]))
                 })
         return polys
-    
+
     def estimate(self, detections: List[Dict]) -> Dict[str, LaneQueue]:
         """Convert detections to per-lane queues"""
-        
+
         # Initialize counters - now lanes_per_approach instead of hardcoded 2
-        counts = {app: {lane: 0 for lane in range(self.lanes_per_approach)} 
+        counts = {app: {lane: 0 for lane in range(self.lanes_per_approach)}
                   for app in ['north', 'south', 'east', 'west']}
-        types = {app: {lane: {} for lane in range(self.lanes_per_approach)} 
+        types = {app: {lane: {} for lane in range(self.lanes_per_approach)}
                  for app in ['north', 'south', 'east', 'west']}
-        
+
         # Map detection bbox to lane
         for det in detections:
             bbox = det['bbox']  # [x1, y1, x2, y2]
             cls = det['class']  # Now supports 8 classes from yolov8-tensorrt-patterns
             cx = (bbox[0] + bbox[2]) / 2
             cy = (bbox[1] + bbox[3]) / 2
-            
+
             # Find which approach+lane (using Indian geometry)
             approach, lane = self._point_to_lane(cx, cy, self.lanes_per_approach)
             if approach:
                 counts[approach][lane] += 1
                 types[approach][lane][cls] = types[approach][lane].get(cls, 0) + 1
-        
+
         # Build result
         result = {}
         for approach in ['north', 'south', 'east', 'west']:
             for lane in range(self.lanes_per_approach):
                 count = counts[approach][lane]
                 veh_types = types[approach][lane]
-                
+
                 # Queue length in meters - using Indian vehicle lengths
-                queue_m = sum(self.vehicle_lengths.get(t, 4.5) * c 
+                queue_m = sum(self.vehicle_lengths.get(t, 4.5) * c
                              for t, c in veh_types.items())
                 queue_m += count * 2.0  # gap between vehicles (smaller in India)
-                
+
                 # Occupancy (0-1) based on max queue length for this lane count
                 # More lanes = longer max queue before spillback
                 max_queue_m = 120.0  # ~20 vehicles * 6m (Indian: longer queues possible)
                 occupancy = min(queue_m / max_queue_m, 1.0)
-                
+
                 result[f"{approach}_{lane}"] = LaneQueue(
                     approach=approach,
                     lane_idx=lane,
@@ -162,14 +167,14 @@ class QueueEstimator:
                     occupancy=occupancy,
                     vehicle_types=veh_types
                 )
-        
+
         return result
-    
+
     def _point_to_lane(self, x, y, lanes_per_approach):
         """Map pixel coordinate to approach+lane using Indian config geometry"""
         # Simplified - real version uses lane polygons
         # Check which stop line region the point is in
-        
+
         # Determine approach first
         if y < 400:  # North (up)
             approach = 'north'
@@ -179,14 +184,14 @@ class QueueEstimator:
             approach = 'west'
         else:  # East (right)
             approach = 'east'
-        
+
         if not approach:
             return None, None
-        
+
         # Now determine lane within approach (0 to lanes_per_average-1)
         # Indian intersections often have vehicles distributed across lanes
         # Lane 0 = nearest stop line, Lane 2 = furthest back
-        
+
         # Simplified lane assignment based on x or y position within approach
         if approach in ['north', 'south']:
             # For north-south: use x coordinate to determine lane
@@ -223,9 +228,9 @@ class QueueEstimator:
                 lane = 0
         else:
             lane = 0
-        
+
         return approach, lane
-    
+
     def _compute_ewma(self, current_queues: Dict[str, LaneQueue]) -> Dict[str, LaneQueue]:
         """EWMA smoothing adapted for Indian traffic noise"""
         smoothed = {}
@@ -236,11 +241,11 @@ class QueueEstimator:
                 smoothed_q = LaneQueue(
                     approach=q.approach,
                     lane_idx=q.lane_idx,
-                    vehicle_count=int(self.ewma_alpha * q.vehicle_count + 
+                    vehicle_count=int(self.ewma_alpha * q.vehicle_count +
                                       (1-self.ewma_alpha) * prev_q.vehicle_count),
-                    queue_length_m=self.ewma_alpha * q.queue_length_m + 
+                    queue_length_m=self.ewma_alpha * q.queue_length_m +
                                    (1-self.ewma_alpha) * prev_q.queue_length_m,
-                    occupancy=self.ewma_alpha * q.occupancy + 
+                    occupancy=self.ewma_alpha * q.occupancy +
                               (1-self.ewma_alpha) * prev_q.occupancy,
                     vehicle_types=q.vehicle_types
                 )
@@ -255,7 +260,7 @@ class EWMAQueueFilter:
     def __init__(self, alpha=0.25):  # Indian: 0.25 vs 0.3
         self.alpha = alpha
         self.prev_queues = {}
-    
+
     def update(self, current_queues: Dict[str, LaneQueue]) -> Dict[str, LaneQueue]:
         smoothed = {}
         for key, q in current_queues.items():
@@ -264,11 +269,11 @@ class EWMAQueueFilter:
                 smoothed_q = LaneQueue(
                     approach=q.approach,
                     lane_idx=q.lane_idx,
-                    vehicle_count=int(self.alpha * q.vehicle_count + 
+                    vehicle_count=int(self.alpha * q.vehicle_count +
                                       (1-self.alpha) * prev_q.vehicle_count),
-                    queue_length_m=self.alpha * q.queue_length_m + 
+                    queue_length_m=self.alpha * q.queue_length_m +
                                    (1-self.alpha) * prev_q.queue_length_m,
-                    occupancy=self.alpha * q.occupancy + 
+                    occupancy=self.alpha * q.occupancy +
                               (1-self.alpha) * prev_q.occupancy,
                     vehicle_types=q.vehicle_types
                 )

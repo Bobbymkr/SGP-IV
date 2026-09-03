@@ -125,3 +125,5 @@ comprehensive_test_execution_report.json
 # Pygame simulation cache
 .pygame/
 _simulation_cache/
+# graphify local-only files
+graphify-out/cost.json

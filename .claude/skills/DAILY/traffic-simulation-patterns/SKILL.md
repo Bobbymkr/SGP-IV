@@ -1,3 +1,8 @@
+---
+name: traffic-simulation-patterns
+description: "Project-specific patterns for the Adaptive-Traffic-Signal-Timer Pygame simulation."
+---
+
 # Traffic Simulation Patterns
 
 Project-specific patterns for the Adaptive-Traffic-Signal-Timer Pygame simulation.
@@ -30,8 +35,8 @@ while running:
 
 **Vehicle type weights for spawning** (replace default weights):
 ```python
-vehicle_type_weights = {'car': 1.0, 'bus': 1.2, 'truck': 1.3, 
-                         'two_wheeler': 0.6, 'autorickshaw': 0.8, 
+vehicle_type_weights = {'car': 1.0, 'bus': 1.2, 'truck': 1.3,
+                         'two_wheeler': 0.6, 'autorickshaw': 0.8,
                          'cycle': 0.5, 'tractor': 0.3}
 ```
 
@@ -43,7 +48,7 @@ def set_signal_timing():
     for i in range(4):
         queue = count_vehicles_at_stop_line(direction[i])
         # Indian: weighted queue - two-wheelers count less
-        weighted_queue = sum(queue.get(t, 0) * vehicle_weights.get(t, 1.0) 
+        weighted_queue = sum(queue.get(t, 0) * vehicle_weights.get(t, 1.0)
                             for t in vehicle_types)
         green = min(max(weighted_queue * service_time, MIN_GREEN), MAX_GREEN)
         signals[i].green = green
@@ -78,10 +83,10 @@ class TrafficEnv(gym.Env):
     def __init__(self, config):
         self.sim = Simulation(config)
         self.observation_space = spaces.Box(...)  # 4-lane queues + phase
-        # Indian: action_space remains Discrete(11) but green duration bounds 
+        # Indian: action_space remains Discrete(11) but green duration bounds
         # are enforced by SafetyWrapper (MIN_GREEN=7, MAX_GREEN=50)
         self.action_space = spaces.Discrete(11)   # green time 10-60s in 5s steps
-    
+
     def step(self, action):
         self.sim.set_green_time(action)
         self.sim.step()

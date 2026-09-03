@@ -16,10 +16,10 @@ This smart traffic system:
 
 ## 📋 What You'll Need (Simple Checklist)
 
-✅ **Computer** (Windows, Mac, or Linux)  
-✅ **Internet connection**  
-✅ **Python** (we'll help you install this)  
-✅ **15 minutes** of your time  
+✅ **Computer** (Windows, Mac, or Linux)
+✅ **Internet connection**
+✅ **Python** (we'll help you install this)
+✅ **15 minutes** of your time
 
 ---
 
@@ -200,9 +200,9 @@ After running the demo:
 
 ---
 
-## 🎉 Success! 
+## 🎉 Success!
 
-**Congratulations!** You've successfully run the Adaptive Traffic Signal Timer. 
+**Congratulations!** You've successfully run the Adaptive Traffic Signal Timer.
 
 You've seen:
 - ✅ Smart vehicle detection
@@ -236,6 +236,6 @@ Now that you've got it running, you can:
 
 ---
 
-*Last Updated: November 2025*  
-*Made for Non-Technical Users*  
+*Last Updated: November 2025*
+*Made for Non-Technical Users*
 *Questions? Check the main project repository!*

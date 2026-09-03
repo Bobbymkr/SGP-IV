@@ -1,3 +1,8 @@
+---
+name: yolov8-tensorrt-patterns
+description: "Project-specific patterns for YOLOv8 deployment on Jetson Orin using TensorRT."
+---
+
 # YOLOv8 TensorRT Patterns
 
 Project-specific patterns for YOLOv8 deployment on Jetson Orin using TensorRT.
@@ -22,16 +27,16 @@ trtexec --onnx=yolov8n.onnx --int8 --saveEngine=yolov8n_int8.engine \
 ### Indian Class Mapping (CRITICAL ADAPTATION)
 **Current 5 classes:** `['car', 'bus', 'truck', 'rickshaw', 'bike']`
 
-**Indian adaptation: 8 classes** - Indian roads have significant two-wheeler, 
+**Indian adaptation: 8 classes** - Indian roads have significant two-wheeler,
 cycle, and tractor traffic not present in Western datasets:
 
 ```python
 # In postprocess or class mapping, use these 8 classes:
-INDIAN_CLASSES = ['car', 'bus', 'truck', 'two_wheeler', 
+INDIAN_CLASSES = ['car', 'bus', 'truck', 'two_wheeler',
                   'autorickshaw', 'cycle', 'tractor', 'bus_pedigree']
 
 # Class indices for TensorRT engine (must match engine class order):
-# 0=car, 1=bus, 2=truck, 3=two_wheeler, 4=autorickshaw, 
+# 0=car, 1=bus, 2=truck, 3=two_wheeler, 4=autorickshaw,
 # 5=cycle, 6=tractor, 7=bus_pedigree (or school_bus)
 
 # Update the COLORS and metadata for 8 classes
@@ -42,7 +47,7 @@ INDIAN_CLASSES = ['car', 'bus', 'truck', 'two_wheeler',
 # Add to vehicle_lengths dict (in queue-estimation-patterns or signal-control-patterns)
 'vehicle_lengths': {
     'car': 4.5, 'bus': 12.0, 'truck': 10.0,
-    'two_wheeler': 1.8, 'autorickshaw': 2.8, 
+    'two_wheeler': 1.8, 'autorickshaw': 2.8,
     'cycle': 1.9, 'tractor': 3.5
 }
 ```
@@ -58,53 +63,53 @@ import cv2
 class YOLOv8ONNX:
     def __init__(self, model_path, conf_thres=0.25, iou_thres=0.45):
         self.session = ort.InferenceSession(
-            model_path, 
+            model_path,
             providers=['CPUExecutionProvider']
         )
         self.conf_thres = conf_thres
         self.iou_thres = iou_thres
         self.input_name = self.session.get_inputs()[0].name
-        
+
         # Indian class mapping - must match model training
-        self.class_names = ['car', 'bus', 'truck', 'two_wheeler', 
+        self.class_names = ['car', 'bus', 'truck', 'two_wheeler',
                            'autorickshaw', 'cycle', 'tractor', 'bus_pedigree']
         self.num_classes = 8
-    
+
     def postprocess(self, preds, scale, pad):
         preds = preds[0]  # (1, 84, 8400) → (84, 8400)
         preds = preds.T   # (8400, 84)
-        
+
         # Filter by confidence
         conf = preds[:, 4]
         mask = conf > self.conf_thres
         preds = preds[mask]
         conf = conf[mask]
-        
+
         # Class scores - Indian model has 8 classes (starting at index 5)
         cls_scores = preds[:, 5:13]  # 8 class scores (was 5 previously)
         cls_ids = cls_scores.argmax(1)
         cls_conf = cls_scores.max(1)
         conf = conf * cls_conf
-        
+
         # Map class ID to Indian class name
         # cls_ids are 0-7, map to self.class_names
         # No further filtering needed - all 8 classes are valid in Indian context
-        
+
         # Filter again by confidence after class assignment
         mask = conf > self.conf_thres
         preds = preds[mask]
         conf = conf[mask]
         cls_ids = cls_ids[mask]
-        
+
         # NMS - keep max_det=300 for Indian traffic (higher vehicle density)
         boxes = self.xywh2xyxy(preds[:, :4])
         boxes = self.scale_boxes(boxes, scale, pad)
-        
-        keep = cv2.dnn.NMSBoxes(boxes.tolist(), conf.tolist(), 
+
+        keep = cv2.dnn.NMSBoxes(boxes.tolist(), conf.tolist(),
                                  self.conf_thres, self.iou_thres)
-        
+
         return boxes[keep], conf[keep], cls_ids[keep]
-    
+
     def __call__(self, img):
         inp, scale, pad = self.preprocess(img)
         preds = self.session.run(None, {self.input_name: inp})
@@ -126,61 +131,61 @@ class YOLOv8TRT:
         self.context = self.engine.create_execution_context()
         self.input_idx = self.engine.get_binding_index('images')
         self.output_idx = self.engine.get_binding_index('output0')
-        
+
         # Indian class mapping
         self.indian_classes = indian_classes  # 8 for Indian adaptation
-    
+
     def infer(self, img):
         # Preprocess (same as ONNX)
         inp, scale, pad = self.preprocess(img)
-        
+
         # Allocate buffers
         d_input = cuda.mem_alloc(inp.nbytes)
         output_shape = self.engine.get_binding_shape(self.output_idx)
         d_output = cuda.mem_alloc(np.prod(output_shape) * 4)
-        
+
         cuda.memcpy_htod(d_input, inp)
         self.context.execute_v2([int(d_input), int(d_output)])
-        
+
         output = np.empty(output_shape, dtype=np.float32)
         cuda.memcpy_dtoh(output, d_output)
-        
+
         return self.postprocess_TRT(output, scale, pad)
-    
+
     def postprocess_TRT(self, preds, scale, pad):
         # Same postprocess as ONNX but with 8-class handling
         preds = preds[0]
         preds = preds.T
-        
+
         # Filter by confidence (index 4 is still confidence)
         conf = preds[:, 4]
         mask = conf > 0.25
         preds = preds[mask]
         conf = conf[mask]
-        
+
         # 8 class scores (indices 5-12, was 5 previously)
         cls_scores = preds[:, 5:13]
         cls_ids = cls_scores.argmax(1)
         cls_conf = cls_scores.max(1)
         conf = conf * cls_conf
-        
+
         # Filter again
         mask = conf > 0.25
         preds = preds[mask]
         conf = conf[mask]
         cls_ids = cls_ids[mask]
-        
+
         # Map to Indian class names if needed
-        # cls_ids 0-7 correspond to: car, bus, truck, two_wheeler, 
+        # cls_ids 0-7 correspond to: car, bus, truck, two_wheeler,
         #   autorickshaw, cycle, tractor, bus_pedigree
-        
+
         # NMS
         boxes = self.xywh2xyxy(preds[:, :4])
         boxes = self.scale_boxes(boxes, scale, pad)
-        
-        keep = cv2.dnn.NMSBoxes(boxes.tolist(), conf.tolist(), 
+
+        keep = cv2.dnn.NMSBoxes(boxes.tolist(), conf.tolist(),
                                  0.25, 0.45)
-        
+
         return boxes[keep], conf[keep], cls_ids[keep]
 ```
 
@@ -206,21 +211,21 @@ class YOLOv8TRT:
 ```python
 def benchmark(model_path, device='cpu', iterations=100):
     import time
-    session = ort.InferenceSession(model_path, 
+    session = ort.InferenceSession(model_path,
         providers=['CUDAExecutionProvider'] if device=='cuda' else ['CPUExecutionProvider'])
-    
+
     dummy = np.random.randn(1, 3, 640, 640).astype(np.float32)
-    
+
     # Warmup
     for _ in range(10):
         session.run(None, {'images': dummy})
-    
+
     times = []
     for _ in range(iterations):
         start = time.perf_counter()
         session.run(None, {'images': dummy})
         times.append(time.perf_counter() - start)
-    
+
     times = np.array(times) * 1000
     return {
         'mean_ms': times.mean(),

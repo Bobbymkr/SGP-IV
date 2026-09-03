@@ -27,42 +27,35 @@ dependencies = [
     # Core web framework
     "fastapi>=0.104.0",
     "uvicorn[standard]>=0.24.0",
-    
-    # UI / Dashboard
-    "streamlit>=1.28.0",
-    "altair>=5.0.0",
-    
-    # Computer Vision / ML
-    "opencv-python>=4.8.0",
-    "ultralytics>=8.2.0",
-    "torch>=2.1.0",
-    "torchvision>=0.16.0",
-    
+
+    # UI / Dashboard -> pip install -e ".[ui]"
+    # Computer Vision / ML -> pip install -e ".[cv]"
+
     # Data processing
     "numpy>=1.24.0",
     "pandas>=2.1.0",
     "pillow>=10.0.0",
     "scipy>=1.11.0",
     "scikit-learn>=1.3.0",
-    
+
     # Configuration
     "pydantic>=2.5.0",
     "pydantic-settings>=2.1.0",
     "pyyaml>=6.0.1",
-    
+
     # Database / Cache
     "redis>=5.0.0",
     "sqlalchemy>=2.0.0",
-    
+
     # Async / Networking
     "httpx>=0.25.0",
     "websockets>=12.0",
     "aiofiles>=23.2.0",
-    
+
     # Monitoring / Logging
     "prometheus-client>=0.19.0",
     "structlog>=23.2.0",
-    
+
     # CLI / Utilities
     "click>=8.1.0",
     "rich>=13.7.0",
@@ -94,10 +87,18 @@ prod = [
     "GPUtil>=1.4.0",
     "py-cpuinfo>=9.0.0",
 ]
-ml = [
-    "tensorflow>=2.15.0",
+cv = [
+    "opencv-python>=4.8.0",
+    "ultralytics>=8.2.0",
     "onnx>=1.15.0",
     "onnxruntime>=1.16.0",
+]
+ui = [
+    "streamlit>=1.28.0",
+    "altair>=5.0.0",
+]
+ml = [
+    "tensorflow>=2.15.0",
 ]
 docs = [
     "mkdocs>=1.5.0",

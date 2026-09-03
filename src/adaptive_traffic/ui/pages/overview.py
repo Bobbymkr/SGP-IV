@@ -3,7 +3,7 @@ System Overview Page
 """
 
 import streamlit as st
-from PIL import Image
+
 from adaptive_traffic.config.settings import get_settings
 
 
@@ -11,7 +11,9 @@ def show_overview():
     """Display system overview page"""
     settings = get_settings()
 
-    st.markdown("<h1 class='main-header'>Adaptive Traffic Signal Timer</h1>", unsafe_allow_html=True)
+    st.markdown(
+        "<h1 class='main-header'>Adaptive Traffic Signal Timer</h1>", unsafe_allow_html=True
+    )
 
     col1, col2 = st.columns([2, 1])
 
@@ -67,14 +69,16 @@ def show_overview():
         st.success("✅ Dashboard: Connected")
 
         st.markdown("### Configuration")
-        st.json({
-            "environment": settings.environment,
-            "controller": settings.controller_type,
-            "signals": settings.num_signals,
-            "simulation": settings.simulation_enabled,
-            "min_green": f"{settings.min_green_time}s",
-            "max_green": f"{settings.max_green_time}s"
-        })
+        st.json(
+            {
+                "environment": settings.environment,
+                "controller": settings.controller_type,
+                "signals": settings.num_signals,
+                "simulation": settings.simulation_enabled,
+                "min_green": f"{settings.min_green_time}s",
+                "max_green": f"{settings.max_green_time}s",
+            }
+        )
 
         st.markdown("### Quick Actions")
         if st.button("🔄 Reload Configuration"):

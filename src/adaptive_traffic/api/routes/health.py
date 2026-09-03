@@ -2,8 +2,10 @@
 Health check endpoints
 """
 
-from fastapi import APIRouter
 from datetime import datetime
+
+from fastapi import APIRouter
+
 from adaptive_traffic.config.settings import get_settings
 
 router = APIRouter()
@@ -15,7 +17,7 @@ async def health_check():
     return {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
-        "service": "adaptive-traffic-signal-api"
+        "service": "adaptive-traffic-signal-api",
     }
 
 
@@ -26,21 +28,14 @@ async def readiness_check():
     return {
         "status": "ready",
         "timestamp": datetime.utcnow().isoformat(),
-        "checks": {
-            "database": "ok",
-            "redis": "ok",
-            "models": "ok"
-        }
+        "checks": {"database": "ok", "redis": "ok", "models": "ok"},
     }
 
 
 @router.get("/health/live")
 async def liveness_check():
     """Liveness check for Kubernetes"""
-    return {
-        "status": "alive",
-        "timestamp": datetime.utcnow().isoformat()
-    }
+    return {"status": "alive", "timestamp": datetime.utcnow().isoformat()}
 
 
 @router.get("/version")
@@ -50,5 +45,5 @@ async def version():
     return {
         "version": settings.app_version,
         "name": settings.app_name,
-        "environment": settings.environment
+        "environment": settings.environment,
     }

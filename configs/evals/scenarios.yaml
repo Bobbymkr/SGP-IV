@@ -1,0 +1,95 @@
+# Eval scenario matrix — Adaptive vs Fixed-time baseline
+# Each scenario runs twice (adaptive_scheduling true/false); runner compares.
+#
+# Fields:
+#   geometry: approaches + compatibility_groups passed to create_intersection
+#   behavior_preset: disciplined | typical_urban | aggressive_metro
+#   weather_state: clear | light_rain | heavy_monsoon | waterlogged
+#   steps: sim steps (x0.1s each)
+#   incident: optional perturbation applied by runner (sensor_failure | lane_block)
+scenarios:
+  # --- geometry coverage ---
+  - name: x4way_clear_disciplined
+    geometry:
+      approaches: [north, south, east, west]
+    behavior_preset: disciplined
+    weather_state: clear
+    steps: 3000
+
+  - name: x4way_clear_aggressive
+    geometry:
+      approaches: [north, south, east, west]
+    behavior_preset: aggressive_metro
+    weather_state: clear
+    steps: 3000
+
+  - name: x3way_typical_clear
+    geometry:
+      approaches: [north, east, west]
+      compatibility_groups: [[north], [east, west]]
+    behavior_preset: typical_urban
+    weather_state: clear
+    steps: 3000
+
+  - name: x5way_typical_clear
+    geometry:
+      approaches: [north, south, east, west, south_west]
+      compatibility_groups: [[north], [east, west], [south], [south_west]]
+    behavior_preset: typical_urban
+    weather_state: clear
+    steps: 3000
+
+  # --- weather coverage ---
+  - name: x4way_typical_light_rain
+    geometry:
+      approaches: [north, south, east, west]
+    behavior_preset: typical_urban
+    weather_state: light_rain
+    steps: 3000
+
+  - name: x4way_typical_heavy_monsoon
+    geometry:
+      approaches: [north, south, east, west]
+    behavior_preset: typical_urban
+    weather_state: heavy_monsoon
+    steps: 3000
+
+  - name: x4way_typical_waterlogged
+    geometry:
+      approaches: [north, south, east, west]
+    behavior_preset: typical_urban
+    weather_state: waterlogged
+    steps: 3000
+
+  # --- worst-case combos ---
+  - name: x4way_aggressive_waterlogged
+    geometry:
+      approaches: [north, south, east, west]
+    behavior_preset: aggressive_metro
+    weather_state: waterlogged
+    steps: 3000
+
+  - name: x5way_aggressive_monsoon
+    geometry:
+      approaches: [north, south, east, west, south_west]
+      compatibility_groups: [[north], [east, west], [south], [south_west]]
+    behavior_preset: aggressive_metro
+    weather_state: heavy_monsoon
+    steps: 3000
+
+  # --- incidents ---
+  - name: x4way_sensor_failure
+    geometry:
+      approaches: [north, south, east, west]
+    behavior_preset: typical_urban
+    weather_state: waterlogged
+    incident: sensor_failure
+    steps: 3000
+
+  - name: x4way_lane_block
+    geometry:
+      approaches: [north, south, east, west]
+    behavior_preset: typical_urban
+    weather_state: clear
+    incident: lane_block
+    steps: 3000

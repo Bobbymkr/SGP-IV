@@ -1,0 +1,32 @@
+# Device capability profile — written by scripts/profile_device.py or edited by hand.
+# Selects detection backend/model per hardware tier (MASTER_PLAN D5).
+#
+# tiers:
+#   low  : any x86/ARM box, CPU-only, int8 quantized nano model, ~5 fps
+#   mid  : GPU/NPU present, fp32 small model
+#   high : NVIDIA Jetson-class, TensorRT engine built on-device at first boot
+
+active_tier: low          # low | mid | high | auto
+
+detection:
+  low:
+    backend: onnx
+    registry_dir: models/registry/india-yolov8n
+    prefer_int8: true
+    confidence_threshold: 0.45   # lowered to offset rain degradation
+    target_fps: 5                # interpolation fills gaps (D6)
+  mid:
+    backend: onnx
+    registry_dir: models/registry/india-yolov8s
+    prefer_int8: false
+    confidence_threshold: 0.5
+  high:
+    backend: tensorrt            # adapter pending Phase 5; falls back to onnx
+    registry_dir: models/registry/india-yolov8s
+    prefer_int8: false
+    precision: fp16
+    trt_cache_dir: models/trt_cache
+
+simulation:
+  default_behavior_preset: typical_urban
+  default_weather_state: clear

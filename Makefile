@@ -4,8 +4,9 @@
 .PHONY: help install install-dev install-prod install-ml install-docs install-notebooks
 .PHONY: format lint type-check test test-unit test-integration test-performance test-security
 .PHONY: pre-commit run-dev run-prod run-demo build docker-build docker-up docker-down
-.PHONY: clean clean-pyc clean-dist clean-cache
+.PHONY: clean clean-pyc clean-dist clean-cache set-city
 .PHONY: docs-serve docs-build
+.PHONY: check-deps security-audit scan-skills bench-detection train-india-yolo
 .PHONY: check-deps security-audit
 
 # Default target
@@ -28,6 +29,7 @@ help:
 	@echo "  pre-commit     Run all pre-commit hooks"
 	@echo "  check-deps     Check for vulnerable/outdated dependencies"
 	@echo "  security-audit Run bandit security audit"
+	@echo "  scan-skills    Scan installed agent skills with NVIDIA SkillSpector"
 	@echo ""
 	@echo "Testing:"
 	@echo "  test           Run all tests"
@@ -42,6 +44,15 @@ help:
 	@echo "  run-prod       Run production server with gunicorn"
 	@echo "  run-demo       Run Streamlit demo dashboard"
 	@echo "  run-tests      Run test suite via script"
+	@echo ""
+	@echo "City Profile:"
+	@echo "  set-city       Set city profile (mumbai, delhi, bangalore, tier2_default)"
+	@echo "  list-cities    List available city profiles"
+	@echo ""
+	@echo "ML/Benchmarks:"
+	@echo "  train-india-yolo  Train India YOLO model (docs only - run in Colab)"
+	@echo "  bench-detection   Run detection benchmark"
+	@echo "  bench-sim         Run simulation benchmark"
 	@echo ""
 	@echo "Docker:"
 	@echo "  docker-build   Build Docker images"
@@ -102,9 +113,50 @@ check-deps:
 security-audit:
 	bandit -r src/ -ll --skip B101,B601
 
+# Agent-skills supply-chain scan (NVIDIA SkillSpector, installed outside the
+# project venv: uv tool install git+https://github.com/NVIDIA/SkillSpector.git).
+# scripts/scan_skills.ps1 enumerates every SKILL.md dir (any depth), batches
+# scans around SkillSpector's fail-closed ceilings, gates on non-suppressed
+# CRITICAL/HIGH findings and honors .skillspector-baseline.json (accepted
+# findings; refresh with -GenerateBaseline after reviewing new findings).
+scan-skills:
+	powershell -NoProfile -ExecutionPolicy Bypass -File scripts/scan_skills.ps1 -Paths .agents/skills,.claude/skills
+
 # Testing
 test:
 	pytest
+
+loop-fast:
+	pytest tests/unit tests/integration -q -x --no-header -p no:cacheprovider
+
+verify:
+	pytest -q
+	flake8 src/adaptive_traffic --count
+
+eval:
+	python evals/runner.py
+
+bench-sim:
+	python scripts/bench_sim.py
+
+bench-detect:
+	python scripts/bench_detect.py
+
+profile-device:
+	python scripts/profile_device.py --write
+
+graph-update:
+	graphify update .
+	powershell -NoProfile -ExecutionPolicy Bypass -File scripts/auto-graph.ps1 -Phase graph-update
+
+orca-pipeline:
+	powershell -NoProfile -ExecutionPolicy Bypass -File scripts/resume.ps1
+
+orca-status:
+	powershell -NoProfile -ExecutionPolicy Bypass -File scripts/resume.ps1 -StatusOnly
+
+vault-sync:
+	powershell -NoProfile -ExecutionPolicy Bypass -File scripts/auto-graph.ps1 -Phase vault-sync
 
 test-unit:
 	pytest -m unit -v
@@ -132,7 +184,7 @@ run-demo:
 	streamlit run src/adaptive_traffic/ui/app.py --server.port 8501
 
 run-tests:
-	python tests/run_tests.py
+	@echo "DEPRECATED: use 'make verify' or 'make loop-fast'"
 
 # Docker
 docker-build:
@@ -180,3 +232,24 @@ ci: format lint type-check test-cov security-audit
 # Quick development cycle
 dev: format test-unit
 	@echo "Development cycle complete"
+
+# City Profile Commands
+set-city:
+	@echo "Setting city profile to $(CITY)..."
+	@powershell -Command "(Get-Content .env) -replace '^CITY_PROFILE=.*', 'CITY_PROFILE=$(CITY)' | Set-Content .env"
+	@echo "City profile set to $(CITY). Run 'make run-dev' to use it."
+
+list-cities:
+	@echo "Available city profiles:"
+	@python -c "from adaptive_traffic.config.city_profiles import list_city_profiles; print('\n'.join(f'  {c}' for c in list_city_profiles()))"
+
+# ML/Benchmark Commands
+train-india-yolo:
+	@echo "Training India YOLO model - run in Colab:"
+	@echo "  1. Open notebooks/train_india_yolo.ipynb in Google Colab"
+	@echo "  2. Mount Google Drive with ITD + IISc datasets"
+	@echo "  3. Run all cells"
+	@echo "  4. Download model.onnx, model-int8.onnx, metadata.json to models/registry/india-yolov8n/"
+
+bench-detection:
+	python scripts/bench_detect.py

@@ -1,3 +1,8 @@
+---
+name: robustness-eval-patterns
+description: "Project-specific patterns for T-REX style robustness testing and evaluation."
+---
+
 # Robustness Evaluation Patterns
 
 Project-specific patterns for T-REX style robustness testing and evaluation.
@@ -53,7 +58,7 @@ import time
 
 class RobustnessTestConfig:
     """Configuration for robustness testing - India adapted"""
-    def __init__(self, 
+    def __init__(self,
                  incidents: List[str] = None,
                  num_runs: int = 30,
                  duration_seconds: int = 3600,  # 1 hour sim
@@ -69,89 +74,89 @@ class RobustnessTestConfig:
         self.speed = sim_speed
         self.output_dir = output_dir
         self.monsoon_months = monsoon_months
-    
+
     def is_monsoon_season(self, current_month: int) -> bool:
         """Check if current simulation month is monsoon season"""
         return current_month in self.monsoon_months
 
 class IncidentInjector:
     """Inject incidents into simulation at specified times - India adapted"""
-    
-    def __init__(self, sim, incident_configs: Dict[str, Dict], 
+
+    def __init__(self, sim, incident_configs: Dict[str, Dict],
                  monsoon_months=(6, 7, 8, 9)):
         self.incidents = incident_configs
         self.monsoon_months = monsoon_months
         self.active = False
         self.current_month = 6  # would be set from sim calendar
-    
+
     def set_current_month(self, month: int):
         self.current_month = month
-    
+
     def inject(self, sim, current_time: float):
         """Check and inject incidents at current simulation time"""
         if not self.active:
             return
-        
+
         # Check monsoon season for flooding incident
         is_monsoon = self.is_monsoon_season(self.current_month)
-        
+
         for incident_type, config in self.incidents.items():
             if current_time >= config["time"] and not getattr(self, f"_{incident_type}_active", False):
                 # Skip monsoon flooding outside monsoon season (unless forced)
                 if incident_type == "monsoon_flooding" and not is_monsoon:
                     # Option: still inject but with lower probability
                     pass  # or continue to skip
-                
+
                 self._apply_incident(sim, incident_type, config)
                 setattr(self, f"_{incident_type}_active", True)
-    
+
     def is_monsoon_season(self, month: int) -> bool:
         return month in self.monsoon_months
-    
+
     def _apply_incident(self, sim, incident_type: str, config: Dict):
         """Apply specific incident to simulation - India adapted"""
         if incident_type == "accident":
             sim.block_lanes("east", n_lanes=2, duration=config["duration"])
             print(f"[INCIDENT] Accident blocks east lanes for {config['duration']}s")
-        
+
         elif incident_type == "lane_block":
             sim.block_lane("south", lane_idx=0, duration=config["duration"])
             print(f"[INCIDENT] Lane block on south lane for {config['duration']}s")
-        
+
         elif incident_type == "sensor_failure":
             sim.reduce_detection_confidence(severity=config.get("severity", 0.5))
             print(f"[INCIDENT] Sensor failure, confidence reduced by {config.get('severity', 0.5)*100:.0f}%")
-        
+
         elif incident_type == "emergency":
             sim.trigger_emergency_priority(duration=config.get("duration", 60))
             print(f"[INCIDENT] Emergency priority request")
-        
+
         elif incident_type == "rerouting":
             sim.simulate_rerouting(adaptation_factor=0.3)
             print(f"[INCIDENT] Rerouting activated")
-        
+
         elif incident_type == "autorickshaw_block":
             # Autorickshaw is India's most common breakdown vehicle
             sim.block_lane("south", lane_idx=1, duration=config["duration"])
             # Autorickshaws often block inner lane; print notification
             print(f"[INCIDENT] Autorickshaw blocks inner lane for {config['duration']}s")
-        
+
         elif incident_type == "cattle_on_road":
             # Cattle on road - common on Indian highways (NH 44, NH 19 etc.)
             sim.block_all_lanes("east", duration=config["duration"])
             print(f"[INCIDENT] Cattle on road blocks all east lanes for {config['duration']}s")
-        
+
         elif incident_type == "religious_crowd":
             # Temple/mosque/church vicinity - high pedestrian density
             sim.reduce_speed_limit(30)  # Reduce to 30 km/h
             sim.increase_pedestrian_count(n_additional=50)
             print(f"[INCIDENT] Religious crowd - reduced speed, added pedestrians")
-        
+
         elif incident_type == "political_rally":
             # Protest/demonstration - multi-intersection impact
             sim.block_intersection_approach("north", n_lanes=3, duration=config["duration"])
             print(f"[INCIDENT] Political rally blocks north approach for {config['duration']}s")
-        
+
         elif incident_type == "monsoon_flooding":
             # Only during monsoon season (Jun-Sep)
             if self.is_monsoon_season(self.current_month):
@@ -162,7 +167,7 @@ class IncidentInjector:
                 # Outside monsoon - still inject but as generic lane block
                 sim.block_lanes("west", n_lanes=1, duration=config["duration"])
                 print(f"[INCIDENT] Lane block (forced) on west for {config['duration']}s")
-    
+
     def reset_incident(self, incident_type: str):
         """Reset incident state for re-testing"""
         if hasattr(self, f"_{incident_type}_active"):
@@ -170,8 +175,8 @@ class IncidentInjector:
 
 class RobustnessEvaluator:
     """Run full robustness suite and generate India-adapted reports"""
-    
-    def __init__(self, 
+
+    def __init__(self,
                  sim_config,
                  controller,
                  evaluator_config: RobustnessTestConfig):
@@ -179,7 +184,7 @@ class RobustnessEvaluator:
         self.controller = controller
         self.test_config = evaluator_config
         self.results = []
-    
+
     def run_suite(self) -> Dict[str, Any]:
         """Run full robustness evaluation suite - India adapted"""
         print(f"Starting robustness evaluation: {self.test_config.num_runs} runs")
@@ -187,41 +192,41 @@ class RobustnessEvaluator:
         print(f"Duration per run: {self.test_config.duration // 3600}h "
               f"(@ {self.test_config.speed}x speed)")
         print("-" * 60)
-        
+
         successful_runs = 0
         all_metrics = []
-        
+
         for run_idx in range(self.test_config.num_runs):
             run_start = time.time()
-            
+
             # Create fresh simulation + controller
             sim = self._create_simulation(run_idx)
             ctrl = self._create_controller(sim, run_idx)
-            
+
             # Set monsoon month for this run (cycle through months)
             monsoon_month = (run_idx % 12) + 1  # cycle 1-12
             self._injector.set_current_month(monsoon_month)
-            
+
             # Run simulation
             metrics = self._run_simulation(sim, ctrl, run_idx)
-            
+
             # Post-process
             metrics["run_index"] = run_idx
             metrics["duration_sec"] = time.time() - run_start
             metrics["sim_speed"] = self.test_config.speed
             metrics["monsoon_month"] = monsoon_month
-            
+
             self.results.append(metrics)
             successful_runs += 1
-            
+
             # Progress
             if (run_idx + 1) % 10 == 0:
                 print(f"  Completed {run_idx + 1}/{self.test_config.num_runs} runs")
-        
+
         # Generate aggregate report - India adapted
         report = self._generate_report()
         return report
-    
+
     def _run_simulation(self, sim, ctrl, run_idx: int) -> Dict:
         """Run single simulation with incident handling - India adapted"""
         metrics = {
@@ -234,12 +239,12 @@ class RobustnessEvaluator:
             "monsoon_month": self.test_config.is_monsoon_season(
                 (run_idx % 12) + 1) if hasattr(self, '_injector') else False,
         }
-        
+
         cycle_count = 0
         max_cycles = int(self.test_config.duration * self.test_config.speed)
-        
+
         # Incident tracking - India augmented
-        injector = IncidentInjector(sim, 
+        injector = IncidentInjector(sim,
             {"accident": {"time": 600, "duration": 300},
              "lane_block": {"time": 300, "duration": 180},
              "sensor_failure": {"time": 1200, "duration": 180},
@@ -249,59 +254,59 @@ class RobustnessEvaluator:
              "political_rally": {"time": 900, "duration": 360},
              "monsoon_flooding": {"time": 600, "duration": 480}})
         injector.set_current_month((run_idx % 12) + 1)
-        
+
         while sim.running and cycle_count < max_cycles:
             current_time = sim.time / self.test_config.speed
-            
+
             # Inject incidents (India adapted)
             injector.inject(sim, current_time)
-            
+
             # Get state from simulation
             state = sim.get_state()  # {queues, occupancies, phase, etc.}
-            
+
             # Controller action
             action = ctrl.act(state)
-            
+
             # Step simulation
             sim.step(action)
-            
+
             # Accumulate metrics
             metrics["total_wait"] += state.get("total_wait", 0)
             metrics["max_queue"] = max(metrics["max_queue"], state.get("max_queue", 0))
             metrics["throughput"] += state.get("throughput", 0)
-            
+
             # Track incidents (India augmented)
             for itype in injector.incidents:
                 if injector.incidents.get(itype, {}).get("active", False):
                     metrics["incidents"].append(itype)
-            
+
             cycle_count += 1
-        
+
         # Calculate final metrics
         if cycle_count > 0:
             metrics["avg_wait"] = metrics["total_wait"] / cycle_count
             metrics["throughput"] = metrics["throughput"] / cycle_count
-        
+
         # Recovery time (time after last incident to return to baseline)
         metrics["recovery_time"] = injector.get_total_recovery_time()
-        
+
         return metrics
-    
+
     def _generate_report(self) -> Dict[str, Any]:
         """Generate aggregate robustness report - India adapted"""
         if not self.results:
             return {"error": "No results to analyze"}
-        
+
         # Per-incident performance - India augmented
         incident_metrics = {}
-        india_types = ["accident", "lane_block", "sensor_failure", 
-                      "autorickshaw_block", "cattle_on_road", 
+        india_types = ["accident", "lane_block", "sensor_failure",
+                      "autorickshaw_block", "cattle_on_road",
                       "religious_crowd", "political_rally", "monsoon_flooding"]
-        
+
         for incident_type in india_types:
             # Filter runs where this incident occurred
             relevant = [r for r in self.results if incident_type in r.get("incidents", [])]
-            
+
             if relevant:
                 incident_metrics[incident_type] = {
                     "num_occurrences": len(relevant),
@@ -311,7 +316,7 @@ class RobustnessEvaluator:
                     "recovery_time": np.mean([r["recovery_time"] for r in relevant]),
                     "success_rate": len([r for r in relevant if r["max_queue"] < 150]) / len(relevant),
                 }
-        
+
         # Overall metrics
         overall = {
             "total_runs": len(self.results),
@@ -320,7 +325,7 @@ class RobustnessEvaluator:
             "overall_max_queue": np.max([r["max_queue"] for r in self.results]),
             "overall_throughput": np.mean([r["throughput"] for r in self.results]),
         }
-        
+
         # Incident impact (delta vs baseline) - India adapted
         baseline = self._get_baseline_metrics()
         incident_impact = {}
@@ -328,15 +333,15 @@ class RobustnessEvaluator:
             if "baseline" in baseline and baseline["baseline"]["avg_wait"] > 0:
                 incident_impact[incident_type] = {
                     "wait_increase_pct": (
-                        (metrics["avg_wait"] - baseline["baseline"]["avg_wait"]) / 
+                        (metrics["avg_wait"] - baseline["baseline"]["avg_wait"]) /
                         baseline["baseline"]["avg_wait"] * 100
                     ),
                     "throughput_decrease_pct": (
-                        (baseline["baseline"]["throughput"] - metrics["avg_throughput"]) / 
+                        (baseline["baseline"]["throughput"] - metrics["avg_throughput"]) /
                         baseline["baseline"]["throughput"] * 100
                     )
                 }
-        
+
         # Monsoon season analysis - India specific
         monsoon_analysis = {}
         monsoon_runs = [r for r in self.results if r.get("monsoon_month", False)]
@@ -349,11 +354,11 @@ class RobustnessEvaluator:
                     "monsoon_avg_wait": monsoon_avg_wait,
                     "non_monsoon_avg_wait": non_monsoon_avg_wait,
                     "wait_increase_pct_monsoon": (
-                        (monsoon_avg_wait - non_monsoon_avg_wait) / 
+                        (monsoon_avg_wait - non_monsoon_avg_wait) /
                         non_monsoon_avg_wait * 100
                     ) if non_monsoon_avg_wait > 0 else 0
                 }
-        
+
         return {
             "overall": overall,
             "incident_metrics": incident_metrics,
@@ -368,7 +373,7 @@ class RobustnessEvaluator:
                 "monsoon_months": self.test_config.monsoon_months
             }
         }
-    
+
     def _get_baseline_metrics(self) -> Dict:
         """Get baseline (no-incident) metrics - unchanged"""
         no_incident = [r for r in self.results if not r.get("incidents")]
@@ -388,21 +393,21 @@ class RobustnessEvaluator:
 ```python
 def compute_metrics(state: Dict, prev_state: Optional[Dict] = None) -> Dict:
     """Compute standard traffic control metrics from simulation state - India notes"""
-    
+
     # Queue metrics - unchanged
     queues = state.get("queues", {})  # per-lane queue lengths (meters)
     total_queue = sum(queues.values()) if queues else 0
     avg_queue = total_queue / len(queues) if queues else 0
     max_queue = max(queues.values()) if queues else 0
-    
+
     # Wait time metrics - unchanged
     total_wait = state.get("total_wait", 0)  # sum of all vehicle waits
     avg_wait_per_veh = total_wait / state.get("total_vehicles", 1)  # avoid div by 0
-    
+
     # Throughput - unchanged
     throughput = state.get("throughput", 0)  # vehicles passed per second
     vehicles_total = state.get("vehicles_total", 0)  # total vehicles in system
-    
+
     # Phase stability - unchanged
     phase = state.get("current_phase", 0)
     if prev_state:
@@ -410,24 +415,24 @@ def compute_metrics(state: Dict, prev_state: Optional[Dict] = None) -> Dict:
         phase_stability = 1.0 / (1.0 + phase_change)  # 1 = stable, 0 = chaotic
     else:
         phase_stability = 1.0
-    
+
     # Quality score - add India consideration for two-wheeler density
     # Lower wait + higher throughput + more stable = better
     queue_penalty = avg_queue / 100.0  # normalize by 100m scale
     throughput_bonus = min(throughput / 10.0, 1.0)  # normalize
     stability_bonus = phase_stability
-    
+
     # Indian: two-wheelers have higher impact on queue metrics
     # (more vehicles per meter, faster acceleration/deceleration)
     quality_score = max(0, 1.0 - 0.4*queue_penalty + 0.3*throughput_bonus + 0.3*stability_bonus)
     quality_score = min(1.0, quality_score)  # clamp 0-1
-    
+
     # Add India-specific flag for monsoon/flood impact
     india_context = {
         "high_two_wheeler_density": avg_queue > 50,  # heuristic threshold
         "queue_penalty_applied": queue_penalty
     }
-    
+
     return {
         "total_queue_m": total_queue,
         "avg_queue_m": avg_queue,
