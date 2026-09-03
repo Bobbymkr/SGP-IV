@@ -1,16 +1,16 @@
-# Graph Report - Adaptive-Traffic-Signal-Timer  (2026-09-02)
+# Graph Report - Adaptive-Traffic-Signal-Timer  (2026-09-03)
 
 ## Corpus Check
-- 77 files · ~43,187 words
+- 77 files · ~43,494 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1073 nodes · 1439 edges · 109 communities (76 shown, 33 thin omitted)
+- 1073 nodes · 1436 edges · 109 communities (76 shown, 33 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 38 edges (avg confidence: 0.93)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2bb10b9c`
+- Built from commit: `2cd1fffe`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -52,13 +52,13 @@
 - .test_08_vehicle_types_definition
 - .test_09_bounding_box_generation
 - .test_10_confidence_score_range
-- .test_11_detection_dictionary_structure
+- .setUpClass
 - .test_12_rectangle_drawing_parameters
 - .test_13_text_rendering_parameters
 - .test_14_output_file_path_construction
 - .test_15_image_writing_error_handling
 - prepare_dataset.py
-- .test_16_vehicle_counting_logic
+- .tearDownClass
 - .test_17_output_formatting
 - .test_19_directory_existence_check
 - .test_20_output_directory_creation
@@ -66,7 +66,7 @@
 - .test_22_no_images_handling
 - .test_23_completion_message
 - Dataset Specification — India-YOLO Training Data
-- .test_01_import_module
+- .test_03_global_variables_initialization
 - .test_02_detectVehicles_function_exists
 - DigitalTwin
 - .test_04_image_loading_error_handling
@@ -115,7 +115,7 @@
 ## God Nodes (most connected - your core abstractions)
 1. `TrafficSimulation` - 33 edges
 2. `TestVehicleDetectionModern` - 28 edges
-3. `get_settings()` - 23 edges
+3. `get_settings()` - 22 edges
 4. `VehicleDetection` - 21 edges
 5. `SyntheticDatasetGenerator` - 17 edges
 6. `ProductionRunner` - 17 edges
@@ -175,7 +175,7 @@ Nodes (27): skip, Test that data flows without corruption, Test Streamlit dashbo
 
 ### Community 8 - "TrafficSimulation"
 Cohesion: 0.13
-Nodes (10): Add intersection to simulation, Advance simulation by one time step, Generate new vehicles based on rates, Update all vehicle positions and states, Remove vehicles that have passed through the intersection, Update simulation statistics including queue observability., Get current state of an intersection, Get overall network statistics (+2 more)
+Nodes (10): Microscopic traffic simulation, Add intersection to simulation, Advance simulation by one time step, Generate new vehicles based on rates, Update all vehicle positions and states, Remove vehicles that have passed through the intersection, Update simulation statistics including queue observability., Get current state of an intersection (+2 more)
 
 ### Community 9 - "TestBoundaryConditions"
 Cohesion: 0.05
@@ -183,11 +183,11 @@ Nodes (25): Test: Extreme signal timing values, Test: Vehicle detection with bou
 
 ### Community 10 - "TestVehicleDetectionPerformance"
 Cohesion: 0.06
-Nodes (22): skip, Test: Concurrent processing performance, Test: Performance with large images (4K), Performance tests for traffic simulation, Test: Simulation maintains 30+ FPS, Test: Performance with many vehicles, Performance tests for vehicle detection module, Test: Memory usage scales linearly with vehicle count (+14 more)
+Nodes (22): skip, Test: Concurrent processing performance, Test: Performance with large images (4K), Performance tests for traffic simulation, Test: Simulation maintains 30+ FPS, Performance tests for vehicle detection module, Test: Performance with many vehicles, Set up test environment (+14 more)
 
 ### Community 11 - "ProductionRunner"
 Cohesion: 0.08
-Nodes (16): main(), ProductionRunner, Continuous health check loop, Check health of a specific endpoint, Collect and report application metrics, Collect application and system metrics, Send metrics to external monitoring system, Production application runner with health checks and graceful shutdown (+8 more)
+Nodes (16): main(), ProductionRunner, Continuous health check loop, Check health of a specific endpoint, Collect and report application metrics, Collect application and system metrics, Production application runner with health checks and graceful shutdown, Send metrics to external monitoring system (+8 more)
 
 ### Community 12 - "detection.py"
 Cohesion: 0.11
@@ -215,7 +215,7 @@ Nodes (15): build_images(), check_prerequisites(), check_service_health(), clean
 
 ### Community 18 - "TestSimulationConstants"
 Cohesion: 0.12
-Nodes (9): Test: Line 63-64 - Coordinate system initialization, Test: Line 66 - Vehicle data structure, Test simulation constants and global variables, Test: Line 27-31 - Default signal timing constants, Test: Line 33-40 - Signal configuration variables, Test: Line 43-47 - Vehicle timing constants, Test: Line 49-55 - Vehicle count variables, Test: Line 60 - Vehicle speed dictionary (+1 more)
+Nodes (9): Test: Line 60 - Vehicle speed dictionary, Test: Line 63-64 - Coordinate system initialization, Test: Line 66 - Vehicle data structure, Test simulation constants and global variables, Test: Line 27-31 - Default signal timing constants, Test: Line 33-40 - Signal configuration variables, Test: Line 43-47 - Vehicle timing constants, Test: Line 49-55 - Vehicle count variables (+1 more)
 
 ### Community 19 - "TestVehicleDetectionEdgeCases"
 Cohesion: 0.25
@@ -227,7 +227,7 @@ Nodes (6): Test data encryption and protection, Test: Sensitive data handling, S
 
 ### Community 21 - "TestVehicleDetectionModern"
 Cohesion: 0.15
-Nodes (7): Test: Line 24-26 - Mock detection setup, Comprehensive unit tests for vehicle_detection_modern.py, Set up test environment, Test: Line 102 - File filtering logic, Clean up test environment, Test: Line 14-15 - Global path variables, TestVehicleDetectionModern
+Nodes (7): Test: Line 24-26 - Mock detection setup, Test: Line 42-47 - Detection dictionary structure, Comprehensive unit tests for vehicle_detection_modern.py, Test: Line 68-71 - Vehicle counting logic, Test: Line 102 - File filtering logic, Test: Line 1-5 - Module imports and structure, TestVehicleDetectionModern
 
 ### Community 42 - "prepare_dataset.py"
 Cohesion: 0.44
@@ -387,7 +387,7 @@ Nodes (4): FixedTimeController, Build or load DQN model, Fixed-time signal contr
 
 ### Community 103 - "get"
 Cohesion: 0.22
-Nodes (9): get_environmental_impact(), get_metrics(), get_performance(), get_recommendations(), get, Get traffic metrics for time window, Get performance analytics, Get environmental impact metrics (+1 more)
+Nodes (9): get_environmental_impact(), get_metrics(), get_performance(), get_recommendations(), get, Get performance analytics, Get environmental impact metrics, Get signal timing recommendations (+1 more)
 
 ### Community 107 - "domain.py"
 Cohesion: 0.23
@@ -403,8 +403,8 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `run_simulation()` connect `get_settings` to `TestDetectionSimulationPipeline`?**
   _High betweenness centrality (0.049) - this node is a cross-community bridge._
-- **Why does `TrafficSimulation` connect `TrafficSimulation` to `SyntheticDatasetGenerator`, `Intersection`, `conftest.py`, `engine.py`, `WeatherModel`, `domain.py`, `create_intersection`?**
-  _High betweenness centrality (0.031) - this node is a cross-community bridge._
+- **Why does `VehicleDetection` connect `VehicleDetection` to `domain.py`, `SyntheticDatasetGenerator`, `conftest.py`?**
+  _High betweenness centrality (0.032) - this node is a cross-community bridge._
 - **Are the 8 inferred relationships involving `TrafficSimulation` (e.g. with `SyntheticDatasetGenerator` and `TrafficRenderer`) actually correct?**
   _`TrafficSimulation` has 8 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 7 inferred relationships involving `VehicleDetection` (e.g. with `SyntheticDatasetGenerator` and `TrafficRenderer`) actually correct?**
