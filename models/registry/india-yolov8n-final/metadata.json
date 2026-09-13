@@ -1,0 +1,48 @@
+{
+  "name": "india-yolov8n-final",
+  "classes": [
+    "car",
+    "motorcycle",
+    "bus",
+    "truck",
+    "bicycle",
+    "auto"
+  ],
+  "imgsz": 640,
+  "normalization": {
+    "mean": [
+      0,
+      0,
+      0
+    ],
+    "std": [
+      255,
+      255,
+      255
+    ],
+    "layout": "NCHW",
+    "color": "RGB"
+  },
+  "quantization": "int8",
+  "source_run": "2026-09-13",
+  "metrics": {
+    "mAP50_overall": 0.8477,
+    "per_class_mAP50": {
+      "car": 0.9189,
+      "motorcycle": 0.8887,
+      "bus": 0.846,
+      "truck": 0.8294,
+      "bicycle": 0.6859,
+      "auto": 0.9171
+    }
+  },
+  "provenance": {
+    "hf_repo": "iisc-aim/BMD-45",
+    "run": "finale-joint-polish",
+    "init_weights": "loop-8 best.pt",
+    "epochs": 5,
+    "lr0": 0.002,
+    "mapping": "optionB-merge-6class",
+    "val": "official-full-10k"
+  }
+}
