@@ -211,6 +211,12 @@ class TrafficSimulation:
         self._queue_error_sum = 0.0
         self._queue_error_n = 0
 
+        # Step 2 event-trigger cache: last demands + preempt cadence per intersection
+        self._demand_cache: dict[str, list[int]] = {}
+        self._preempt_tick: dict[str, int] = {}
+        # Starvation bound: greens since each group was last served
+        self._wait_count: dict[str, list[int]] = {}
+
         # Statistics
         self.stats = {
             "total_generated": 0,
@@ -244,6 +250,87 @@ class TrafficSimulation:
         self._remove_completed_vehicles()
         self._update_statistics()
 
+    def _green_bounds(self) -> tuple[float, float]:
+        """Min/max green seconds: city profile wins, else Indian defaults (7/50)."""
+        bounds = self.city_profile.signal_bounds if self.city_profile else None
+        if bounds is not None:
+            return (float(bounds.min_green), float(bounds.max_green))
+        return (7.0, 50.0)
+
+    def _group_green_times(
+        self, intersection: Intersection, demands: list[int]
+    ) -> dict[int, float]:
+        """Demand-following green durations per compatibility group.
+
+        green = queued_vehicles * headway + startup lost time, clamped to
+        green bounds. Unlike a fixed-budget proportional split (which holds
+        cycles long under light demand and inflates waits), the cycle breathes:
+        light demand -> short greens -> short reds for everyone. This is the
+        discharge half of Webster's insight; headway 2.0s/veh is the Indian
+        saturation value used across this codebase.
+        """
+        lo, hi = self._green_bounds()
+        base = self.config.get("green_time", 30)
+        headway = self.config.get("discharge_headway_s", 2.0)
+        startup = self.config.get("startup_lost_s", 2.0)
+        # Efficiency floor: chopping greens below ~3x yellow wastes the cycle
+        # on lost time (measured: x4way_disciplined 6.5 -> 9.3 without it).
+        floor = self.config.get("efficient_floor_s", 15.0)
+        out = {}
+        for i, d in enumerate(demands):
+            if d <= 0:
+                out[i] = float(base)
+            else:
+                out[i] = max(floor, max(lo, min(hi, d * headway + startup)))
+        return out
+
+    def _refresh_green_plan(self, intersection: Intersection) -> list[int]:
+        """Recompute demands + durations, cache the plan. Returns demands."""
+        demands = [
+            self._group_demand(intersection, g)
+            for g in intersection.compatibility_groups
+        ]
+        if self.adaptive_scheduling:
+            for idx, green in self._group_green_times(intersection, demands).items():
+                intersection.signal_timing[f"{idx}_green"] = green
+        self._demand_cache[intersection.id] = demands
+        return demands
+
+    def _maybe_preempt(self, intersection: Intersection) -> None:
+        """Mid-phase early-cut check (event-driven, cached plan).
+
+        Only fires on green phases past min-green: if another group's demand
+        exceeds the current group's by >25%, cut to yellow now instead of
+        serving a stale full green. Cheap int compare, ~1s sim cadence.
+        """
+        if not self.adaptive_scheduling:
+            return
+        phase = intersection.current_phase
+        if not phase.endswith("_green"):
+            return
+        lo, _ = self._green_bounds()
+        if intersection.phase_timer < lo:
+            return
+        # ~1s cadence: skip ticks inside the same whole second
+        tick = int(intersection.phase_timer / 1.0)
+        if self._preempt_tick.get(intersection.id) == tick:
+            return
+        self._preempt_tick[intersection.id] = tick
+        cur_idx = int(phase.split("_", 1)[0])
+        demands = [
+            self._group_demand(intersection, g)
+            for g in intersection.compatibility_groups
+        ]
+        self._demand_cache[intersection.id] = demands
+        cur = demands[cur_idx]
+        best_other = max(
+            (d for i, d in enumerate(demands) if i != cur_idx), default=0
+        )
+        if best_other > cur and (best_other - cur) / max(cur, 1) > 0.25:
+            intersection.current_phase = f"{cur_idx}_yellow"
+            intersection.phase_timer = 0.0
+            self._update_lane_signals(intersection)
+
     def _update_signals(self):
         """Update traffic signal states"""
         for intersection in self.intersections.values():
@@ -252,7 +339,11 @@ class TrafficSimulation:
             if intersection.phase_timer >= phase_duration:
                 intersection.current_phase = self._next_phase(intersection)
                 intersection.phase_timer = 0.0
+                if intersection.current_phase.endswith("_green"):
+                    self._refresh_green_plan(intersection)
                 self._update_lane_signals(intersection)
+            else:
+                self._maybe_preempt(intersection)
 
     def _group_demand(self, intersection: Intersection, group: list[Direction]) -> int:
         demand = 0
@@ -262,7 +353,16 @@ class TrafficSimulation:
         return demand
 
     def _next_phase(self, intersection: Intersection) -> str:
-        """Pick next phase: demand-responsive when adaptive, round-robin otherwise."""
+        """Pick next phase.
+
+        Fixed mode: strict round-robin (untouched baseline).
+        Adaptive mode: rotate, skipping zero-demand groups (D7 empty-skip),
+        with Webster-proportional durations set by _refresh_green_plan.
+        Rotation (not argmax) avoids starving small groups: a singleton's
+        demand can never exceed a pair's sum, so greedy order + short greens
+        spirals (x3way 6.0 -> 7.8); rotation + proportional durations gives
+        the fairness of fixed timing with demand-sized greens.
+        """
         current_idx = intersection.phase_sequence.index(intersection.current_phase)
         cur_group_idx = current_idx // 2
         n_groups = len(intersection.compatibility_groups)
@@ -273,12 +373,26 @@ class TrafficSimulation:
             next_group = (cur_group_idx + 1) % n_groups
             return f"{next_group}_green"
         demands = [self._group_demand(intersection, g) for g in intersection.compatibility_groups]
-        best_idx, best_demand = -1, 0
-        for i, d in enumerate(demands):
-            if d > best_demand:
-                best_idx, best_demand = i, d
-        if best_idx == -1:
-            best_idx = cur_group_idx  # nothing waiting anywhere: stay put
+        waits = self._wait_count.setdefault(
+            intersection.id, [0] * n_groups
+        )
+        # Starvation bound: a group with demand waiting a full rotation jumps
+        # the queue (longest wait first). Otherwise argmax demand. Zero-demand
+        # groups are never served (D7 empty-skip); all-zero stays put.
+        forced = [i for i in range(n_groups) if demands[i] > 0 and waits[i] >= n_groups]
+        if forced:
+            best_idx = max(forced, key=lambda i: waits[i])
+        else:
+            best_idx, best_demand = -1, 0
+            for i, d in enumerate(demands):
+                if d > best_demand:
+                    best_idx, best_demand = i, d
+            if best_idx == -1:
+                self._wait_count[intersection.id] = [0] * n_groups
+                return f"{cur_group_idx}_green"  # nothing waiting: stay, reset debt
+        for i in range(n_groups):
+            waits[i] += 1
+        waits[best_idx] = 0
         return f"{best_idx}_green"
 
     def _update_lane_signals(self, intersection: Intersection):

@@ -11,7 +11,7 @@ active_tier: low          # low | mid | high | auto
 detection:
   low:
     backend: onnx
-    registry_dir: models/registry/india-yolov8n
+    registry_dir: models/registry/india-yolov8n-final
     prefer_int8: true
     confidence_threshold: 0.45   # lowered to offset rain degradation
     target_fps: 5                # interpolation fills gaps (D6)

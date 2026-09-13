@@ -48,11 +48,22 @@ def run_scenario(scenario: dict) -> dict:
         for _ in range(scenario.get("steps", 3000)):
             sim.step()
         stats = sim.get_network_stats()
+        # Decision latency: sample refresh+decide on final state (Step 4 gate: p95 <10ms)
+        ix = sim.intersections["eval-1"]
+        lat = []
+        for _ in range(200):
+            t0 = time.perf_counter()
+            sim._refresh_green_plan(ix)
+            sim._next_phase(ix)
+            lat.append((time.perf_counter() - t0) * 1000)
+        lat.sort()
         rows["adaptive" if mode else "fixed"] = {
             "avg_waiting_time": round(stats["avg_waiting_time"], 2),
             "throughput_vph": round(stats["throughput"], 1),
             "queue_error": round(stats["queue_error"], 3),
             "completed": stats["total_completed"],
+            "dec_p50_ms": round(lat[100], 3),
+            "dec_p95_ms": round(lat[190], 3),
         }
     adaptive, fixed = rows["adaptive"], rows["fixed"]
     rows["delta_wait_pct"] = round(
@@ -86,22 +97,29 @@ def main() -> int:
     if len(prev_files) > 1:
         prev = {r["name"]: r for r in json.loads(prev_files[-2].read_text(encoding="utf-8"))["results"]}
 
-    header = f"{'scenario':34} {'wait_adapt':>10} {'wait_fixed':>10} {'delta%':>8} {'qerr_a':>7} {'qerr_f':>7}"
+    header = f"{'scenario':34} {'wait_adapt':>10} {'wait_fixed':>10} {'delta%':>8} {'qerr_a':>7} {'qerr_f':>7} {'dec95_a':>8}"
     print(header)
     print("-" * len(header))
     regressions = []
+    lat_regressions = []
     for r in results:
         print(
             f"{r['name']:34} {r['adaptive']['avg_waiting_time']:>10.1f} "
             f"{r['fixed']['avg_waiting_time']:>10.1f} {r['delta_wait_pct']:>8.1f} "
-            f"{r['adaptive']['queue_error']:>7.2f} {r['fixed']['queue_error']:>7.2f}"
+            f"{r['adaptive']['queue_error']:>7.2f} {r['fixed']['queue_error']:>7.2f} "
+            f"{r['adaptive']['dec_p95_ms']:>8.2f}"
         )
         if r["name"] in prev and r["adaptive"]["avg_waiting_time"] > prev[r["name"]]["adaptive"]["avg_waiting_time"] * 1.05:
             regressions.append(r["name"])
+        if r["adaptive"]["dec_p95_ms"] > 10:
+            lat_regressions.append(r["name"])
 
     print(f"\nwall: {wall:.1f}s | scorecard: {out.relative_to(REPO)}")
     if regressions:
         print(f"REGRESSION (>5% wait vs previous run): {regressions}")
+    if lat_regressions:
+        print(f"LATENCY REGRESSION (dec p95 >10ms): {lat_regressions}")
+    if regressions or lat_regressions:
         return 1
     return 0
 

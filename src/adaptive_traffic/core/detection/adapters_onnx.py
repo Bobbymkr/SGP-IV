@@ -94,7 +94,10 @@ class OnnxDetector(DetectorPort):
 
         t0 = time.perf_counter()
         blob = self._preprocess(frame)
-        preds = self.session.run(None, {self.input_name: blob})[0][0]  # (N, 5+nc)
+        preds = self.session.run(None, {self.input_name: blob})[0][0]
+        nc = len(self.class_names)
+        if preds.shape[0] == 4 + nc and preds.shape[1] != 4 + nc:
+            preds = preds.T  # ultralytics ONNX export layout is (4+nc, N)
 
         boxes_raw, scores_raw, class_ids = self._decode(preds)
         keep = self._nms(boxes_raw, scores_raw)

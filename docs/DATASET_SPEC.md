@@ -24,9 +24,9 @@ DATASET_ROOT/
 `data.yaml` shape:
 
 ```yaml
-path: .
+path: /abs/path/to/DATASET_ROOT   # absolute: ultralytics resolves `path: .` against CWD, not the yaml dir
 train: images/train
-val: images/val
+val: images/val   # falls back to images/test when a source ships train/test only (e.g. HeTra)
 test: images/test
 names:
   0: car

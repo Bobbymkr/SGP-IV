@@ -44,12 +44,12 @@ def main() -> int:
 
     frames = synth_frames(args.frames)
     det = detector.detect(frames[0])  # warmup
-    print(f"warmup detections: {len(det)}")
+    print(f"warmup detections: {len(det.detections)}")
 
     t0 = time.perf_counter()
     total = 0
     for f in frames:
-        total += len(detector.detect(f))
+        total += len(detector.detect(f).detections)
     elapsed = time.perf_counter() - t0
 
     fps = args.frames / elapsed

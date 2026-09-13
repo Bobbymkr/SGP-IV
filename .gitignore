@@ -65,8 +65,11 @@ nosetests.xml
 # Celery
 celerybeat-schedule
 
-# Env files
+# Env files (secrets - never commit)
 .env
+.env.local
+.env.*.local
+.env.test
 
 # Streamlit
 .st/
@@ -125,5 +128,60 @@ comprehensive_test_execution_report.json
 # Pygame simulation cache
 .pygame/
 _simulation_cache/
-# graphify local-only files
-graphify-out/cost.json
+
+# Graphify - all generated outputs (regenerable via `python -m graphify update .`)
+graphify-out/
+!.gitkeep
+
+# Large model binaries (use runtime download or Git LFS)
+*.pt
+*.onnx
+*.engine
+*.trt
+yolov8n.pt
+# Exception: canonical finale registry is LFS-tracked on main
+!models/registry/india-yolov8n-final/**
+!models/registry/india-yolov8n-final/*.pt
+!models/registry/india-yolov8n-final/*.onnx
+
+# Training phase release assets (not on main — see GitHub Release)
+notebooks/training_output_zips/
+colab_outputs/
+data/dryrun_*/
+
+# Internal tooling configs (not for production repo)
+.claude/
+.codex/
+.cursor/
+.kilo/
+.opencode/
+.graph-mem/
+.graphifyignore
+.jetro/
+
+# Internal notes and vault
+vault/
+# One-shot builders (history is the notebook, not its scaffolding)
+scripts/build_*.py
+scripts/dryrun_*.py
+scripts/patch_*.py
+scripts/fix_*.py
+
+# Internal pipeline configs
+orca-pipeline.yaml
+skills-lock.json
+
+# Internal documentation (duplicates or internal)
+AGENTS.md
+CLAUDE.md
+readme.md
+
+# Python cache directories
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# OS/Editor temp files
+*.swp
+*.swo
+*~
