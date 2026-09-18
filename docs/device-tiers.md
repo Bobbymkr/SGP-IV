@@ -15,7 +15,7 @@ Run `make profile-device` to auto-detect and write `active_tier`.
 |------|------------------|-------------------|------------------------|------------------------|
 | **low** | x86 IPC, ARM SBC, legacy boxes — CPU only, no GPU | ONNX Runtime int8 (CPUExecutionProvider) | ~4.98 fps on india-yolov8n-final (int8) | Interpolation-only (D6). Frames skipped when inference > time-step; queue estimates interpolated from last two frames. |
 | **mid** | Jetson TX2 / Xavier NX, RK3588 NPU boxes — GPU/NPU present | ONNX Runtime fp32 (CUDAExecutionProvider or NPU provider if available) | ~10–25 fps on yolov8n-final (fp32) | Full-frame detection each step. Confidence threshold standard (0.5). |
-| **high** | Jetson Orin NX / AGX, discrete GPU boxes — TensorRT-capable | TensorRT fp16 (engine built+cached on-device at first boot in `models/trt_cache/`) | fp16 path TBD; until then same as mid on `-final` fp32 | Same as mid, but with fp16 speed. **Adapter pending Phase 5** — currently falls back to ONNX fp32 with a warning. |
+| **high** | Jetson Orin NX / AGX, discrete GPU boxes — TensorRT-capable | TensorRT fp16 via ORT TRT-EP (engine built+cached on-device at first boot in `models/trt_cache/`) | fp16 on Jetson; `-final` fp32 fallback elsewhere | `TensorRTDetector`: fp32 source + fp16 provider options; warns + falls back to ONNX when the provider is absent. On-device latency validation pending Jetson hardware. |
 
 > **Note on "mid" NPU providers:** onnxruntime 1.16+ supports `QNNExecutionProvider` (Snapdragon) and vendor-specific NPU providers. If present, `profile-device` detects them as CUDA-equivalent and selects `mid`.
 

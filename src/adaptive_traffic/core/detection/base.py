@@ -5,6 +5,7 @@ Backend-agnostic vehicle detection contract
 
 from abc import ABC, abstractmethod
 from typing import Optional
+import warnings
 
 import numpy as np
 
@@ -57,16 +58,42 @@ class DetectorPort(ABC):
                 city_profile=city_profile,
             )
         if backend == "tensorrt":
-            # ponytail: adapter pending real Jetson hardware; fall back to ONNX runtime
-            # (device.yaml documents this). Replace with adapters_tensorrt when available.
-            import warnings
-
-            warnings.warn(
-                "tensorrt backend not available; falling back to onnx. "
-                "Build the TRT adapter on-device to use fp16.",
-                RuntimeWarning,
-                stacklevel=2,
+            from adaptive_traffic.core.detection.adapters_tensorrt import (
+                TensorRTDetector,
             )
-            config = {**config, "backend": "onnx", "prefer_int8": False}
-            return cls.create(config, city_profile)
+
+            try:
+                if "registry_dir" in config:
+                    return TensorRTDetector.from_registry(
+                        config["registry_dir"],
+                        city_profile=city_profile,
+                        **{
+                            k: config[k]
+                            for k in ("prefer_int8", "confidence_threshold",
+                                      "trt_cache_dir")
+                            if k in config
+                        },
+                    )
+                return TensorRTDetector(
+                    model_path=config.get(
+                        "model_path",
+                        "models/registry/india-yolov8n-final/model.onnx",
+                    ),
+                    city_profile=city_profile,
+                    **{
+                        k: config[k]
+                        for k in ("confidence_threshold", "iou_threshold",
+                                  "providers", "trt_cache_dir")
+                        if k in config
+                    },
+                )
+            except RuntimeError as e:
+                # No TRT provider on this box: fall back to ONNX fp32.
+                warnings.warn(
+                    f"{e} falling back to onnx.",
+                    RuntimeWarning,
+                    stacklevel=2,
+                )
+                config = {**config, "backend": "onnx", "prefer_int8": False}
+                return cls.create(config, city_profile)
         raise ValueError(f"Unknown detection backend: {backend}")

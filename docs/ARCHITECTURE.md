@@ -128,7 +128,7 @@ Camera Frame → DetectorPort.create(backend, city_profile)
 **Backends**:
 - `ultralytics` (default): YOLOv8, PyTorch, GPU/CPU
 - `onnx`: ONNX Runtime int8/fp32, CPU/CUDA/NPU
-- `tensorrt`: Falls back to ONNX (Phase 5)
+- `tensorrt`: TensorRTDetector (ORT TRT-EP fp16, engine cache); onnx fallback when provider absent
 
 ## Simulation & Evaluation
 
@@ -150,7 +150,7 @@ Camera Frame → DetectorPort.create(backend, city_profile)
 |------|---------|-------|--------------|------------|
 | low  | onnx    | india-yolov8n-final | int8  | 5  |
 | mid  | onnx    | india-yolov8n-final | fp32  | 15 |
-| high | tensorrt→onnx fallback | india-yolov8n-final | fp32 until TRT adapter | — |
+| high | tensorrt (fp16 + engine cache; onnx fallback off-Jetson) | india-yolov8n-final | fp16 on Jetson | valid. pending HW |
 
 ## Verification Commands
 
