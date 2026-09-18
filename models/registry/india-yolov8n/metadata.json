@@ -1,0 +1,43 @@
+{
+  "name": "india-yolov8n",
+  "classes": [
+    "car",
+    "motorcycle",
+    "bus",
+    "truck",
+    "bicycle",
+    "auto"
+  ],
+  "imgsz": 640,
+  "normalization": {
+    "mean": [
+      0,
+      0,
+      0
+    ],
+    "std": [
+      255,
+      255,
+      255
+    ],
+    "layout": "NCHW",
+    "color": "RGB"
+  },
+  "quantization": "int8",
+  "source_run": "2026-09-04",
+  "metrics": {
+    "mAP50_overall": 0.9816,
+    "per_class_mAP50": {
+      "car": 0.9896,
+      "bus": 0.981,
+      "auto": 0.9744
+    }
+  },
+  "provenance": {
+    "hf_repo": "kalyan1729/trafficmanagementdataset",
+    "hf_subset": "IITM-HeTra_v2",
+    "mapping": "optionA-conservative-6class",
+    "contract": "docs/DATASET_SPEC.md v1",
+    "epochs": 70
+  }
+}

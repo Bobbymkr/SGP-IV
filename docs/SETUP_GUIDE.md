@@ -19,6 +19,19 @@ Then open your browser to http://localhost:8503
 ### Option 2: Using the Batch File
 Double-click on `run_enhanced_demo.bat` in the project folder
 
+### Option 3: Drive-Native Finale Training (Recommended for Training)
+For the full training pipeline with Drive-native workflow:
+
+```bash
+cd "C:\Users\Admin\OneDrive\Desktop\IDEA\Adaptive-Traffic-Signal-Timer"
+# 1. Upload best_f007.pt to Colab (/content/best_f007.pt)
+# 2. Open train_bmd_finale_drive.ipynb in Colab
+# 3. Runtime → T4 GPU
+# 4. Run all cells (Drive mount → convert → train → export → zip)
+```
+
+## 📋 Required Packages (Already Installed)
+
 ## 📋 Required Packages (Already Installed)
 
 All required packages are already present in your Python environment:

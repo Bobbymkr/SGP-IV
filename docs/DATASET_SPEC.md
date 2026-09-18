@@ -1,6 +1,6 @@
 # Dataset Specification — India-YOLO Training Data
 
-*Status: CONTRACT v1 · Classes provisional (see §2 flag)*
+*Status: CONTRACT v2 · Classes finalized for finale (see §2 flag)*
 
 This document defines the exact format authorities'/annotators' data must be
 converted into before training. `scripts/prepare_dataset.py` validates and
@@ -53,6 +53,12 @@ names:
 > at the END (never reorder existing ones), update `data.yaml`,
 > `core/domain.py::VehicleType`, and retrain. All downstream code reads class
 > lists from model `metadata.json`, never hardcoded.
+> 
+> **FINALE NOTE**: The Option B merge (BMD-45 dataset) consolidates 13 source
+> classes into 6 contract classes. Dropped: Hatchback, Sedan, SUV, MUV, LCV,
+> Mini-bus, Van, Tempo-traveller, Other. See `scripts/prepare_dataset.py`
+> `MERGE_B` mapping. Original 13-class schema preserved in source annotations
+> for future expansion.
 
 ## 3. Label format
 

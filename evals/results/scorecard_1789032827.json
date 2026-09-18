@@ -1,0 +1,181 @@
+{
+  "wall_s": 18.47,
+  "results": [
+    {
+      "name": "x4way_clear_disciplined",
+      "adaptive": {
+        "avg_waiting_time": 10.86,
+        "throughput_vph": 912.0,
+        "queue_error": 0.0,
+        "completed": 76
+      },
+      "fixed": {
+        "avg_waiting_time": 6.66,
+        "throughput_vph": 948.0,
+        "queue_error": 0.0,
+        "completed": 79
+      },
+      "delta_wait_pct": -63.06
+    },
+    {
+      "name": "x4way_clear_aggressive",
+      "adaptive": {
+        "avg_waiting_time": 10.48,
+        "throughput_vph": 864.0,
+        "queue_error": 0.0,
+        "completed": 72
+      },
+      "fixed": {
+        "avg_waiting_time": 8.89,
+        "throughput_vph": 852.0,
+        "queue_error": 0.0,
+        "completed": 71
+      },
+      "delta_wait_pct": -17.89
+    },
+    {
+      "name": "x3way_typical_clear",
+      "adaptive": {
+        "avg_waiting_time": 5.97,
+        "throughput_vph": 744.0,
+        "queue_error": 0.0,
+        "completed": 62
+      },
+      "fixed": {
+        "avg_waiting_time": 8.65,
+        "throughput_vph": 780.0,
+        "queue_error": 0.0,
+        "completed": 65
+      },
+      "delta_wait_pct": 30.98
+    },
+    {
+      "name": "x5way_typical_clear",
+      "adaptive": {
+        "avg_waiting_time": 12.76,
+        "throughput_vph": 864.0,
+        "queue_error": 0.0,
+        "completed": 72
+      },
+      "fixed": {
+        "avg_waiting_time": 54.28,
+        "throughput_vph": 528.0,
+        "queue_error": 0.0,
+        "completed": 44
+      },
+      "delta_wait_pct": 76.49
+    },
+    {
+      "name": "x4way_typical_light_rain",
+      "adaptive": {
+        "avg_waiting_time": 21.05,
+        "throughput_vph": 720.0,
+        "queue_error": 0.179,
+        "completed": 60
+      },
+      "fixed": {
+        "avg_waiting_time": 19.1,
+        "throughput_vph": 744.0,
+        "queue_error": 0.23,
+        "completed": 62
+      },
+      "delta_wait_pct": -10.21
+    },
+    {
+      "name": "x4way_typical_heavy_monsoon",
+      "adaptive": {
+        "avg_waiting_time": 28.32,
+        "throughput_vph": 636.0,
+        "queue_error": 0.711,
+        "completed": 53
+      },
+      "fixed": {
+        "avg_waiting_time": 28.32,
+        "throughput_vph": 636.0,
+        "queue_error": 0.711,
+        "completed": 53
+      },
+      "delta_wait_pct": 0.0
+    },
+    {
+      "name": "x4way_typical_waterlogged",
+      "adaptive": {
+        "avg_waiting_time": 45.66,
+        "throughput_vph": 384.0,
+        "queue_error": 0.763,
+        "completed": 32
+      },
+      "fixed": {
+        "avg_waiting_time": 47.44,
+        "throughput_vph": 384.0,
+        "queue_error": 0.8,
+        "completed": 32
+      },
+      "delta_wait_pct": 3.75
+    },
+    {
+      "name": "x4way_aggressive_waterlogged",
+      "adaptive": {
+        "avg_waiting_time": 29.28,
+        "throughput_vph": 432.0,
+        "queue_error": 0.702,
+        "completed": 36
+      },
+      "fixed": {
+        "avg_waiting_time": 29.75,
+        "throughput_vph": 480.0,
+        "queue_error": 0.609,
+        "completed": 40
+      },
+      "delta_wait_pct": 1.58
+    },
+    {
+      "name": "x5way_aggressive_monsoon",
+      "adaptive": {
+        "avg_waiting_time": 45.16,
+        "throughput_vph": 492.0,
+        "queue_error": 0.875,
+        "completed": 41
+      },
+      "fixed": {
+        "avg_waiting_time": 96.66,
+        "throughput_vph": 324.0,
+        "queue_error": 1.318,
+        "completed": 27
+      },
+      "delta_wait_pct": 53.28
+    },
+    {
+      "name": "x4way_sensor_failure",
+      "adaptive": {
+        "avg_waiting_time": 45.66,
+        "throughput_vph": 384.0,
+        "queue_error": 0.763,
+        "completed": 32
+      },
+      "fixed": {
+        "avg_waiting_time": 47.44,
+        "throughput_vph": 384.0,
+        "queue_error": 0.8,
+        "completed": 32
+      },
+      "delta_wait_pct": 3.75
+    },
+    {
+      "name": "x4way_lane_block",
+      "adaptive": {
+        "avg_waiting_time": 19.49,
+        "throughput_vph": 780.0,
+        "queue_error": 0.0,
+        "completed": 65
+      },
+      "fixed": {
+        "avg_waiting_time": 10.49,
+        "throughput_vph": 852.0,
+        "queue_error": 0.0,
+        "completed": 71
+      },
+      "delta_wait_pct": -85.8
+    }
+  ]
+}

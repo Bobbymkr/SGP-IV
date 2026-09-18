@@ -1,0 +1,225 @@
+{
+  "wall_s": 13.0,
+  "results": [
+    {
+      "name": "x4way_clear_disciplined",
+      "adaptive": {
+        "avg_waiting_time": 4.94,
+        "throughput_vph": 972.0,
+        "queue_error": 0.0,
+        "completed": 81,
+        "dec_p50_ms": 0.037,
+        "dec_p95_ms": 0.039
+      },
+      "fixed": {
+        "avg_waiting_time": 6.66,
+        "throughput_vph": 948.0,
+        "queue_error": 0.0,
+        "completed": 79,
+        "dec_p50_ms": 0.015,
+        "dec_p95_ms": 0.015
+      },
+      "delta_wait_pct": 25.83
+    },
+    {
+      "name": "x4way_clear_aggressive",
+      "adaptive": {
+        "avg_waiting_time": 4.68,
+        "throughput_vph": 1068.0,
+        "queue_error": 0.0,
+        "completed": 89,
+        "dec_p50_ms": 0.04,
+        "dec_p95_ms": 0.052
+      },
+      "fixed": {
+        "avg_waiting_time": 8.89,
+        "throughput_vph": 852.0,
+        "queue_error": 0.0,
+        "completed": 71,
+        "dec_p50_ms": 0.016,
+        "dec_p95_ms": 0.016
+      },
+      "delta_wait_pct": 47.36
+    },
+    {
+      "name": "x3way_typical_clear",
+      "adaptive": {
+        "avg_waiting_time": 4.05,
+        "throughput_vph": 720.0,
+        "queue_error": 0.0,
+        "completed": 60,
+        "dec_p50_ms": 0.015,
+        "dec_p95_ms": 0.016
+      },
+      "fixed": {
+        "avg_waiting_time": 8.65,
+        "throughput_vph": 780.0,
+        "queue_error": 0.0,
+        "completed": 65,
+        "dec_p50_ms": 0.013,
+        "dec_p95_ms": 0.014
+      },
+      "delta_wait_pct": 53.18
+    },
+    {
+      "name": "x5way_typical_clear",
+      "adaptive": {
+        "avg_waiting_time": 11.09,
+        "throughput_vph": 912.0,
+        "queue_error": 0.022,
+        "completed": 76,
+        "dec_p50_ms": 0.058,
+        "dec_p95_ms": 0.06
+      },
+      "fixed": {
+        "avg_waiting_time": 54.28,
+        "throughput_vph": 528.0,
+        "queue_error": 0.0,
+        "completed": 44,
+        "dec_p50_ms": 0.023,
+        "dec_p95_ms": 0.024
+      },
+      "delta_wait_pct": 79.57
+    },
+    {
+      "name": "x4way_typical_light_rain",
+      "adaptive": {
+        "avg_waiting_time": 12.47,
+        "throughput_vph": 852.0,
+        "queue_error": 0.149,
+        "completed": 71,
+        "dec_p50_ms": 0.018,
+        "dec_p95_ms": 0.02
+      },
+      "fixed": {
+        "avg_waiting_time": 19.1,
+        "throughput_vph": 744.0,
+        "queue_error": 0.23,
+        "completed": 62,
+        "dec_p50_ms": 0.015,
+        "dec_p95_ms": 0.02
+      },
+      "delta_wait_pct": 34.71
+    },
+    {
+      "name": "x4way_typical_heavy_monsoon",
+      "adaptive": {
+        "avg_waiting_time": 12.67,
+        "throughput_vph": 696.0,
+        "queue_error": 0.311,
+        "completed": 58,
+        "dec_p50_ms": 0.041,
+        "dec_p95_ms": 0.062
+      },
+      "fixed": {
+        "avg_waiting_time": 28.32,
+        "throughput_vph": 636.0,
+        "queue_error": 0.711,
+        "completed": 53,
+        "dec_p50_ms": 0.017,
+        "dec_p95_ms": 0.017
+      },
+      "delta_wait_pct": 55.26
+    },
+    {
+      "name": "x4way_typical_waterlogged",
+      "adaptive": {
+        "avg_waiting_time": 18.64,
+        "throughput_vph": 504.0,
+        "queue_error": 0.353,
+        "completed": 42,
+        "dec_p50_ms": 0.022,
+        "dec_p95_ms": 0.024
+      },
+      "fixed": {
+        "avg_waiting_time": 47.44,
+        "throughput_vph": 384.0,
+        "queue_error": 0.8,
+        "completed": 32,
+        "dec_p50_ms": 0.018,
+        "dec_p95_ms": 0.028
+      },
+      "delta_wait_pct": 60.71
+    },
+    {
+      "name": "x4way_aggressive_waterlogged",
+      "adaptive": {
+        "avg_waiting_time": 20.44,
+        "throughput_vph": 408.0,
+        "queue_error": 0.293,
+        "completed": 34,
+        "dec_p50_ms": 0.024,
+        "dec_p95_ms": 0.026
+      },
+      "fixed": {
+        "avg_waiting_time": 29.75,
+        "throughput_vph": 480.0,
+        "queue_error": 0.609,
+        "completed": 40,
+        "dec_p50_ms": 0.016,
+        "dec_p95_ms": 0.017
+      },
+      "delta_wait_pct": 31.29
+    },
+    {
+      "name": "x5way_aggressive_monsoon",
+      "adaptive": {
+        "avg_waiting_time": 23.99,
+        "throughput_vph": 612.0,
+        "queue_error": 0.586,
+        "completed": 51,
+        "dec_p50_ms": 0.053,
+        "dec_p95_ms": 0.078
+      },
+      "fixed": {
+        "avg_waiting_time": 96.66,
+        "throughput_vph": 324.0,
+        "queue_error": 1.318,
+        "completed": 27,
+        "dec_p50_ms": 0.013,
+        "dec_p95_ms": 0.023
+      },
+      "delta_wait_pct": 75.18
+    },
+    {
+      "name": "x4way_sensor_failure",
+      "adaptive": {
+        "avg_waiting_time": 18.64,
+        "throughput_vph": 504.0,
+        "queue_error": 0.353,
+        "completed": 42,
+        "dec_p50_ms": 0.022,
+        "dec_p95_ms": 0.023
+      },
+      "fixed": {
+        "avg_waiting_time": 47.44,
+        "throughput_vph": 384.0,
+        "queue_error": 0.8,
+        "completed": 32,
+        "dec_p50_ms": 0.014,
+        "dec_p95_ms": 0.034
+      },
+      "delta_wait_pct": 60.71
+    },
+    {
+      "name": "x4way_lane_block",
+      "adaptive": {
+        "avg_waiting_time": 8.47,
+        "throughput_vph": 876.0,
+        "queue_error": 0.0,
+        "completed": 73,
+        "dec_p50_ms": 0.047,
+        "dec_p95_ms": 0.049
+      },
+      "fixed": {
+        "avg_waiting_time": 10.49,
+        "throughput_vph": 852.0,
+        "queue_error": 0.0,
+        "completed": 71,
+        "dec_p50_ms": 0.009,
+        "dec_p95_ms": 0.019
+      },
+      "delta_wait_pct": 19.26
+    }
+  ]
+}

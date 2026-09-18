@@ -185,3 +185,6 @@ readme.md
 *.swp
 *.swo
 *~
+# Agent session state (local-only caches, never commit)
+.backboard/
+.superbrain/

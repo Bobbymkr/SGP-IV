@@ -8,6 +8,24 @@
 [![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-orange.svg)](https://ultralytics.com)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://docker.com)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![mAP50](https://img.shields.io/badge/mAP50-0.8477-brightgreen.svg)](https://github.com/your-org/adaptive-traffic-signal)
+[![FPS](https://img.shields.io/badge/FPS-4.98-orange.svg)](https://github.com/your-org/adaptive-traffic-signal)
+
+---
+
+## 🏆 BMD-45 Finale Results (v0.1-bmd-finale)
+
+| Metric | Value | Notes |
+|--------|-------|-------|
+| **mAP50 (full 10k val)** | **0.8477** | +0.0184 vs loop-8 |
+| **Per-class mAP50** | car: 0.9189, auto: 0.9171, moto: 0.8887, bus: 0.846, truck: 0.8294, bicycle: 0.6859 | |
+| **Inference Speed** | **4.98 fps** (200.6 ms/frame) | CPU static int8 |
+| **Model Size** | 3.0M params (11.7 MB fp32 / 3.4 MB int8) | |
+| **Training** | 5-epoch joint polish @ lr=0.002 from loop-8 (0.8293) | |
+| **Val Set** | Official BMD-45 10k val (BMD-45-Val) | |
+| **Training** | 8-loop chain (0.7949 → 0.8293) + 5ep polish | |
+| **Regime** | Option B merge (13→6 classes), static int8 | |
+| **Registry** | `models/registry/india-yolov8n-final/` (LFS) | |
 
 ---
 
