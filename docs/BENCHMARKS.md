@@ -70,3 +70,41 @@ Headline findings (see scorecard): adaptive scheduling cuts avg waiting time 76.
 5-way and 31% on 3-way; fixed-time competitive on balanced 4-ways. Queue-estimation
 error scales with weather/degradation: 0.00 (clear/disciplined) → 0.76 (waterlogged)
 → 1.32 (5-way monsoon, fixed).
+
+## Phase Histograms (Step 2, 2026-09-18)
+
+`core/monitoring.py`: four `traffic_<stage>_seconds` Histograms
+(detect/estimate/decide/actuate) wired by one `@observe` decorator at each
+bench boundary — both `detect()` adapters, `estimate_from_detections`,
+engine `_refresh_green_plan` + `_next_phase`, engine `_update_lane_signals`
++ STMP `set_phase_timing` (mocks excluded). Scrape at
+`GET /api/v1/health/metrics` (404 when `prometheus_enabled=false`).
+
+Overhead unmeasurable: bench_decide @300 det 1.11/1.83ms p50/p95 (09-13) →
+0.93/1.19ms (09-18); the delta is run-to-run variance (±10% band), not the
+~µs histogram observe. Eval still 11/11 adaptive wins, wall 18.7s.
+
+## Staged Pipeline (Step 3, 2026-09-18)
+
+`core/pipeline.py`: `DropOldestBuffer` (bounded, never blocks; counters
+received/dropped/served) + `StagedPipeline.process()` (inline
+detect→estimate→decide with per-stage ms). Dual DetectorPort return shapes
+(DetectionResult vs legacy List) normalized once at the seam. No live caller
+yet — API serves mocks, sim is synthetic — so the worker loop exists for the
+future edge runner, covered by unit tests (11 new: buffer, stages, shapes,
+thread, /metrics).
+
+`bench_detect --stages` first row (onnx int8, synth noise): detect
+233.6ms/frame vs plain-path 216.8ms same day — same variance band as the
+canonical 4.98 fps row; estimate 0.055ms (0 dets on noise; scales ~3.3µs/det
+per the Decide-Path table). Methodology note: an early version of this flag
+submitted all frames up front and divided by n while the buffer held 4 —
+caught by the numbers, fixed to inline `process()` per frame.
+
+## Deliberate skips (measured, not deferred)
+
+- orjson: scorecards ~6KB, API payloads tiny — D10's "when payloads grow"
+  unmet. stdlib json stays; no new dep.
+- uvloop: uninstallable on the Windows dev host and no async hot loop exists
+  (mock API + sync sim). Deploy-time `uvicorn --loop uvloop` on Linux if a
+  profile ever justifies it.

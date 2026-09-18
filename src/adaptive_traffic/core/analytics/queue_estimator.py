@@ -11,6 +11,7 @@ import numpy as np
 
 from adaptive_traffic.config.city_profile import CityProfile
 from adaptive_traffic.core.domain import VehicleDetection, VehicleType
+from adaptive_traffic.core.monitoring import observe
 
 logger = logging.getLogger(__name__)
 
@@ -79,6 +80,7 @@ class QueueEstimator:
                 mapping[k] = v
         return mapping
 
+    @observe("estimate")
     def estimate_from_detections(
         self,
         detections: List[VehicleDetection],

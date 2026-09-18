@@ -13,6 +13,7 @@ import numpy as np
 from adaptive_traffic.config.city_profile import CityProfile
 from adaptive_traffic.core.detection.base import DetectorPort
 from adaptive_traffic.core.domain import DetectionResult, VehicleDetection
+from adaptive_traffic.core.monitoring import observe
 
 
 class OnnxDetector(DetectorPort):
@@ -89,6 +90,7 @@ class OnnxDetector(DetectorPort):
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32) / 255.0
         return np.ascontiguousarray(img.transpose(2, 0, 1)[None])
 
+    @observe("detect")
     def detect(self, frame: np.ndarray) -> DetectionResult:
         import time
 

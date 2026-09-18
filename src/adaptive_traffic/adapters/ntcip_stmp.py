@@ -10,6 +10,7 @@ import struct
 import time
 from typing import List, Optional
 
+from adaptive_traffic.core.monitoring import observe
 from adaptive_traffic.core.ports.ntcip_port import (
     NTCIPCycleConfig,
     NTCIPPhaseTiming,
@@ -152,6 +153,7 @@ class NTCIP1202STMPAdapter(NTCIPPort):
         # For now, return mock data for testing
         return {}
 
+    @observe("actuate")
     def set_phase_timing(self, timing: NTCIPCycleConfig) -> bool:
         """Apply phase timing via NTCIP 1202 STMP SET"""
         try:

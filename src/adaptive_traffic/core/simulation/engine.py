@@ -15,6 +15,7 @@ import numpy as np
 
 from adaptive_traffic.config.city_profile import CityProfile
 from adaptive_traffic.core.domain import Direction, VehicleType
+from adaptive_traffic.core.monitoring import observe
 from adaptive_traffic.core.simulation.behavior import BehaviorEngine, profile_for
 from adaptive_traffic.core.simulation.weather import WeatherModel, WeatherState
 
@@ -284,6 +285,7 @@ class TrafficSimulation:
                 out[i] = max(floor, max(lo, min(hi, d * headway + startup)))
         return out
 
+    @observe("decide")
     def _refresh_green_plan(self, intersection: Intersection) -> list[int]:
         """Recompute demands + durations, cache the plan. Returns demands."""
         demands = [
@@ -352,6 +354,7 @@ class TrafficSimulation:
                 demand += sum(1 for v in lane.vehicles if v.speed < 1.0 and v.position < 50)
         return demand
 
+    @observe("decide")
     def _next_phase(self, intersection: Intersection) -> str:
         """Pick next phase.
 
@@ -395,6 +398,7 @@ class TrafficSimulation:
         waits[best_idx] = 0
         return f"{best_idx}_green"
 
+    @observe("actuate")
     def _update_lane_signals(self, intersection: Intersection):
         """Update lane signal states based on current phase group"""
         idx = intersection.phase_sequence.index(intersection.current_phase)

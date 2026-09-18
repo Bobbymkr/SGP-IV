@@ -26,8 +26,11 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--backend", default="ultralytics", choices=["ultralytics", "onnx", "tensorrt"])
     p.add_argument("--model", default="yolov8n.pt", help="ultralytics model path")
-    p.add_argument("--registry", default="models/registry/india-yolov8n-final", help="onnx registry dir")
+    p.add_argument("--registry", default="models/registry/india-yolov8n-final",
+                   help="onnx registry dir")
     p.add_argument("--frames", type=int, default=20)
+    p.add_argument("--stages", action="store_true",
+                   help="route detect+estimate through StagedPipeline")
     args = p.parse_args()
 
     cfg = {"backend": args.backend}
@@ -43,6 +46,28 @@ def main() -> int:
         return 1
 
     frames = synth_frames(args.frames)
+    if args.stages:
+        from adaptive_traffic.config.city_profile import get_city_profile  # noqa: E402
+        from adaptive_traffic.core.analytics.queue_estimator import QueueEstimator  # noqa: E402
+        from adaptive_traffic.core.pipeline import StagedPipeline  # noqa: E402
+
+        pipe = StagedPipeline(detector, QueueEstimator(get_city_profile("bangalore")))
+        # Inline path: same stages the edge worker drains. The drop-oldest
+        # buffer is bypassed by design — submit-all-then-drain would silently
+        # drop frames (buffer < n) and skew the mean; buffer semantics are
+        # covered by unit tests instead.
+        results = [pipe.process(f) for f in frames]
+        det_ms = est_ms = 0.0
+        total = 0
+        for res in results:
+            det_ms += res.stage_ms["detect"]
+            est_ms += res.stage_ms["estimate"]
+            raw = res.detections
+            total += len(raw.detections if hasattr(raw, "detections") else raw)
+        n = len(results)
+        print(f"backend={args.backend} stages=detect+estimate frames={n} "
+              f"detect_ms={det_ms / n:.3f} estimate_ms={est_ms / n:.3f} det_total={total}")
+        return 0
     det = detector.detect(frames[0])  # warmup
     print(f"warmup detections: {len(det.detections)}")
 

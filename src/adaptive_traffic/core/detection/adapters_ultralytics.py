@@ -12,6 +12,7 @@ import numpy as np
 from adaptive_traffic.config.city_profile import CityProfile
 from adaptive_traffic.core.detection.base import DetectorPort
 from adaptive_traffic.core.domain import VehicleDetection
+from adaptive_traffic.core.monitoring import observe
 
 logger = logging.getLogger(__name__)
 
@@ -71,6 +72,7 @@ class UltralyticsDetector(DetectorPort):
         """Get confidence threshold for a class"""
         return self.detection_thresholds.get(class_name, self.confidence_threshold)
 
+    @observe("detect")
     def detect(self, frame: np.ndarray) -> List[VehicleDetection]:
         # ponytail: returns List[VehicleDetection] to preserve legacy behavior;
         # wrap in DetectionResult when callers migrate (Phase 5)
