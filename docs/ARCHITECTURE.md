@@ -148,9 +148,9 @@ Camera Frame → DetectorPort.create(backend, city_profile)
 
 | Tier | Backend | Model | Quantization | Target FPS |
 |------|---------|-------|--------------|------------|
-| low  | onnx    | india-yolov8n | int8  | 5  |
-| mid  | onnx    | india-yolov8s | fp32  | 15 |
-| high | tensorrt| india-yolov8s | fp16  | 30+ |
+| low  | onnx    | india-yolov8n-final | int8  | 5  |
+| mid  | onnx    | india-yolov8n-final | fp32  | 15 |
+| high | tensorrt→onnx fallback | india-yolov8n-final | fp32 until TRT adapter | — |
 
 ## Verification Commands
 

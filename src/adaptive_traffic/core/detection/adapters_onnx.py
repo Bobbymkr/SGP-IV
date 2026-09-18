@@ -20,7 +20,7 @@ class OnnxDetector(DetectorPort):
 
     def __init__(
         self,
-        model_path: str = "models/registry/india-yolov8n/model-int8.onnx",
+        model_path: str = "models/registry/india-yolov8n-final/model-int8.onnx",
         metadata_path: Optional[str] = None,
         confidence_threshold: float = 0.5,
         iou_threshold: float = 0.45,

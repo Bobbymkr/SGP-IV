@@ -49,7 +49,7 @@ class DetectorPort(ABC):
                 )
             return OnnxDetector(
                 model_path=config.get(
-                    "model_path", "models/registry/india-yolov8n/model-int8.onnx"
+                    "                model_path", "models/registry/india-yolov8n-final/model-int8.onnx"
                 ),
                 confidence_threshold=config.get("confidence_threshold", 0.5),
                 iou_threshold=config.get("iou_threshold", 0.45),

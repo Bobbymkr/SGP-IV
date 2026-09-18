@@ -26,7 +26,7 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--backend", default="ultralytics", choices=["ultralytics", "onnx", "tensorrt"])
     p.add_argument("--model", default="yolov8n.pt", help="ultralytics model path")
-    p.add_argument("--registry", default="models/registry/india-yolov8n", help="onnx registry dir")
+    p.add_argument("--registry", default="models/registry/india-yolov8n-final", help="onnx registry dir")
     p.add_argument("--frames", type=int, default=20)
     args = p.parse_args()
 

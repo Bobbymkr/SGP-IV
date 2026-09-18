@@ -5,6 +5,9 @@
 #   low  : any x86/ARM box, CPU-only, int8 quantized nano model, ~5 fps
 #   mid  : GPU/NPU present, fp32 small model
 #   high : NVIDIA Jetson-class, TensorRT engine built on-device at first boot
+# NOTE (Steps 0+1): no yolov8s artifact was ever trained — mid/high share the
+# -final nano registry until one exists. Tiers still differ by runtime
+# (int8 vs fp32, thresholds) and backend (tensorrt falls back to onnx).
 
 active_tier: low          # low | mid | high | auto
 
@@ -17,12 +20,12 @@ detection:
     target_fps: 5                # interpolation fills gaps (D6)
   mid:
     backend: onnx
-    registry_dir: models/registry/india-yolov8s
+    registry_dir: models/registry/india-yolov8n-final
     prefer_int8: false
     confidence_threshold: 0.5
   high:
     backend: tensorrt            # adapter pending Phase 5; falls back to onnx
-    registry_dir: models/registry/india-yolov8s
+    registry_dir: models/registry/india-yolov8n-final
     prefer_int8: false
     precision: fp16
     trt_cache_dir: models/trt_cache
