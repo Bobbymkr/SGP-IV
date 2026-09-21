@@ -172,6 +172,25 @@ lane/direction buckets — per-camera calibration is the follow-up). The
 hybrid-trigger FIRE on this proxy row is **not actionable** — the 0.5 trigger
 is calibrated for hand-count `--gt-csv` GT with a matching queue definition.
 
+## TrafficCAM Candidate (2026-09-21, NOT promoted)
+
+`notebooks/training_output_zips/trafficcam_candidate_2026-09-21.zip` (local-only,
+gitignored like all training zips): 10-ep T4 polish from `best_f007.pt`,
+12.3MB fp32 + 3.4MB int8. Local 50-frame val sample @conf 0.45, greedy IoU≥0.5:
+
+| Model | max score | det | P | R | F1 | fps CPU |
+|---|---|---|---|---|---|---|
+| finale fp32 (canonical) | 0.899 | 415 | 0.923 | 0.163 | 0.278 | 7.4 |
+| candidate fp32 | 0.959 | 446 | 0.868 | 0.165 | 0.277 | 7.3 |
+| candidate int8 (alive, non-zero) | 0.964 | 441 | 0.878 | 0.165 | 0.278 | 0.76 |
+
+Verdict: **finale stays canonical.** TrafficCAM F1 ties (0.277 vs 0.278, noise);
+candidate int8 is quality-alive but 10× too slow for low-tier (0.76 vs 5 fps
+target — dynamic-quant matmuls lose on this 3M-param model); BMD-45
+no-forgetting anchor unmeasured locally. Promote only on: TrafficCAM F1 up +
+BMD-Val within −0.02 + int8 ≥4.5fps. (Note: candidate metadata.json predates
+the `quant` provenance field — ask the run owner which recipe won.)
+
 ## Detector QA Findings (2026-09-21, from the TrafficCAM bring-up)
 
 1. **Dead int8 (critical):** `model-int8.onnx` emits all-zero scores on every
