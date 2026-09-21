@@ -155,6 +155,13 @@ def test_class_index_aliases():
     assert _class_index("two-wheeler") == 1  # aligned with probe notebook
     assert _class_index("sedan") is None  # Option A: dropped
     assert _class_index("tempo_traveller") is None  # Option A: dropped
+    # TrafficCAM census aliases (ground truth 2026-09-21)
+    assert _class_index("LMV") == 0
+    assert _class_index("MotorBike") == 1
+    assert _class_index("Motor Bike") == 1
+    assert _class_index("Moterbike") == 1
+    assert _class_index("e-rickshaw") == 5
+    assert _class_index("Tractor") is None  # Option A: dropped (B merges to truck)
 
 
 def test_option_b_merge_mapping():
@@ -166,6 +173,7 @@ def test_option_b_merge_mapping():
     assert _class_index("Van", "B") == 2
     assert _class_index("Tempo-traveller", "B") == 2
     assert _class_index("LCV", "B") == 3
+    assert _class_index("Tractor", "B") == 3
     assert _class_index("Two-wheeler", "B") == 1
     assert _class_index("Bicycle", "B") == 4
     assert _class_index("Three-wheeler", "B") == 5

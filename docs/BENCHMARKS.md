@@ -23,6 +23,8 @@ unnecessary; NumPy vectorization still planned if eval matrix wall-time demands 
 | 2026-09-13 | onnx int8 static (india-yolov8n-final, CPU) | 4.98 | 200.6ms/frame on 20 synthetic-noise frames (polish did not regress latency; vs 3.14 fps for loop-8). Finale mAP50 0.8477 full-val. |
 | 2026-09-13 | trained model quality (finale joint polish, full 10k val) | — | **0.8477 overall (+0.0184 vs loop-8 0.8293 anchor, full-val)**; per-class car 0.9189 auto 0.9171 moto 0.8887 bus 0.846 truck 0.8294 bicycle 0.6859; 5ep low-LR from loop-8. |
 | 2026-09-18 | onnx int8 static (india-yolov8n-final, CPU, `--frames-dir`) | 4.96 | 201.5ms/frame on 576 rendered test frames (`data/synthetic_india_yolo/images/test`); `det_total=0`, 576/576 zero-frames. Latency matches the noise row — but the renders are near-black schematics (mean 0.47 labels/frame, few-px boxes), so the photo-trained model is blind here. Verdict: `--frames-dir` path proven, renders unsuitable for quality; recorded phone footage is the real next source. |
+| 2026-09-21 | onnx fp32 (india-yolov8n-final, CPU, `--frames-dir` renders) | 10.24 | 97.6ms/frame on the same 576 renders; still `det_total=0` — now with a *working* model (see §Detector QA below), so the renders-unsuitable verdict is re-confirmed on solid ground, not on a dead artifact. |
+| 2026-09-21 | onnx fp32 (india-yolov8n-final, CPU, `--frames-dir` TrafficCAM val) | 5.1–8.2 | 123–197ms/frame on 180 real Indian CCTV frames; `det_total>0`, zero zero-frames. First real quality signal (see queue-proxy rows below). |
 
 ## Decide Path (`scripts/bench_decide.py`)
 
@@ -145,6 +147,49 @@ so the 0.5 hybrid trigger is **undecided, not fired** — the script gates the
 verdict on detector non-blindness. Per-frame rows in
 `evals/results/queue_proxy_conf04{5,0}.csv`. First honest qerr needs phone
 footage + `--gt-csv` hand counts (protocol in TESTING_DOCUMENTATION.md).
+
+> ⚠️ 2026-09-21 correction: those two proxy rows were computed with the
+> **degenerate int8** (all-zero scores — see §Detector QA below), so the
+> RMSE numbers are invalid, not just proxy-limited. Real fp32 proxy rows
+> follow in the TrafficCAM table. The renders-unsuitable verdict itself was
+> re-confirmed with working fp32 (0/576 again).
+
+## Queue-Error on Real Footage (TrafficCAM val, fp32, 2026-09-21)
+
+First honest detector+queue numbers on real Indian CCTV (180 val frames,
+local run, GT = converted 6-class labels):
+
+| Conf | det RMSE/MAE/bias | queue RMSE/MAE/bias | det hist | queue zeros |
+|------|-------------------|---------------------|----------|-------------|
+| 0.45 | 28.69/24.29/−23.76 | 28.89/24.91/−24.38 | p50 7, max 12, 0 zeros | 15/180 |
+
+Greedy IoU≥0.5 class-aware matching on 50 frames @conf 0.25: P=0.836 R=0.384
+F1=0.527 (NMS iou threshold 0.45/0.6/0.7 all F1≈0.52–0.53 — NMS is not the
+lever; small-object recall is). Caveats: labels count ALL visible vehicles
+vs queue-zone-only estimation (structural undercount bias); estimator
+geometry is still 640×480-hardcoded while frames are 1080p (coarse
+lane/direction buckets — per-camera calibration is the follow-up). The
+hybrid-trigger FIRE on this proxy row is **not actionable** — the 0.5 trigger
+is calibrated for hand-count `--gt-csv` GT with a matching queue definition.
+
+## Detector QA Findings (2026-09-21, from the TrafficCAM bring-up)
+
+1. **Dead int8 (critical):** `model-int8.onnx` emits all-zero scores on every
+   frame including dense scenes where fp32 peaks at 0.899 — degenerate static
+   quantization, not a domain gap. Every pre-2026-09-21 int8 quality claim is
+   void (latency rows stand). Low tier now runs fp32 (`prefer_int8: false` in
+   `configs/device.yaml` + factory default): measured 5.1–8.2 fps CPU, above
+   the 5 fps target and faster than the dead int8's 200ms/frame. No verified
+   int8 exists; the train notebook now gates packaging on a non-degeneracy
+   assert (max calibration score > 0).
+2. **bbox contract violation (critical):** `OnnxDetector` emitted `(x, y, w, h)`
+   while `VehicleDetection` promises `(x1, y1, x2, y2)` (and Ultralytics emits
+   corners) — the estimator unpacked corners and filtered every real queue
+   out (145/180 zero-queues → 15/180 after the fix). Locked by
+   `test_detect_emits_xyxy_corners_like_ultralytics`.
+3. **NMS threshold (measured, kept):** `_nms` hardcoded 0.45 ignoring the
+   constructor's `iou_threshold` — now wired (default unchanged: F1-neutral
+   per the matching study above).
 
 ## Closed Loop (Phase C lab slice, 2026-09-18)
 

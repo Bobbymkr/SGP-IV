@@ -15,7 +15,10 @@ detection:
   low:
     backend: onnx
     registry_dir: models/registry/india-yolov8n-final
-    prefer_int8: true
+    # prefer_int8=false: the 2026-09-13 static int8 emits all-zero scores
+    # (degenerate quantization). fp32 measures 8.15 fps CPU — above the
+    # 5 fps target — until a verified int8 is promoted.
+    prefer_int8: false
     confidence_threshold: 0.45   # lowered to offset rain degradation
     target_fps: 5                # interpolation fills gaps (D6)
   mid:

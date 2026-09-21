@@ -41,6 +41,8 @@ MERGE_B = {
     "tempo_traveller": "bus", "tempo": "bus",
     # truck-like goods carriers
     "lcv": "truck",
+    # tractor discharges like heavy goods; no dedicated contract class (D7)
+    "tractor": "truck",
 }
 
 
@@ -48,10 +50,13 @@ def _class_index(name: str, option: str = "A"):
     n = name.lower().strip().replace(" ", "_").replace("-", "_")
     aliases = {
         "motorbike": "motorcycle", "moto": "motorcycle", "motor": "motorcycle",
+        "motor_bike": "motorcycle", "moterbike": "motorcycle",
         "two_wheeler": "motorcycle",
         "bicycle": "bicycle", "bike": "bicycle",
         "autorickshaw": "auto", "rickshaw": "auto",
         "three_wheeler": "auto", "auto_rickshaw": "auto",
+        "e_rickshaw": "auto",
+        "lmv": "car",
     }
     if option == "B":
         aliases.update(MERGE_B)
