@@ -38,7 +38,7 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 
 | Layer | Status | Evidence |
 |-------|--------|----------|
-| **Detector (int8 static)** | ✅ Production | 4.98 fps CPU, 0.8477 mAP50 full-val |
+| **Detector (int8 static)** | ✅ Production | 0.8477 mAP50 full-val; 4.98 fps CPU on synthetic frames (recorded-footage bench pending Phase B) |
 | **Decide Path** | ✅ Production | 1.11 ms p50 / 1.83 ms p95 @300 boxes (6× under 10 ms budget) |
 | **Signals** | ✅ Production | Adaptive beats fixed in 11/11 scenarios; `dec_p50/p95_ms` + regression flag |
 | **Integration** | ✅ Production | 48 tests green, `device.yaml:14` → `india-yolov8n-final` |
@@ -52,13 +52,13 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 ### Pre-deployment
 - [ ] Verify `models/registry/india-yolov8n-final/` exists with `model.onnx`, `model-int8.onnx`, `metadata.json`
 - [ ] Confirm `configs/device.yaml:14` points to `models/registry/india-yolov8n-final`
-- [ ] Verify `make bench-detect --backend=onnx --registry=models/registry/india-yolov8n-final` → ~4.98 fps
-- [ ] Verify `make eval` → 11/11 adaptive wins, `dec_p95_ms` ≤ 0.08ms
+- [ ] Verify `python scripts/bench_detect.py --backend=onnx --registry=models/registry/india-yolov8n-final` → ~4.98 fps (synthetic-noise latency only; 0 detections expected)
+- [ ] Verify `make eval` → 11/11 adaptive wins, `dec_p95_ms` ≤ 10ms budget (typical ≤0.08ms on sim states)
 
 ### Deployment Steps
 1. **Edge Device**: Copy `models/registry/india-yolov8n-final/` to target device
 2. **Config**: Ensure `configs/device.yaml` has `active_tier: low` and `registry_dir: models/registry/india-yolov8n-final`
-3. **Calibration**: Run `make bench-detect --backend=onnx --registry=models/registry/india-yolov8n-final --frames=200` to verify latency
+3. **Calibration**: Run `python scripts/bench_detect.py --backend=onnx --registry=models/registry/india-yolov8n-final --frames=200` to verify latency (`make bench-detect` takes no extra args — call the script directly)
 4. **Integration**: Wire detector → queue estimator → scheduler (engine.py) with `OnnxDetector`
 
 ### Monitoring
@@ -97,30 +97,34 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 ## 🎯 Industry Demo Script (5 min)
 
 ### 1. Live Detection (30s)
+
+> Lab status (2026-09-18): no live camera runner is wired yet — `StagedPipeline`
+> exists and is unit-tested, but there is no RTSP/capture loop. The honest live
+> latency proof today is the bench below (synthetic frames, 0 detections
+> expected). Recorded-footage `--frames-dir` support is Phase B.
+
 ```bash
-# On edge device with camera
-python -m adaptive_traffic.core.detection.adapters_onnx \
-  --model models/registry/india-yolov8n-final/model-int8.onnx \
-  --source rtsp://camera_ip:554/stream \
-  --conf 0.45 --device cpu
+# On any box with the registry present:
+python scripts/bench_detect.py --backend=onnx --registry=models/registry/india-yolov8n-final --frames=20
+python scripts/bench_detect.py --backend=onnx --registry=models/registry/india-yolov8n-final --frames=20 --stages
 ```
-Shows: Real-time detection of car/motorcycle/bus/truck/bicycle/auto at ~5 fps
+Shows: int8 detect latency (~200ms/frame CPU) + staged detect+estimate split
 
 ### 2. Adaptive Signal Demo (60s)
 ```bash
-# Terminal 1: Simulation
-python -m adaptive_traffic.core.simulation.engine --config configs/demo_4way.yaml
+# Terminal 1: eval matrix (adaptive vs fixed across 11 scenarios)
+python evals/runner.py
 
-# Terminal 2: Dashboard
-streamlit run src/adaptive_traffic/ui/app.py
+# Terminal 2: sim throughput
+python scripts/bench_sim.py
 ```
-Shows: Adaptive vs Fixed timing comparison, live queue estimates, phase transitions
+Shows: Adaptive vs Fixed timing comparison, wait-time deltas, queue-error columns
 
 ### 3. Latency Proof (30s)
 ```bash
-make bench-decide --registry=models/registry/india-yolov8n-final --count=300
+python scripts/bench_decide.py --counts 50,150,300
 ```
-Shows: `dec_p50_ms=1.11`, `dec_p95_ms=1.83` (budget <10ms ✅)
+Shows: `total_p50≈1.11ms`, `total_p95≈1.83ms` @300 det (budget <10ms ✅)
 
 ---
 

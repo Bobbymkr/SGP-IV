@@ -5,15 +5,10 @@ Shared pytest fixtures for Adaptive Traffic Signal Timer tests
 import pytest
 
 collect_ignore_glob = [
-    # Legacy tests targeting the removed Code/YOLO/darkflow layout
-    # (vehicle_detection_modern.py, run_project.py, simulation.py were
-    # deleted in the 2bb10b9 project restructure). Quarantined, not deleted.
-    "**/test_vehicle_detection_unit.py",
-    "**/test_simulation_unit.py",
-    "**/test_edge_cases.py",
-    "**/test_enhanced_gif.py",
-    "**/test_gif_loading.py",
-    "**/test_enhanced_demo.py",
+    # 2026-09-18 cleanup: the six quarantined files below were DELETED
+    # (see docs/TEST_CLEANUP_LOG.md for hashes + restore commands).
+    # List kept empty intentionally — do not re-add ignores; delete stale
+    # tests instead of quarantining them.
 ]
 
 
