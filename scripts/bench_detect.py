@@ -1,18 +1,25 @@
 """Detection latency benchmark — CPU baseline via the configured DetectorPort backend.
 Record results in docs/BENCHMARKS.md (make bench-detect).
 
-Uses synthetic frames: real traffic footage arrives with Phase T, at which point
-swap --frames-dir to a captured set for realistic numbers.
+Two frame sources:
+- default: synthetic noise (latency-only; 0 detections expected)
+- --frames-dir: real files from disk (recorded footage or rendered sets).
+  Prints a per-frame detection histogram + per-class counts alongside fps,
+  so a `det_total=0` row can no longer pass silently as a quality signal.
 """
 
 import argparse
 import sys
 import time
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from footage import det_hist, load_frames  # noqa: E402
 
 from adaptive_traffic.core.detection.base import DetectorPort  # noqa: E402
 
@@ -29,6 +36,10 @@ def main() -> int:
     p.add_argument("--registry", default="models/registry/india-yolov8n-final",
                    help="onnx registry dir")
     p.add_argument("--frames", type=int, default=20)
+    p.add_argument("--frames-dir", default=None,
+                   help="directory of jpg/png frames (recorded footage or rendered set)")
+    p.add_argument("--max-frames", type=int, default=0,
+                   help="cap frames from --frames-dir (0 = all)")
     p.add_argument("--stages", action="store_true",
                    help="route detect+estimate through StagedPipeline")
     args = p.parse_args()
@@ -45,7 +56,18 @@ def main() -> int:
         print(f"backend '{args.backend}' unavailable: {e}")
         return 1
 
-    frames = synth_frames(args.frames)
+    source = "synth-noise"
+    if args.frames_dir:
+        frames, names, skipped = load_frames(args.frames_dir, args.max_frames)
+        if not frames:
+            print(f"no readable frames in {args.frames_dir} (skipped={skipped})")
+            return 1
+        source = f"frames-dir:{args.frames_dir}"
+        if skipped:
+            print(f"warning: skipped {skipped} unreadable files in {args.frames_dir}")
+    else:
+        frames = synth_frames(args.frames)
+        names = [f"synth_{i}" for _ in range(len(frames))]
     if args.stages:
         from adaptive_traffic.config.city_profile import get_city_profile  # noqa: E402
         from adaptive_traffic.core.analytics.queue_estimator import QueueEstimator  # noqa: E402
@@ -58,28 +80,35 @@ def main() -> int:
         # covered by unit tests instead.
         results = [pipe.process(f) for f in frames]
         det_ms = est_ms = 0.0
-        total = 0
+        counts, classes = [], Counter()
         for res in results:
             det_ms += res.stage_ms["detect"]
             est_ms += res.stage_ms["estimate"]
             raw = res.detections
-            total += len(raw.detections if hasattr(raw, "detections") else raw)
+            dets = raw.detections if hasattr(raw, "detections") else raw
+            counts.append(len(dets))
+            classes.update(d.class_name for d in dets)
         n = len(results)
-        print(f"backend={args.backend} stages=detect+estimate frames={n} "
-              f"detect_ms={det_ms / n:.3f} estimate_ms={est_ms / n:.3f} det_total={total}")
+        print(f"backend={args.backend} source={source} stages=detect+estimate frames={n} "
+              f"detect_ms={det_ms / n:.3f} estimate_ms={est_ms / n:.3f} det_total={sum(counts)}")
+        print(f"det_hist={det_hist(counts)} class_counts={dict(classes)}")
         return 0
     det = detector.detect(frames[0])  # warmup
     print(f"warmup detections: {len(det.detections)}")
 
     t0 = time.perf_counter()
-    total = 0
+    counts, classes = [], Counter()
     for f in frames:
-        total += len(detector.detect(f).detections)
+        dets = detector.detect(f).detections
+        counts.append(len(dets))
+        classes.update(d.class_name for d in dets)
     elapsed = time.perf_counter() - t0
 
-    fps = args.frames / elapsed
-    lat_ms = elapsed / args.frames * 1000
-    print(f"backend={args.backend} frames={args.frames} fps={fps:.2f} latency={lat_ms:.1f}ms/frame det_total={total}")
+    fps = len(frames) / elapsed
+    lat_ms = elapsed / len(frames) * 1000
+    print(f"backend={args.backend} source={source} frames={len(frames)} fps={fps:.2f} "
+          f"latency={lat_ms:.1f}ms/frame det_total={sum(counts)}")
+    print(f"det_hist={det_hist(counts)} class_counts={dict(classes)}")
     return 0
 
 
