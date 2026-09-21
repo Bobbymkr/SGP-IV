@@ -392,10 +392,10 @@ def _trafficcam_objects(ann: dict) -> list:
                                 if area > best_area:
                                     best, best_area = bb, area
                         bbox = best
-                    elif isinstance(first, (list, tuple)) and first and isinstance(
-                        first[0], (list, tuple)
+                    elif isinstance(first, (list, tuple)) and all(
+                        isinstance(q, (list, tuple)) and len(q) == 2 for q in p
                     ):
-                        bbox = _poly_to_bbox(p)  # [[x,y],...] point list
+                        bbox = _poly_to_bbox(p)  # [[x,y],...] labelme/CVAT point list
                     elif isinstance(first, (list, tuple)):
                         # [flat, flat, ...]: several flat polygons, use largest
                         best, best_area = None, -1.0
@@ -437,6 +437,8 @@ def convert_trafficcam(raw_root: Path, out_root: Path, option: str = "B"):
 
     captures = []
     n_frames = n_dropped_class = n_unknown_shape = n_missing_img = 0
+    kept_names: dict = {}
+    dropped_names: dict = {}
     for jf in jsons:
         video_id = jf.parent.name
         stem = jf.stem  # frame<N>
@@ -471,7 +473,9 @@ def convert_trafficcam(raw_root: Path, out_root: Path, option: str = "B"):
             idx = _class_index(o["category"], option)
             if idx is None:
                 n_dropped_class += 1
+                dropped_names[o["category"]] = dropped_names.get(o["category"], 0) + 1
                 continue
+            kept_names[o["category"]] = kept_names.get(o["category"], 0) + 1
             x1, y1, x2, y2 = o["bbox"]
             bw, bh = x2 - x1, y2 - y1
             if bw <= 0 or bh <= 0:
@@ -506,18 +510,27 @@ def convert_trafficcam(raw_root: Path, out_root: Path, option: str = "B"):
                 "time_of_day": "unknown",
             }
         )
+
+    def _report(n_videos):
+        return (
+            f"trafficcam: wrote {n_frames} frames from {n_videos} videos; "
+            f"dropped {n_dropped_class} objects (class); "
+            f"{n_unknown_shape} jsons unreadable-shape; "
+            f"{n_missing_img} jsons without image/dims\n"
+            f"  kept: {dict(sorted(kept_names.items()))}\n"
+            f"  dropped: {dict(sorted(dropped_names.items()))}"
+        )
+
     if n_frames == 0:
         sys.exit(
-            "trafficcam: wrote 0 frames — check raw_root layout "
+            _report("?") + " — check raw_root layout "
             "(expected <video>/frame<N>.jpg + frame<N>.json)"
         )
     (out_root / "meta").mkdir(exist_ok=True)
     seen = set()
     uniq = [c for c in captures if not (c["clip_id"] in seen or seen.add(c["clip_id"]))]
     (out_root / "meta" / "captures.json").write_text(json.dumps(uniq, indent=2), encoding="utf-8")
-    print(f"trafficcam: wrote {n_frames} frames from {len(uniq)} videos; "
-          f"dropped {n_dropped_class} objects (class); {n_unknown_shape} jsons unreadable-shape; "
-          f"{n_missing_img} jsons without image/dims")
+    print(_report(len(uniq)))
     _write_data_yaml(out_root)
 
 

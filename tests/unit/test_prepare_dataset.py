@@ -210,6 +210,17 @@ def trafficcam_raw(tmp_path: Path) -> Path:
             {"category": "motor", "segmentation": {"counts": [5, 2, 2, 2, 5], "size": [4, 4]}},
         ],
     }), encoding="utf-8")
+    # labelme-style point list: [[x,y],...] must box all points (regression:
+    # an early branch read these as zero-area boxes and wrote 0 frames)
+    v3 = raw / "HYD_clip03"
+    v3.mkdir(parents=True)
+    (v3 / "frame0.jpg").touch()
+    (v3 / "frame0.json").write_text(_json.dumps({
+        "version": "5.0.1", "imageHeight": 100, "imageWidth": 200,
+        "shapes": [
+            {"label": "MotorBike", "points": [[10, 10], [30, 10], [30, 50], [10, 50]]},
+        ],
+    }), encoding="utf-8")
     return raw
 
 
@@ -217,7 +228,7 @@ def test_trafficcam_geometries_and_video_split_hygiene(trafficcam_raw: Path, tmp
     out = tmp_path / "out"
     convert_trafficcam(trafficcam_raw, out, option="B")
     labels = list((out / "labels").rglob("*.txt"))
-    assert len(labels) == 3  # frame0+frame2 of v1, frame0 of v2
+    assert len(labels) == 4  # frame0+frame2 of v1, frame0 of v2/v3
     # bbox path: car(0) kept, Person dropped
     f0 = next(p for p in labels if p.stem == "BLR_clip01_frame0")
     assert f0.read_text().splitlines() == ["0 0.083333 0.145833 0.138889 0.208333"]
@@ -227,12 +238,15 @@ def test_trafficcam_geometries_and_video_split_hygiene(trafficcam_raw: Path, tmp
     # RLE path: motor->motorcycle(1), (1,1,2,2) on 4x4
     fr = next(p for p in labels if p.stem == "DEL_clip02_frame0")
     assert fr.read_text().splitlines() == ["1 0.375000 0.375000 0.250000 0.250000"]
+    # labelme path: MotorBike->motorcycle(1), points box (10,10,30,50) on 200x100
+    fl = next(p for p in labels if p.stem == "HYD_clip03_frame0")
+    assert fl.read_text().splitlines() == ["1 0.100000 0.300000 0.100000 0.400000"]
     # whole videos in one split each (no temporal leak)
     splits = {p.parent.name for p in labels if p.stem.startswith("BLR_clip01")}
     assert len(splits) == 1
     caps = __import__("json").loads((out / "meta" / "captures.json").read_text())
-    assert {c["clip_id"] for c in caps} == {"BLR_clip01", "DEL_clip02"}
-    assert {c["city"] for c in caps} == {"BLR", "DEL"}
+    assert {c["clip_id"] for c in caps} == {"BLR_clip01", "DEL_clip02", "HYD_clip03"}
+    assert {c["city"] for c in caps} == {"BLR", "DEL", "HYD"}
 
 
 def test_trafficcam_fails_fast_on_empty(tmp_path: Path):
