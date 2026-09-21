@@ -62,7 +62,10 @@ class OnnxDetector(DetectorPort):
     def from_registry(
         cls,
         registry_dir: str,
-        prefer_int8: bool = True,
+        # Default False: the static-int8 export shipped 2026-09-13 emits all-zero
+        # scores (degenerate scales) — fp32 until a verified int8 lands. Pass
+        # prefer_int8=True only with a non-degeneracy check on real frames.
+        prefer_int8: bool = False,
         city_profile: Optional[CityProfile] = None,
         **kwargs,
     ) -> "OnnxDetector":
@@ -123,18 +126,20 @@ class OnnxDetector(DetectorPort):
             if confidence < threshold:
                 continue
 
+            # Contract: bbox is (x1, y1, x2, y2) in original-frame pixels
+            # (same as UltralyticsDetector) — the estimator unpacks corners,
+            # so (x, y, w, h) here silently empties every queue downstream.
+            x1 = int((cx - bw / 2) * scale_x)
+            y1 = int((cy - bh / 2) * scale_y)
+            x2 = int((cx + bw / 2) * scale_x)
+            y2 = int((cy + bh / 2) * scale_y)
             detections.append(
                 VehicleDetection(
                     class_id=class_id,
                     class_name=mapped_name,
                     confidence=confidence,
-                    bbox=(
-                        int((cx - bw / 2) * scale_x),
-                        int((cy - bh / 2) * scale_y),
-                        int(bw * scale_x),
-                        int(bh * scale_y),
-                    ),
-                    center=(int(cx * scale_x), int(cy * scale_y)),
+                    bbox=(x1, y1, x2, y2),
+                    center=((x1 + x2) // 2, (y1 + y2) // 2),
                 )
             )
 
@@ -167,8 +172,7 @@ class OnnxDetector(DetectorPort):
         mask = scores >= self.confidence_threshold
         return boxes_xywh[mask], scores[mask], class_ids[mask]
 
-    @staticmethod
-    def _nms(boxes: np.ndarray, scores: np.ndarray) -> list:
+    def _nms(self, boxes: np.ndarray, scores: np.ndarray) -> list:
         import cv2
 
         if len(boxes) == 0:
@@ -186,6 +190,6 @@ class OnnxDetector(DetectorPort):
             xyxy.tolist(),
             scores.astype(np.float32).tolist(),
             score_threshold=0.0,
-            nms_threshold=0.45,
+            nms_threshold=self.iou_threshold,
         )
         return np.array(indices).flatten().tolist()

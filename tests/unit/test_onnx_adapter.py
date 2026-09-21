@@ -59,3 +59,25 @@ def test_detect_transposes_export_layout():
     res = det.detect(frame)
     assert len(res.detections) == 1
     assert res.detections[0].class_name == "auto"
+
+
+def test_detect_emits_xyxy_corners_like_ultralytics():
+    """Contract: bbox is (x1, y1, x2, y2). The estimator unpacks corners, so
+    an (x, y, w, h) box here silently empties every queue downstream."""
+    det = _detector()
+    out = np.zeros((1, 10, 8400), dtype=np.float32)
+    out[0, :, 0] = _export_layout_row()  # cx=320, cy=320, w=h=100
+
+    class FakeSession:
+        def run(self, _outputs, _inputs):
+            return [out]
+
+    det.session = FakeSession()
+    det.input_name = "images"
+
+    frame = np.zeros((480, 640, 3), dtype=np.uint8)  # scale_x=1.0, scale_y=0.75
+    (d,) = det.detect(frame).detections
+    assert d.bbox == (270, 202, 370, 277)
+    assert d.center == (320, 239)
+    x1, y1, x2, y2 = d.bbox
+    assert x2 > x1 and y2 > y1  # corners, not (x, y, w, h)
