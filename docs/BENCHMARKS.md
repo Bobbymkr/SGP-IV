@@ -22,6 +22,7 @@ unnecessary; NumPy vectorization still planned if eval matrix wall-time demands 
 | 2026-09-10 | onnx int8 static (india-yolov8n-bmd, CPU) | 3.14 | 319ms/frame on 20 synthetic-noise frames (vs 0.68 fps for the dynamic-fallback pilot int8 — static quant confirmed faster). 0 detections expected on noise. |
 | 2026-09-13 | onnx int8 static (india-yolov8n-final, CPU) | 4.98 | 200.6ms/frame on 20 synthetic-noise frames (polish did not regress latency; vs 3.14 fps for loop-8). Finale mAP50 0.8477 full-val. |
 | 2026-09-13 | trained model quality (finale joint polish, full 10k val) | — | **0.8477 overall (+0.0184 vs loop-8 0.8293 anchor, full-val)**; per-class car 0.9189 auto 0.9171 moto 0.8887 bus 0.846 truck 0.8294 bicycle 0.6859; 5ep low-LR from loop-8. |
+| 2026-09-18 | onnx int8 static (india-yolov8n-final, CPU, `--frames-dir`) | 4.96 | 201.5ms/frame on 576 rendered test frames (`data/synthetic_india_yolo/images/test`); `det_total=0`, 576/576 zero-frames. Latency matches the noise row — but the renders are near-black schematics (mean 0.47 labels/frame, few-px boxes), so the photo-trained model is blind here. Verdict: `--frames-dir` path proven, renders unsuitable for quality; recorded phone footage is the real next source. |
 
 ## Decide Path (`scripts/bench_decide.py`)
 
@@ -33,11 +34,37 @@ unnecessary; NumPy vectorization still planned if eval matrix wall-time demands 
 | 2026-09-13 | 50 | 0.30ms | ~0ms | 0.04ms | 0.30ms | 0.45ms | <10ms ✅ |
 | 2026-09-13 | 150 | 0.81ms | ~0ms | 0.03ms | 0.56ms | 0.93ms | <10ms ✅ |
 | 2026-09-13 | 300 | 1.13ms | ~0ms | 0.02ms | 1.11ms | 1.83ms | <10ms ✅ (5× headroom) |
+| 2026-09-21 | 50 | 0.30ms | ~0ms | 0.04ms | 0.30ms | 0.54ms | <10ms ✅ |
+| 2026-09-21 | 150 | 0.74ms | ~0ms | 0.03ms | 0.82ms | 1.28ms | <10ms ✅ |
+| 2026-09-21 | 300 | 2.01ms | ~0ms | 0.06ms | 2.16ms | 2.93ms | <10ms ✅ (3× headroom) |
 
 Estimator scales ~3.3µs/detection (linear); decide path flat ~0.02ms.
 Verdict: Steps 3–4 (estimator optimization) NOT needed — budget met with 6×
 headroom at 300 boxes. Effort goes to durations (Step 1) + event triggering
 (Step 2) + eval latency columns (Step 4).
+
+2026-09-21: estimate @300 rose 1.13→2.01ms from per-class queue aggregation
+(`by_class` for the weighted green policy). Budget still met 3× — no action.
+
+## Policy Ports (2026-09-21, plug-and-play timing)
+
+`core/control/policies.py`: HeadwayTable (per-class discharge seconds, city-
+overridable) + Green (weighted discharge) + Order (clockwise default, argmax
+legacy) + Cap (dynamic demand-share) + Emergency/Manual priority + MARL
+`Independent` slot. Engine delegates via injected policies; legacy behavior is
+one config away (`green_policy=flat, order_policy=argmax, cap_policy=fixed_max`).
+`QueueEstimate.by_class` feeds class mix through `closed_loop.inject_estimate`
+(typed vehicles, all-CAR fallback for old estimates).
+
+Attribution (trimmed 1500-step runs): weighted+argmax+share == legacy to the
+digit on sim traffic (mixed sim fleets average ~2.0s/veh; share cap rarely
+binds) — the duration/cap change is neutral in sim and only bites with real
+detector class mixes. The 4 eval regressions are 100% the clockwise order:
+5-way (4 groups × 15s floor rotation) +29%, saturated 4-way waterlogged
++9–18% (strict alternation vs greedy back-to-back service). Still beats fixed
+19–75% everywhere; `dec95_a` ≤0.11ms. Clockwise is the operator requirement
+(predictable right-hand rule, smooth transitions); argmax stays one flag away.
+Mid-phase preempt (>25% imbalance) partially offsets heavy-direction waits.
 
 ## Adaptive Durations (Steps 1+2+4, 2026-09-10)
 
@@ -65,6 +92,7 @@ scenarios (deltas +2.9% … +79.6%); scorecard carries `dec_p50/p95_ms` with a
 | Date | Scenarios | Wall | Notes |
 |------|-----------|------|-------|
 | 2026-08-26 | 11 scenarios × {adaptive, fixed} multiprocess | 22.4s | first scorecard: evals/results/scorecard_*.json |
+| 2026-09-21 | 11 scenarios × {adaptive, fixed} multiprocess | 12.5s | policy-ports run (`evals/results/scorecard_1789972903.json`): 11/11 adaptive wins (deltas +19.3% … +75.2%), `dec95_a` ≤0.11ms; 4 regressions vs argmax run flagged above (order-policy cost, accepted) |
 
 Headline findings (see scorecard): adaptive scheduling cuts avg waiting time 76.5% on
 5-way and 31% on 3-way; fixed-time competitive on balanced 4-ways. Queue-estimation
@@ -100,6 +128,39 @@ canonical 4.98 fps row; estimate 0.055ms (0 dets on noise; scales ~3.3µs/det
 per the Decide-Path table). Methodology note: an early version of this flag
 submitted all frames up front and divided by n while the buffer held 4 —
 caught by the numbers, fixed to inline `process()` per frame.
+
+## Queue-Error Proxy (`scripts/score_queue.py`, Phase B 2026-09-18)
+
+Labels-as-GT on the 576 rendered test frames (proxy: labels count ALL visible
+vehicles, estimator counts queue-zone only — expect systematic undercount):
+
+| Conf | det RMSE/MAE/bias | queue RMSE/MAE/bias | Per-weather queue RMSE (clear/light/monsoon/waterlogged) | Trigger |
+|------|-------------------|---------------------|----------------------------------------------------------|---------|
+| 0.45 | 0.788/0.465/-0.465 | 0.788/0.465/-0.465 | 0.95 / 0.81 / 0.58 / 0.76 | INCONCLUSIVE |
+| 0.50 | 0.788/0.465/-0.465 | 0.788/0.465/-0.465 | 0.95 / 0.81 / 0.58 / 0.76 | INCONCLUSIVE |
+
+Identical rows = detector found 0/576 (threshold irrelevant when blind). The
+0.788 RMSE is pure domain gap (bias −0.465 = GT mean), NOT interpolation error,
+so the 0.5 hybrid trigger is **undecided, not fired** — the script gates the
+verdict on detector non-blindness. Per-frame rows in
+`evals/results/queue_proxy_conf04{5,0}.csv`. First honest qerr needs phone
+footage + `--gt-csv` hand counts (protocol in TESTING_DOCUMENTATION.md).
+
+## Closed Loop (Phase C lab slice, 2026-09-18)
+
+`scripts/run_closed_loop.py` (frames → detect → estimate → decide → actuate,
+mock STMP): 10/10 actuated on rendered test frames in 2.2s; zero-demand holds
+position (`0_green`↔`0_yellow`, cycle 74s = 30+30 greens + 5+5 yellow + 2+2
+all-red). `--ntcip-ip` aims the same loop at a real controller (hardware
+handoff, untested).
+
+Wire-level STMP fix (found by `tests/integration/test_stmp_wire.py`, fixed same
+day): OID BER set the continuation bit on the wrong bytes (every OID containing
+1206 — i.e. all of them — was malformed), and a full 4-phase SET crashed in
+`struct.pack("!B", len)` (~300B of varbinds vs a 1-byte prefix) before anything
+reached the wire. Fixed with correct base-128 continuation + BER long-form
+lengths. The real adapter had therefore never sent a complete timing plan;
+`_parse_stmp_response` remains an unimplemented stub (GET returns defaults).
 
 ## Deliberate skips (measured, not deferred)
 

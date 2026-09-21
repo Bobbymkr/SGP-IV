@@ -45,7 +45,8 @@
 │  ├── TrafficSimulation        → Microscopic sim, N-way scheduler        │
 │  ├── BehaviorEngine           → 3 India presets (disciplined/urban/agg) │
 │  ├── WeatherModel             → 4 states (clear/rain/monsoon/waterlog)  │
-│  ├── Controllers (Fixed/Webster/Fuzzy/DQN)                             │
+│  ├── Controllers (Fixed/Webster/Fuzzy/DQN — dormant alternatives)     │
+│  ├── Timing policies (Headway/Green/Order/Cap ports — canonical path)  │
 │  ├── QueueEstimator           → px_to_m, vehicle lengths, BSM fusion    │
 │  └── RobustnessEvaluator      → Incident scenarios with city weights    │
 ├─────────────────────────────────────────────────────────────────────────┤
@@ -129,6 +130,31 @@ Camera Frame → DetectorPort.create(backend, city_profile)
 - `ultralytics` (default): YOLOv8, PyTorch, GPU/CPU
 - `onnx`: ONNX Runtime int8/fp32, CPU/CUDA/NPU
 - `tensorrt`: TensorRTDetector (ORT TRT-EP fp16, engine cache); onnx fallback when provider absent
+
+## Signal Timing Pipeline (policies — screenshot-in → green-out)
+
+```
+Screenshot/approach (all-red) → DetectorPort.detect
+    → QueueEstimator.estimate_from_detections → QueueEstimate{by_direction, by_class}
+        → inject_estimate (typed sim vehicles; all-CAR fallback)
+            → GreenPolicy (weighted discharge: startup + Σ n_class × h_class, city headways)
+            → CapPolicy (dynamic demand-share ceiling from cycle_budget_s)
+            → OrderPolicy (clockwise right-hand rule + zero-skip; argmax via flag)
+                → Priority: manual protocol (route-scoped, suppresses EVP there)
+                  > EVP preempt > adaptive plan
+                    → NTCIP STMP SET → Controller (+ J2735 SPAT)
+```
+
+- Ports + default adapters live in `core/control/policies.py`; engine holds
+  injected policies (`green_policy`/`order_policy`/`cap_policy` config keys,
+  legacy = `flat`/`argmax`/`fixed_max`). `HeadwayTable` merges
+  `CityProfile.discharge_headways` over PCE defaults — per-city calibration is
+  data, never code.
+- `core/control/controllers.py` (Fixed/Webster/Fuzzy/DQN) is **dormant**:
+  alternative `compute_timing` implementations, unwired from eval/closed-loop;
+  Webster remains the documented fallback pattern.
+- `CoordinationPort` (`Independent` = standalone today) is the MARL slot: a
+  future coordinator biases `cycle_budget_s`/offsets per cycle, never phases.
 
 ## Simulation & Evaluation
 

@@ -11,6 +11,11 @@ categories by name onto the contract schema.
 <filename>, <size>, and <object>/<bndbox> tags) and maps category names onto
 the contract schema. Used for the IITM-HeTra_v2 pilot from the kalyan1729
 traffic-management dataset.
+--source trafficcam expects the TrafficCAM layout (per-video dirs with
+frame<N>.jpg + frame<N>.json for annotated frames; JSON objects carry
+polygons/RLE-masks/bboxes) and maps categories onto the contract schema.
+Whole videos stay in one split (no temporal leak); splits are a deterministic
+hash over video IDs. Unlabelled frames are skipped.
 """
 
 import argparse
@@ -19,6 +24,7 @@ import random
 import shutil
 import sys
 from pathlib import Path
+from typing import Optional
 
 CONTRACT_CLASSES = ["car", "motorcycle", "bus", "truck", "bicycle", "auto"]
 SPLITS = ("train", "val", "test")
@@ -41,7 +47,7 @@ MERGE_B = {
 def _class_index(name: str, option: str = "A"):
     n = name.lower().strip().replace(" ", "_").replace("-", "_")
     aliases = {
-        "motorbike": "motorcycle", "moto": "motorcycle",
+        "motorbike": "motorcycle", "moto": "motorcycle", "motor": "motorcycle",
         "two_wheeler": "motorcycle",
         "bicycle": "bicycle", "bike": "bicycle",
         "autorickshaw": "auto", "rickshaw": "auto",
@@ -282,6 +288,239 @@ def convert_voc(raw_root: Path, out_root: Path, option: str = "A"):
     _write_data_yaml(out_root)
 
 
+def _rle_to_bbox(counts, height: int, width: int):
+    """COCO-style RLE -> (xmin, ymin, xmax, ymax) in pixels. Stdlib + list ops
+    only (no pycocotools dependency); TrafficCAM-scale masks are small."""
+    total = height * width
+    vals = []
+    v = 0
+    for c in counts:
+        vals.extend([v] * int(c))
+        v = 1 - v
+    if len(vals) < total:
+        vals.extend([0] * (total - len(vals)))
+    vals = vals[:total]
+    cols = [i % width for i, x in enumerate(vals) if x]
+    rows = [i // width for i, x in enumerate(vals) if x]
+    if not cols:
+        return None
+    return (min(cols), min(rows), max(cols), max(rows))
+
+
+def _poly_to_bbox(poly) -> Optional[tuple]:
+    """Flattened [x1,y1,x2,y2,...] or [[x,y],...] -> (xmin, ymin, xmax, ymax)."""
+    if not poly:
+        return None
+    if isinstance(poly[0], (list, tuple)):
+        xs = [float(p[0]) for p in poly]
+        ys = [float(p[1]) for p in poly]
+    else:
+        xs = [float(poly[i]) for i in range(0, len(poly) - 1, 2)]
+        ys = [float(poly[i + 1]) for i in range(0, len(poly) - 1, 2)]
+    if not xs:
+        return None
+    return (min(xs), min(ys), max(xs), max(ys))
+
+
+def _trafficcam_objects(ann: dict) -> list:
+    """Normalize one frame JSON to [{category, bbox_xyxy, width, height}].
+
+    Accepts the shapes segmentation datasets actually ship: instance lists
+    under various keys, polygon / RLE / direct-bbox geometries, and
+    Cityscapes-style flat object lists. Unknown shapes return [] (caller
+    reports the count so a schema change is loud, not silent).
+    """
+    if isinstance(ann, list):
+        candidates = ann
+    else:
+        candidates = []
+        for key in ("objects", "instances", "annotations", "labels", "shapes"):
+            v = ann.get(key)
+            if isinstance(v, list):
+                candidates.extend(v)
+    img_w = img_h = None
+    if isinstance(ann, dict):
+        for key in ("imageWidth", "width", "imgWidth"):
+            if ann.get(key):
+                img_w = int(ann[key])
+                break
+        for key in ("imageHeight", "height", "imgHeight"):
+            if ann.get(key):
+                img_h = int(ann[key])
+                break
+    out = []
+    for o in candidates:
+        if not isinstance(o, dict):
+            continue
+        cname = o.get("category") or o.get("label") or o.get("class") or o.get("name")
+        bbox = None
+        for key in ("bbox", "box2d", "box", "bndbox"):
+            b = o.get(key)
+            if isinstance(b, (list, tuple)) and len(b) == 4:
+                x, y, w, h = (float(v) for v in b)
+                # Heuristic: w,h <= 2 with x,y < 2 smell normalized cx,cy — not
+                # supported; absolute pixels only.
+                bbox = (x, y, x + w, y + h)
+                break
+            if isinstance(b, dict):
+                try:
+                    x1 = float(b.get("x1", b.get("xmin")))
+                    y1 = float(b.get("y1", b.get("ymin")))
+                    x2 = float(b.get("x2", b.get("xmax")))
+                    y2 = float(b.get("y2", b.get("ymax")))
+                except (TypeError, ValueError):
+                    continue
+                bbox = (x1, y1, x2, y2)
+                break
+        if bbox is None:
+            for key in ("segmentation", "polygon", "points", "poly2d", "vertices"):
+                p = o.get(key)
+                if isinstance(p, dict):  # RLE {counts, size}
+                    counts, size = p.get("counts"), p.get("size")
+                    if counts and size and img_w and img_h:
+                        bbox = _rle_to_bbox(counts, img_h, img_w)
+                    break
+                if isinstance(p, list) and p:
+                    first = p[0]
+                    if isinstance(first, dict):  # multi-part: use largest part
+                        best, best_area = None, -1.0
+                        for part in p:
+                            pts = part.get("points", part.get("vertices", part))
+                            bb = _poly_to_bbox(pts) if isinstance(pts, list) else None
+                            if bb:
+                                area = (bb[2] - bb[0]) * (bb[3] - bb[1])
+                                if area > best_area:
+                                    best, best_area = bb, area
+                        bbox = best
+                    elif isinstance(first, (list, tuple)) and first and isinstance(
+                        first[0], (list, tuple)
+                    ):
+                        bbox = _poly_to_bbox(p)  # [[x,y],...] point list
+                    elif isinstance(first, (list, tuple)):
+                        # [flat, flat, ...]: several flat polygons, use largest
+                        best, best_area = None, -1.0
+                        for poly in p:
+                            bb = _poly_to_bbox(poly)
+                            if bb:
+                                area = (bb[2] - bb[0]) * (bb[3] - bb[1])
+                                if area > best_area:
+                                    best, best_area = bb, area
+                        bbox = best
+                    else:
+                        bbox = _poly_to_bbox(p)  # flat [x1,y1,...]
+                    break
+        if bbox is None or not cname:
+            continue
+        out.append({"category": str(cname), "bbox": bbox, "width": img_w, "height": img_h})
+    return out
+
+
+def convert_trafficcam(raw_root: Path, out_root: Path, option: str = "B"):
+    """TrafficCAM video dirs -> contract. Only annotated frames convert.
+
+    Layout: <video_id>/frame<N>.jpg + frame<N>.json (Fully_annotate: all 30
+    frames; FirstFrame_annotate: frame0 only). Whole videos hash into one
+    split — consecutive frames never leak across splits. Writes
+    meta/captures.json (clip_id = video id, city = id prefix) for split
+    hygiene. Defaults to Option B: TrafficCAM ships fine-grained Indian
+    vehicle classes that need the Bengaluru-style merge.
+    """
+    import hashlib
+
+    jsons = sorted(raw_root.rglob("frame*.json"))
+    if not jsons:
+        sys.exit("no TrafficCAM frame*.json found under raw_root")
+    img_index: dict = {}
+    for pat in ("*.jpg", "*.jpeg", "*.png", "*.JPG", "*.JPEG", "*.PNG"):
+        for p in raw_root.rglob(pat):
+            img_index.setdefault((p.parent.name, p.stem), p)
+
+    captures = []
+    n_frames = n_dropped_class = n_unknown_shape = n_missing_img = 0
+    for jf in jsons:
+        video_id = jf.parent.name
+        stem = jf.stem  # frame<N>
+        try:
+            ann = json.loads(jf.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            continue
+        objs = _trafficcam_objects(ann)
+        if not objs:
+            # Distinguish "no instances" from "unreadable schema": a JSON with
+            # zero parseable objects is counted, not silently skipped.
+            n_unknown_shape += 1
+            continue
+        img_path = img_index.get((video_id, stem))
+        if img_path is None or not img_path.exists():
+            n_missing_img += 1
+            continue
+        iw = objs[0]["width"] or 0
+        ih = objs[0]["height"] or 0
+        if iw <= 0 or ih <= 0:
+            # Fall back to actual image size when the JSON omits dimensions.
+            try:
+                import cv2
+
+                im = cv2.imread(str(img_path))
+                ih, iw = im.shape[:2]
+            except Exception:
+                n_missing_img += 1
+                continue
+        yolo_lines = []
+        for o in objs:
+            idx = _class_index(o["category"], option)
+            if idx is None:
+                n_dropped_class += 1
+                continue
+            x1, y1, x2, y2 = o["bbox"]
+            bw, bh = x2 - x1, y2 - y1
+            if bw <= 0 or bh <= 0:
+                continue
+            x1c, y1c = max(0.0, x1), max(0.0, y1)
+            x2c, y2c = min(float(iw), x2), min(float(ih), y2)
+            if x2c <= x1c or y2c <= y1c:
+                continue
+            yolo_lines.append(
+                f"{idx} {(x1c + x2c) / 2 / iw:.6f} {(y1c + y2c) / 2 / ih:.6f} "
+                f"{(x2c - x1c) / iw:.6f} {(y2c - y1c) / ih:.6f}"
+            )
+        if not yolo_lines:
+            continue
+        h = int(hashlib.md5(video_id.encode()).hexdigest(), 16) % 10
+        split = "val" if h == 0 else ("test" if h == 1 else "train")
+        (out_root / "images" / split).mkdir(parents=True, exist_ok=True)
+        (out_root / "labels" / split).mkdir(parents=True, exist_ok=True)
+        out_name = f"{video_id}_{stem}.jpg"
+        shutil.copy2(img_path, out_root / "images" / split / out_name)
+        (out_root / "labels" / split / f"{video_id}_{stem}.txt").write_text(
+            "\n".join(yolo_lines) + "\n", encoding="utf-8"
+        )
+        n_frames += 1
+        prefix = video_id.split("_")[0]
+        captures.append(
+            {
+                "clip_id": video_id,
+                "junction_type": "other",
+                "city": prefix if prefix.isalpha() else "unknown",
+                "weather": "unknown",
+                "time_of_day": "unknown",
+            }
+        )
+    if n_frames == 0:
+        sys.exit(
+            "trafficcam: wrote 0 frames — check raw_root layout "
+            "(expected <video>/frame<N>.jpg + frame<N>.json)"
+        )
+    (out_root / "meta").mkdir(exist_ok=True)
+    seen = set()
+    uniq = [c for c in captures if not (c["clip_id"] in seen or seen.add(c["clip_id"]))]
+    (out_root / "meta" / "captures.json").write_text(json.dumps(uniq, indent=2), encoding="utf-8")
+    print(f"trafficcam: wrote {n_frames} frames from {len(uniq)} videos; "
+          f"dropped {n_dropped_class} objects (class); {n_unknown_shape} jsons unreadable-shape; "
+          f"{n_missing_img} jsons without image/dims")
+    _write_data_yaml(out_root)
+
+
 def check(dataset_root: Path) -> int:
     errors = []
     for split in SPLITS:
@@ -347,7 +586,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("root", type=Path)
     ap.add_argument("--out", type=Path, help="output dataset root when converting")
-    ap.add_argument("--source", choices=("yolo", "coco", "voc"), default="yolo")
+    ap.add_argument("--source", choices=("yolo", "coco", "voc", "trafficcam"), default="yolo")
     ap.add_argument("--option", choices=("A", "B"), default="A",
                     help="A: exact 6-class match only; B: merge Bengaluru fine-grained classes")
     ap.add_argument("--check", action="store_true")
@@ -365,6 +604,8 @@ def main():
         convert_coco(args.root, args.out, args.option)
     elif args.source == "voc":
         convert_voc(args.root, args.out, args.option)
+    elif args.source == "trafficcam":
+        convert_trafficcam(args.root, args.out, args.option)
     else:
         convert_yolo(args.root, args.out)
     print(f"wrote {args.out}; run --check next")

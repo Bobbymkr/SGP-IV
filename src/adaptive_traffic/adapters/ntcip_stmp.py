@@ -88,7 +88,8 @@ class NTCIP1202STMPAdapter(NTCIPPort):
         encoded = [40 * parts[0] + parts[1]]
         for part in parts[2:]:
             encoded.append(part)
-        # BER encode each part
+        # BER encode each part (base-128, continuation bit on every
+        # group except the last-emitted one)
         result = b""
         for part in encoded:
             if part < 128:
@@ -98,10 +99,23 @@ class NTCIP1202STMPAdapter(NTCIPPort):
                 bytes_needed = (part.bit_length() + 6) // 7
                 for i in range(bytes_needed - 1, -1, -1):
                     byte = (part >> (7 * i)) & 0x7F
-                    if i != bytes_needed - 1:
+                    if i != 0:
                         byte |= 0x80
                     result += struct.pack("!B", byte)
         return result
+
+    @staticmethod
+    def _encode_length(n: int) -> bytes:
+        """BER length octets: short form below 128, long form above.
+
+        A full 4-phase SET is ~300 bytes of varbinds, so the single-byte
+        prefix used to crash packing ("ubyte format requires ... <= 255")
+        before anything reached the wire.
+        """
+        if n < 128:
+            return struct.pack("!B", n)
+        raw = n.to_bytes((n.bit_length() + 7) // 8, "big")
+        return struct.pack("!B", 0x80 | len(raw)) + raw
 
     def _build_varbind(self, oid: str, value: int) -> bytes:
         """Build SNMP varbind for STMP payload"""
@@ -113,9 +127,9 @@ class NTCIP1202STMPAdapter(NTCIPPort):
             value_bytes = struct.pack("!H", value) if value < 65536 else struct.pack("!I", value)
 
         # Varbind: SEQUENCE { OID, INTEGER }
-        varbind_content = b"\x06" + struct.pack("!B", len(oid_bytes)) + oid_bytes
-        varbind_content += b"\x02" + struct.pack("!B", len(value_bytes)) + value_bytes
-        return b"\x30" + struct.pack("!B", len(varbind_content)) + varbind_content
+        varbind_content = b"\x06" + self._encode_length(len(oid_bytes)) + oid_bytes
+        varbind_content += b"\x02" + self._encode_length(len(value_bytes)) + value_bytes
+        return b"\x30" + self._encode_length(len(varbind_content)) + varbind_content
 
     def _send_stmp_request(self, pdu_type: int, varbinds: List[bytes]) -> Optional[bytes]:
         """Send STMP request and return response"""
@@ -127,7 +141,7 @@ class NTCIP1202STMPAdapter(NTCIPPort):
 
         # Build varbind list
         varbind_list = b"".join(varbinds)
-        varbind_list = b"\x30" + struct.pack("!B", len(varbind_list)) + varbind_list
+        varbind_list = b"\x30" + self._encode_length(len(varbind_list)) + varbind_list
 
         # Complete PDU
         pdu = header + varbind_list

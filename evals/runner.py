@@ -70,7 +70,13 @@ def run_scenario(scenario: dict) -> dict:
         (fixed["avg_waiting_time"] - adaptive["avg_waiting_time"])
         / max(fixed["avg_waiting_time"], 1e-9) * 100, 2
     )
-    return {"name": name, **rows}
+    return {
+        "name": name,
+        # Honesty label (Phase B): incidents are synthetic approximations via
+        # existing sim knobs, not field events. See _apply_incident.
+        "incident_model": f"synthetic-approx:{scenario['incident']}" if scenario.get("incident") else "none",
+        **rows,
+    }
 
 
 def _load_scenarios() -> list:
@@ -90,7 +96,12 @@ def main() -> int:
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     out = RESULTS_DIR / f"scorecard_{int(time.time())}.json"
-    out.write_text(json.dumps({"wall_s": round(wall, 2), "results": results}, indent=2), encoding="utf-8")
+    out.write_text(json.dumps({
+        "wall_s": round(wall, 2),
+        "notes": "incidents are synthetic approximations (sensor_failure->waterlogged, "
+                 "lane_block->0.3x gen rate), not field events; queue_error is sim-internal",
+        "results": results,
+    }, indent=2), encoding="utf-8")
 
     prev_files = sorted(RESULTS_DIR.glob("scorecard_*.json"))
     prev = {}

@@ -14,6 +14,7 @@ from typing import Optional
 import numpy as np
 
 from adaptive_traffic.config.city_profile import CityProfile
+from adaptive_traffic.core.control import policies as signal_policies
 from adaptive_traffic.core.domain import Direction, VehicleType
 from adaptive_traffic.core.monitoring import observe
 from adaptive_traffic.core.simulation.behavior import BehaviorEngine, profile_for
@@ -99,6 +100,17 @@ def _default_compatibility_groups(approaches: list[Direction]) -> list[list[Dire
     return groups
 
 
+# VehicleType -> headway-table key (single place; engine never hardcodes seconds).
+_VTYPE_HEADWAY_KEY = {
+    VehicleType.CAR: "car",
+    VehicleType.BUS: "bus",
+    VehicleType.TRUCK: "truck",
+    VehicleType.MOTORCYCLE: "two_wheeler",
+    VehicleType.BICYCLE: "cycle",
+    VehicleType.AUTO: "autorickshaw",
+}
+
+
 class TrafficSimulation:
     """Microscopic traffic simulation"""
 
@@ -110,6 +122,22 @@ class TrafficSimulation:
         self.max_time = config.get("max_time", 3600)  # seconds
         self.rng = random.Random(config.get("seed", 42))
         self.adaptive_scheduling = config.get("adaptive_scheduling", True)
+
+        # Pluggable timing policies (screenshot-in -> green-out). String keys in
+        # config select adapters; defaults = weighted discharge + clockwise
+        # right-hand order + dynamic demand-share cap. Legacy behavior is one
+        # config away: green_policy=flat, order_policy=argmax, cap_policy=fixed_max.
+        self.headways = signal_policies.create_headways(config, city_profile)
+        self.green_policy = signal_policies.create_green_policy(config)
+        self.order_policy = signal_policies.create_order_policy(config)
+        self.cap_policy = signal_policies.create_cap_policy(config)
+        # MARL slot: None = standalone intersection; a coordinator only biases
+        # cycle budget/offset inputs, never drives phases directly.
+        self.coordinator = config.get("coordinator")
+        budget = config.get("cycle_budget_s")
+        if budget is None and city_profile is not None:
+            budget = getattr(city_profile, "cycle_budget_s", 120.0)
+        self.cycle_budget_s = float(budget or 120.0)
 
         # Use city profile for behavior and weather if available
         behavior_preset = (
@@ -263,40 +291,81 @@ class TrafficSimulation:
     ) -> dict[int, float]:
         """Demand-following green durations per compatibility group.
 
-        green = queued_vehicles * headway + startup lost time, clamped to
-        green bounds. Unlike a fixed-budget proportional split (which holds
-        cycles long under light demand and inflates waits), the cycle breathes:
-        light demand -> short greens -> short reds for everyone. This is the
-        discharge half of Webster's insight; headway 2.0s/veh is the Indian
-        saturation value used across this codebase.
+        green = startup + sum(queued_class * headway_class), clamped into the
+        dynamic demand-share ceiling and green bounds. Unlike a fixed-budget
+        proportional split (which holds cycles long under light demand and
+        inflates waits), the cycle breathes: light demand -> short greens ->
+        short reds for everyone. Headways are per-city data (see
+        CityProfile.discharge_headways), not code.
         """
         lo, hi = self._green_bounds()
         base = self.config.get("green_time", 30)
-        headway = self.config.get("discharge_headway_s", 2.0)
         startup = self.config.get("startup_lost_s", 2.0)
         # Efficiency floor: chopping greens below ~3x yellow wastes the cycle
         # on lost time (measured: x4way_disciplined 6.5 -> 9.3 without it).
         floor = self.config.get("efficient_floor_s", 15.0)
-        out = {}
+
+        raw: dict[int, Optional[float]] = {}
         for i, d in enumerate(demands):
             if d <= 0:
+                raw[i] = None  # empty approach -> base green (skipped by order)
+            else:
+                counts = self._group_class_counts(
+                    intersection, intersection.compatibility_groups[i]
+                )
+                if not counts:  # demand without typed vehicles: legacy count math
+                    counts = {"car": d}
+                raw[i] = self.green_policy.compute(counts, self.headways, startup)
+        total = sum(v for v in raw.values() if v is not None)
+
+        out = {}
+        for i, d in enumerate(demands):
+            if d <= 0 or raw[i] is None:
                 out[i] = float(base)
             else:
-                out[i] = max(floor, max(lo, min(hi, d * headway + startup)))
+                share = raw[i] / total if total > 0 else 0.0
+                ceiling = self.cap_policy.cap(raw[i], share, floor, hi, self.cycle_budget_s)
+                out[i] = max(floor, max(lo, min(hi, min(raw[i], ceiling))))
         return out
+
+    def _group_class_counts(
+        self, intersection: Intersection, group: list[Direction]
+    ) -> dict[str, int]:
+        """Queued vehicles per headway class for one group (queue predicate =
+        exactly the _group_demand predicate: stopped, within 50 m)."""
+        counts: dict[str, int] = {}
+        for lane in intersection.lanes.values():
+            if lane.direction in group:
+                for v in lane.vehicles:
+                    if v.speed < 1.0 and v.position < 50:
+                        key = signal_policies.normalize_class(_VTYPE_HEADWAY_KEY[v.vehicle_type])
+                        counts[key] = counts.get(key, 0) + 1
+        return counts
 
     @observe("decide")
     def _refresh_green_plan(self, intersection: Intersection) -> list[int]:
         """Recompute demands + durations, cache the plan. Returns demands."""
-        demands = [
-            self._group_demand(intersection, g)
-            for g in intersection.compatibility_groups
-        ]
+        demands = [self._group_demand(intersection, g) for g in intersection.compatibility_groups]
+        if self.coordinator is not None:
+            # MARL Phase A: coordinator only biases budget inputs; any failure
+            # falls back to standalone timing within this same cycle.
+            try:
+                bias = self.coordinator.bias(intersection.id, demands) or {}
+            except Exception:  # ponytail: fail-closed, never break the loop
+                bias = {}
+            if "cycle_budget_s" in bias:
+                self.cycle_budget_s = float(bias["cycle_budget_s"])
         if self.adaptive_scheduling:
             for idx, green in self._group_green_times(intersection, demands).items():
                 intersection.signal_timing[f"{idx}_green"] = green
         self._demand_cache[intersection.id] = demands
         return demands
+
+    def decide(self, intersection: Intersection) -> tuple[list[int], str]:
+        """Public decide seam: refresh plan + pick phase (closed_loop uses this,
+        never the privates). Returns (demands, phase)."""
+        demands = self._refresh_green_plan(intersection)
+        return demands, self._next_phase(intersection)
 
     def _maybe_preempt(self, intersection: Intersection) -> None:
         """Mid-phase early-cut check (event-driven, cached plan).
@@ -319,15 +388,10 @@ class TrafficSimulation:
             return
         self._preempt_tick[intersection.id] = tick
         cur_idx = int(phase.split("_", 1)[0])
-        demands = [
-            self._group_demand(intersection, g)
-            for g in intersection.compatibility_groups
-        ]
+        demands = [self._group_demand(intersection, g) for g in intersection.compatibility_groups]
         self._demand_cache[intersection.id] = demands
         cur = demands[cur_idx]
-        best_other = max(
-            (d for i, d in enumerate(demands) if i != cur_idx), default=0
-        )
+        best_other = max((d for i, d in enumerate(demands) if i != cur_idx), default=0)
         if best_other > cur and (best_other - cur) / max(cur, 1) > 0.25:
             intersection.current_phase = f"{cur_idx}_yellow"
             intersection.phase_timer = 0.0
@@ -359,12 +423,9 @@ class TrafficSimulation:
         """Pick next phase.
 
         Fixed mode: strict round-robin (untouched baseline).
-        Adaptive mode: rotate, skipping zero-demand groups (D7 empty-skip),
-        with Webster-proportional durations set by _refresh_green_plan.
-        Rotation (not argmax) avoids starving small groups: a singleton's
-        demand can never exceed a pair's sum, so greedy order + short greens
-        spirals (x3way 6.0 -> 7.8); rotation + proportional durations gives
-        the fairness of fixed timing with demand-sized greens.
+        Adaptive mode: order policy decides (default clockwise right-hand rule
+        with D7 empty-skip; legacy argmax available via order_policy=argmax),
+        durations come from _refresh_green_plan. All-zero demand holds position.
         """
         current_idx = intersection.phase_sequence.index(intersection.current_phase)
         cur_group_idx = current_idx // 2
@@ -376,23 +437,13 @@ class TrafficSimulation:
             next_group = (cur_group_idx + 1) % n_groups
             return f"{next_group}_green"
         demands = [self._group_demand(intersection, g) for g in intersection.compatibility_groups]
-        waits = self._wait_count.setdefault(
-            intersection.id, [0] * n_groups
-        )
-        # Starvation bound: a group with demand waiting a full rotation jumps
-        # the queue (longest wait first). Otherwise argmax demand. Zero-demand
-        # groups are never served (D7 empty-skip); all-zero stays put.
-        forced = [i for i in range(n_groups) if demands[i] > 0 and waits[i] >= n_groups]
-        if forced:
-            best_idx = max(forced, key=lambda i: waits[i])
-        else:
-            best_idx, best_demand = -1, 0
-            for i, d in enumerate(demands):
-                if d > best_demand:
-                    best_idx, best_demand = i, d
-            if best_idx == -1:
-                self._wait_count[intersection.id] = [0] * n_groups
-                return f"{cur_group_idx}_green"  # nothing waiting: stay, reset debt
+        waits = self._wait_count.setdefault(intersection.id, [0] * n_groups)
+        # Order policy selects the next group (-1 = hold: zero-demand groups
+        # are never served per D7 empty-skip; all-zero stays put).
+        best_idx = self.order_policy.next(cur_group_idx, demands, waits)
+        if best_idx == -1:
+            self._wait_count[intersection.id] = [0] * n_groups
+            return f"{cur_group_idx}_green"  # nothing waiting: stay, reset debt
         for i in range(n_groups):
             waits[i] += 1
         waits[best_idx] = 0

@@ -146,6 +146,25 @@ class CityProfile(BaseModel):
         }
     )
 
+    # Per-class discharge headways in seconds (trial-and-error calibrated per
+    # city; missing keys fall back to policies.DEFAULT_HEADWAYS). Append-only:
+    # never rename keys, the green policy reads them by name.
+    discharge_headways: Dict[str, float] = Field(
+        default_factory=lambda: {
+            "two_wheeler": 1.0,
+            "car": 2.0,
+            "autorickshaw": 2.0,
+            "cycle": 1.0,
+            "tractor": 2.5,
+            "bus": 3.2,
+            "truck": 3.2,
+            "bus_pedigree": 3.2,
+        }
+    )
+
+    # Shared cycle budget in seconds for the dynamic demand-share cap.
+    cycle_budget_s: float = 120.0
+
     class Config:
         extra = "allow"  # Allow additional city-specific fields
 
