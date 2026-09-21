@@ -188,8 +188,28 @@ Verdict: **finale stays canonical.** TrafficCAM F1 ties (0.277 vs 0.278, noise);
 candidate int8 is quality-alive but 10× too slow for low-tier (0.76 vs 5 fps
 target — dynamic-quant matmuls lose on this 3M-param model); BMD-45
 no-forgetting anchor unmeasured locally. Promote only on: TrafficCAM F1 up +
-BMD-Val within −0.02 + int8 ≥4.5fps. (Note: candidate metadata.json predates
-the `quant` provenance field — ask the run owner which recipe won.)
+BMD-Val within −0.02 + int8 ≥4.5fps.
+
+## Head-to-Head on TrafficCAM Val (2026-09-21, same 180 frames)
+
+Finale ONNX measured locally (`yolo val`, CPU): **mAP50 0.488** vs the run
+log's candidate **0.635** (car .582 / moto .633 / bus .541 / truck .696 /
+auto .728; bicycle has 0 val instances — unvalidated for both). That is
++0.147 (+30% relative) on the new domain: the fine-tune genuinely learned
+TrafficCAM. It does NOT clear the BMD no-forgetting anchor (unmeasurable
+locally — 153GB BMD val not on hand), so the candidate is staged as a
+**local-only alternative registry** `models/registry/india-yolov8n-trafficcam/`
+(gitignored; provenance in its metadata.json + the training zip): usable today
+via `--registry models/registry/india-yolov8n-trafficcam` for head-to-head
+evals, wired to nothing by default. Canonical path unchanged.
+
+Training notes from the run log (20ep — operator edit, not the notebook's 10):
+`optimizer=auto` silently overrode `lr0=0.002`/momentum → AdamW(lr=0.001);
+ultralytics removed duplicate labels on ~20 frames (source annotation
+duplicates, harmless); 6.5% of train frames are `UCF_*`-prefixed
+(non-Indian subset — val is pure-Indian: BLR/Mumbai/NITK4/Noida); static quant
+degenerate a second time → dynamic fallback won (max score 0.917, recipe now
+recorded as `quant_kind` in Cell 5 metadata).
 
 ## Detector QA Findings (2026-09-21, from the TrafficCAM bring-up)
 
