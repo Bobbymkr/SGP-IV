@@ -246,6 +246,10 @@ reached the wire. Fixed with correct base-128 continuation + BER long-form
 lengths. The real adapter had therefore never sent a complete timing plan;
 `_parse_stmp_response` remains an unimplemented stub (GET returns defaults).
 
+2026-09-21: first real-footage closed loop — candidate registry on 8 TrafficCAM
+val frames: 8/8 actuated (mock STMP), det 6–8 → queue 6–8 → demands [6–8, 0],
+cycle breathing 61–66s with demand. Screenshot-flow proven on real pixels.
+
 ## Deliberate skips (measured, not deferred)
 
 - orjson: scorecards ~6KB, API payloads tiny — D10's "when payloads grow"
