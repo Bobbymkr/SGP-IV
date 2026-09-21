@@ -17,6 +17,7 @@ from prepare_dataset import (  # noqa: E402
     _class_index,
     _load_voc_splits,
     check,
+    convert_trafficcam,
     convert_voc,
     make_calibration,
 )
@@ -174,3 +175,69 @@ def test_option_b_merge_mapping():
     # Option A default unchanged
     assert _class_index("sedan") is None
     assert _class_index("LCV") is None
+
+
+@pytest.fixture()
+def trafficcam_raw(tmp_path: Path) -> Path:
+    """Two video dirs: bbox JSON, polygon+RLE JSONs. Dims inline (no cv2)."""
+    import json as _json
+
+    raw = tmp_path / "raw"
+    v1 = raw / "BLR_clip01"
+    v1.mkdir(parents=True)
+    for stem in ("frame0", "frame2"):
+        (v1 / f"{stem}.jpg").touch()
+    (v1 / "frame0.json").write_text(_json.dumps({
+        "imageWidth": 720, "imageHeight": 480,
+        "objects": [
+            {"category": "car", "bbox": [10, 20, 100, 100]},
+            {"category": "Person", "bbox": [0, 0, 10, 10]},
+        ],
+    }), encoding="utf-8")
+    (v1 / "frame2.json").write_text(_json.dumps({
+        "imageWidth": 720, "imageHeight": 480,
+        "objects": [
+            {"category": "bus", "segmentation": [[10, 20, 110, 20, 110, 120, 10, 120]]},
+        ],
+    }), encoding="utf-8")
+    v2 = raw / "DEL_clip02"
+    v2.mkdir(parents=True)
+    (v2 / "frame0.jpg").touch()
+    # 4x4 mask, foreground cols/rows 1-2 -> bbox (1,1,2,2)
+    (v2 / "frame0.json").write_text(_json.dumps({
+        "imageWidth": 4, "imageHeight": 4,
+        "objects": [
+            {"category": "motor", "segmentation": {"counts": [5, 2, 2, 2, 5], "size": [4, 4]}},
+        ],
+    }), encoding="utf-8")
+    return raw
+
+
+def test_trafficcam_geometries_and_video_split_hygiene(trafficcam_raw: Path, tmp_path: Path):
+    out = tmp_path / "out"
+    convert_trafficcam(trafficcam_raw, out, option="B")
+    labels = list((out / "labels").rglob("*.txt"))
+    assert len(labels) == 3  # frame0+frame2 of v1, frame0 of v2
+    # bbox path: car(0) kept, Person dropped
+    f0 = next(p for p in labels if p.stem == "BLR_clip01_frame0")
+    assert f0.read_text().splitlines() == ["0 0.083333 0.145833 0.138889 0.208333"]
+    # polygon path: bus(2), (10,20,110,120) on 720x480
+    f2 = next(p for p in labels if p.stem == "BLR_clip01_frame2")
+    assert f2.read_text().splitlines() == ["2 0.083333 0.145833 0.138889 0.208333"]
+    # RLE path: motor->motorcycle(1), (1,1,2,2) on 4x4
+    fr = next(p for p in labels if p.stem == "DEL_clip02_frame0")
+    assert fr.read_text().splitlines() == ["1 0.375000 0.375000 0.250000 0.250000"]
+    # whole videos in one split each (no temporal leak)
+    splits = {p.parent.name for p in labels if p.stem.startswith("BLR_clip01")}
+    assert len(splits) == 1
+    caps = __import__("json").loads((out / "meta" / "captures.json").read_text())
+    assert {c["clip_id"] for c in caps} == {"BLR_clip01", "DEL_clip02"}
+    assert {c["city"] for c in caps} == {"BLR", "DEL"}
+
+
+def test_trafficcam_fails_fast_on_empty(tmp_path: Path):
+    raw = tmp_path / "empty"
+    raw.mkdir()
+    (raw / "stray.txt").write_text("no json here", encoding="utf-8")
+    with pytest.raises(SystemExit):
+        convert_trafficcam(raw, tmp_path / "out")
