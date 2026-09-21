@@ -23,7 +23,14 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from footage import det_hist, err_stats, load_frames, parse_weather, read_gt_csv, yolo_gt_counts  # noqa: E402
+from footage import (  # noqa: E402
+    det_hist,
+    err_stats,
+    load_frames,
+    parse_weather,
+    read_gt_csv,
+    yolo_gt_counts,
+)
 
 from adaptive_traffic.config.city_profile import get_city_profile  # noqa: E402
 from adaptive_traffic.core.analytics.queue_estimator import QueueEstimator  # noqa: E402
@@ -104,8 +111,10 @@ def main() -> int:
         print(f"hybrid-trigger: INCONCLUSIVE — detector blind "
               f"(pred total 0 vs gt mean {sum(gt)/len(gt):.2f}); trigger undecided")
     else:
-        print(f"hybrid-trigger: queue RMSE {q_rmse} {'>' if q_rmse > 0.5 else '<='} 0.5 "
-              f"({'FIRES — build frame-skip hybrid' if q_rmse > 0.5 else 'holds — interpolation stays'})")
+        fires = q_rmse > 0.5
+        verdict = "FIRES — build frame-skip hybrid" if fires else "holds — interpolation stays"
+        mark = ">" if fires else "<="
+        print(f"hybrid-trigger: queue RMSE {q_rmse} {mark} 0.5 ({verdict})")
 
     if args.out_csv:
         with open(args.out_csv, "w", newline="", encoding="utf-8") as f:

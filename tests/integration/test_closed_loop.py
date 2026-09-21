@@ -12,7 +12,7 @@ import pytest
 from adaptive_traffic.adapters.ntcip_stmp import MockNTCIP1202STMPAdapter
 from adaptive_traffic.config.city_profile import get_city_profile
 from adaptive_traffic.core.analytics.queue_estimator import LaneQueue, QueueEstimate
-from adaptive_traffic.core.closed_loop import actuate, create_loop, decide, run_frame
+from adaptive_traffic.core.closed_loop import create_loop, decide, run_frame
 from adaptive_traffic.core.domain import VehicleDetection
 from adaptive_traffic.core.pipeline import StagedPipeline
 from adaptive_traffic.core.analytics.queue_estimator import QueueEstimator

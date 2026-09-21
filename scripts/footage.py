@@ -51,12 +51,15 @@ def det_hist(counts):
     if not counts:
         return {"n": 0, "min": 0, "p50": 0, "p95": 0, "max": 0, "zeros": 0}
     s = sorted(counts)
-    pick = lambda q: s[min(len(s) - 1, int(q * len(s)))]
+
+    def _pick(q):
+        return s[min(len(s) - 1, int(q * len(s)))]
+
     return {
         "n": len(s),
         "min": s[0],
-        "p50": pick(0.5),
-        "p95": pick(0.95),
+        "p50": _pick(0.5),
+        "p95": _pick(0.95),
         "max": s[-1],
         "zeros": sum(1 for c in s if c == 0),
     }

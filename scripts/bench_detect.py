@@ -67,7 +67,6 @@ def main() -> int:
             print(f"warning: skipped {skipped} unreadable files in {args.frames_dir}")
     else:
         frames = synth_frames(args.frames)
-        names = [f"synth_{i}" for _ in range(len(frames))]
     if args.stages:
         from adaptive_traffic.config.city_profile import get_city_profile  # noqa: E402
         from adaptive_traffic.core.analytics.queue_estimator import QueueEstimator  # noqa: E402
