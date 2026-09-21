@@ -16,6 +16,11 @@ import itertools
 import logging
 from typing import Any, Optional
 
+from adaptive_traffic.core.control.policies import (
+    EmergencyEvent,
+    ManualRegistry,
+    resolve_priority,
+)
 from adaptive_traffic.core.ports.ntcip_port import (
     NTCIPCycleConfig,
     NTCIPPhaseTiming,
@@ -44,11 +49,26 @@ def inject_estimate(sim, intersection_id: str, estimate) -> dict[str, int]:
 
     Removes previously injected queued vehicles (speed < 1, position < 50 —
     exactly the ``_group_demand`` predicate) and adds one stopped vehicle per
-    counted vehicle, spread round-robin over the direction's lanes. Returns
-    per-direction injected counts. Unknown direction names are skipped.
+    counted vehicle, spread round-robin over the direction's lanes. Vehicle
+    types follow the estimate's per-class breakdown when present (so the
+    weighted green policy sees the true mix); otherwise all-CAR (legacy).
+    Returns per-direction injected counts. Unknown direction names are skipped.
     """
     from adaptive_traffic.core.domain import VehicleType
     from adaptive_traffic.core.simulation.engine import Vehicle
+
+    # Estimator class key -> sim VehicleType (schema has no tractor/bus_pedigree
+    # members; they discharge like their closest heavy class).
+    _CLASS_VTYPE = {
+        "car": VehicleType.CAR,
+        "bus": VehicleType.BUS,
+        "truck": VehicleType.TRUCK,
+        "two_wheeler": VehicleType.MOTORCYCLE,
+        "cycle": VehicleType.BICYCLE,
+        "autorickshaw": VehicleType.AUTO,
+        "tractor": VehicleType.TRUCK,
+        "bus_pedigree": VehicleType.BUS,
+    }
 
     ix = sim.intersections[intersection_id]
     for lane in ix.lanes.values():
@@ -59,6 +79,7 @@ def inject_estimate(sim, intersection_id: str, estimate) -> dict[str, int]:
     for lane in ix.lanes.values():
         lanes_by_dir.setdefault(lane.direction.value, []).append(lane)
 
+    by_class = getattr(estimate, "by_class", None) or {}
     for name, queue in (estimate.by_direction or {}).items():
         direction = _as_direction(name)
         if direction is None:
@@ -66,12 +87,24 @@ def inject_estimate(sim, intersection_id: str, estimate) -> dict[str, int]:
         lanes = lanes_by_dir.get(direction.value)
         if not lanes:
             continue
-        for k in range(queue.vehicle_count):
+        class_counts = by_class.get(name)
+        if class_counts:
+            typed: list = []
+            for cls, n in class_counts.items():
+                typed.extend([_CLASS_VTYPE.get(cls, VehicleType.CAR)] * int(n))
+            # Pad/truncate to the direction total (defensive: class sums from
+            # older estimates may disagree by rounding).
+            while len(typed) < queue.vehicle_count:
+                typed.append(VehicleType.CAR)
+            typed = typed[: queue.vehicle_count]
+        else:
+            typed = [VehicleType.CAR] * queue.vehicle_count
+        for k, vtype in enumerate(typed):
             lane = lanes[k % len(lanes)]
             lane.vehicles.append(
                 Vehicle(
                     id=next(_vid),
-                    vehicle_type=VehicleType.CAR,
+                    vehicle_type=vtype,
                     direction=direction,
                     lane=lane.lane_index,
                     position=5.0 + (k // len(lanes)) * 7.0,
@@ -83,21 +116,48 @@ def inject_estimate(sim, intersection_id: str, estimate) -> dict[str, int]:
     return injected
 
 
-def decide(sim, intersection_id: str) -> dict[str, Any]:
-    """Refresh the green plan from current lane demand and pick next phase."""
+def decide(
+    sim,
+    intersection_id: str,
+    manual: Optional[ManualRegistry] = None,
+    emergency: Optional[EmergencyEvent] = None,
+) -> dict[str, Any]:
+    """Refresh the green plan from current lane demand and pick next phase.
+
+    Priority (operator rule): an ACTIVE manual protocol on this route owns the
+    signal — EVP preempts there are suppressed; elsewhere EVP forces its
+    group green; otherwise the adaptive plan runs. ``mode`` reports which fired.
+    """
     ix = sim.intersections[intersection_id]
-    demands = sim._refresh_green_plan(ix)
-    phase = sim._next_phase(ix)
-    ix.current_phase = phase
-    ix.phase_timer = 0.0
-    sim._update_lane_signals(ix)
+    n_groups = len(ix.compatibility_groups)
+    verdict = resolve_priority(intersection_id, None, manual, emergency)
+    if verdict == "manual":
+        mode = "manual"
+        demands = sim._refresh_green_plan(ix)
+        phase = ix.current_phase  # human owns the signal: hold, don't rotate
+    elif verdict == "evp" and emergency is not None:
+        mode = "evp"
+        demands = sim._refresh_green_plan(ix)
+        # Force the emergency group green (via yellow when mid-green, per the
+        # all-red-clearance invariant the engine already enforces on switch).
+        if ix.current_phase == f"{emergency.group_idx}_green":
+            phase = ix.current_phase
+        else:
+            phase = f"{emergency.group_idx}_green"
+        ix.current_phase = phase
+        ix.phase_timer = 0.0
+        sim._update_lane_signals(ix)
+    else:
+        mode = "adaptive"
+        demands, phase = sim.decide(ix)
+        ix.current_phase = phase
+        ix.phase_timer = 0.0
+        sim._update_lane_signals(ix)
     return {
         "phase": phase,
         "demands": demands,
-        "greens": {
-            i: float(ix.signal_timing.get(f"{i}_green", 30))
-            for i in range(len(ix.compatibility_groups))
-        },
+        "mode": mode,
+        "greens": {i: float(ix.signal_timing.get(f"{i}_green", 30)) for i in range(n_groups)},
     }
 
 
@@ -130,13 +190,21 @@ def actuate(
     return bool(stmp.set_phase_timing(cfg)), cfg
 
 
-def run_frame(pipe, sim, intersection_id: str, stmp, frame: Any) -> dict[str, Any]:
+def run_frame(
+    pipe,
+    sim,
+    intersection_id: str,
+    stmp,
+    frame: Any,
+    manual: Optional[ManualRegistry] = None,
+    emergency: Optional[EmergencyEvent] = None,
+) -> dict[str, Any]:
     """One closed-loop iteration: detect -> estimate -> decide -> actuate."""
     stages = pipe.process(frame)
     raw = stages.detections
     dets = raw.detections if hasattr(raw, "detections") else raw
     injected = inject_estimate(sim, intersection_id, stages.estimate)
-    plan = decide(sim, intersection_id)
+    plan = decide(sim, intersection_id, manual=manual, emergency=emergency)
     ok, cfg = actuate(stmp, sim, intersection_id)
     return {
         "detected": len(dets),
@@ -144,6 +212,7 @@ def run_frame(pipe, sim, intersection_id: str, stmp, frame: Any) -> dict[str, An
         "injected": injected,
         "phase": plan["phase"],
         "demands": plan["demands"],
+        "mode": plan["mode"],
         "greens": plan["greens"],
         "cycle_length": cfg.cycle_length,
         "actuated": ok,

@@ -4,12 +4,13 @@ Converts vehicle detections to per-lane queue lengths using city profile paramet
 """
 
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 
 from adaptive_traffic.config.city_profile import CityProfile
+from adaptive_traffic.core.control.policies import normalize_class
 from adaptive_traffic.core.domain import VehicleDetection, VehicleType
 from adaptive_traffic.core.monitoring import observe
 
@@ -38,6 +39,10 @@ class QueueEstimate:
     by_direction: Dict[str, LaneQueue]
     total_vehicles: int
     total_length_m: float
+    # Queued vehicles per direction per normalized class (headway-table keys);
+    # feeds the weighted green policy. Empty when estimated from BSM-only paths
+    # that carry no class info (never None — callers sum it directly).
+    by_class: Dict[str, Dict[str, int]] = field(default_factory=dict)
 
 
 class QueueEstimator:
@@ -94,9 +99,11 @@ class QueueEstimator:
 
         # Estimate queue per lane
         lane_queues = []
+        lane_class_counts: Dict[str, Dict[str, int]] = {}
         for lane_key, lane_dets in lane_detections.items():
-            queue = self._estimate_lane_queue(lane_key, lane_dets)
+            queue, class_counts = self._estimate_lane_queue(lane_key, lane_dets)
             lane_queues.append(queue)
+            lane_class_counts[lane_key] = class_counts
 
         # Aggregate by direction
         by_direction = {}
@@ -115,6 +122,15 @@ class QueueEstimator:
             else:
                 by_direction[queue.direction] = queue
 
+        # Aggregate per-class queue counts by direction (single pass: lane keys
+        # are f"{direction}_{lane_idx}", same split as _estimate_lane_queue).
+        by_class: Dict[str, Dict[str, int]] = {}
+        for lane_key, counts in lane_class_counts.items():
+            direction = lane_key.split("_", 1)[0]
+            direction_counts = by_class.setdefault(direction, {})
+            for cls, n in counts.items():
+                direction_counts[cls] = direction_counts.get(cls, 0) + n
+
         total_vehicles = sum(q.vehicle_count for q in lane_queues)
         total_length = sum(q.total_length_m for q in lane_queues)
 
@@ -125,6 +141,7 @@ class QueueEstimator:
             by_direction=by_direction,
             total_vehicles=total_vehicles,
             total_length_m=total_length,
+            by_class=by_class,
         )
 
     def _group_by_lane(
@@ -182,8 +199,14 @@ class QueueEstimator:
         else:
             return "east"
 
-    def _estimate_lane_queue(self, lane_key: str, detections: List[VehicleDetection]) -> LaneQueue:
-        """Estimate queue length for a single lane"""
+    def _estimate_lane_queue(
+        self, lane_key: str, detections: List[VehicleDetection]
+    ) -> Tuple[LaneQueue, Dict[str, int]]:
+        """Estimate queue length for a single lane.
+
+        Returns the lane queue plus per-class counts of queue-zone vehicles
+        (normalized headway-table keys) for the weighted green policy.
+        """
         direction, lane_idx = lane_key.split("_", 1)
         lane_idx = int(lane_idx)
 
@@ -197,13 +220,16 @@ class QueueEstimator:
                 queue_detections.append((det, class_name, distance))
 
         if not queue_detections:
-            return LaneQueue(
-                lane_id=lane_key,
-                direction=direction,
-                vehicle_count=0,
-                total_length_m=0.0,
-                avg_spacing_m=0.0,
-                confidence=1.0,
+            return (
+                LaneQueue(
+                    lane_id=lane_key,
+                    direction=direction,
+                    vehicle_count=0,
+                    total_length_m=0.0,
+                    avg_spacing_m=0.0,
+                    confidence=1.0,
+                ),
+                {},
             )
 
         # Sort by distance to stop line (closest first)
@@ -227,13 +253,21 @@ class QueueEstimator:
         calibration_factor = self.detector_calibration.__dict__.get(direction, 0.05)
         confidence = min(1.0, len(queue_detections) * calibration_factor * 10)
 
-        return LaneQueue(
-            lane_id=lane_key,
-            direction=direction,
-            vehicle_count=len(queue_detections),
-            total_length_m=total_length,
-            avg_spacing_m=avg_spacing,
-            confidence=confidence,
+        class_counts: Dict[str, int] = {}
+        for _, class_name, _ in queue_detections:
+            key = normalize_class(class_name)
+            class_counts[key] = class_counts.get(key, 0) + 1
+
+        return (
+            LaneQueue(
+                lane_id=lane_key,
+                direction=direction,
+                vehicle_count=len(queue_detections),
+                total_length_m=total_length,
+                avg_spacing_m=avg_spacing,
+                confidence=confidence,
+            ),
+            class_counts,
         )
 
     def _estimate_distance_to_stop_line(
@@ -276,6 +310,7 @@ class QueueEstimator:
             lane_groups[lane_key].append(vehicle)
 
         lane_queues = []
+        by_class: Dict[str, Dict[str, int]] = {}
         for lane_key, vehicles in lane_groups.items():
             direction, lane_idx = lane_key.split("_", 1)
             lane_idx = int(lane_idx)
@@ -294,6 +329,9 @@ class QueueEstimator:
                     vtype = v.get("vehicle_type", "car")
                     vehicle_len = self.vehicle_lengths.get(vtype, 4.5)
                     total_length += vehicle_len + self.queue_params["vehicle_length_buffer"]
+                    key = normalize_class(vtype)
+                    direction_counts = by_class.setdefault(direction, {})
+                    direction_counts[key] = direction_counts.get(key, 0) + 1
 
             lane_queues.append(
                 LaneQueue(
@@ -332,6 +370,7 @@ class QueueEstimator:
             by_direction=by_direction,
             total_vehicles=total_vehicles,
             total_length_m=total_length,
+            by_class=by_class,
         )
 
 

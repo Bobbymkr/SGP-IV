@@ -1,0 +1,237 @@
+{
+  "wall_s": 12.51,
+  "notes": "incidents are synthetic approximations (sensor_failure->waterlogged, lane_block->0.3x gen rate), not field events; queue_error is sim-internal",
+  "results": [
+    {
+      "name": "x4way_clear_disciplined",
+      "incident_model": "none",
+      "adaptive": {
+        "avg_waiting_time": 4.94,
+        "throughput_vph": 972.0,
+        "queue_error": 0.0,
+        "completed": 81,
+        "dec_p50_ms": 0.071,
+        "dec_p95_ms": 0.099
+      },
+      "fixed": {
+        "avg_waiting_time": 6.66,
+        "throughput_vph": 948.0,
+        "queue_error": 0.0,
+        "completed": 79,
+        "dec_p50_ms": 0.024,
+        "dec_p95_ms": 0.027
+      },
+      "delta_wait_pct": 25.83
+    },
+    {
+      "name": "x4way_clear_aggressive",
+      "incident_model": "none",
+      "adaptive": {
+        "avg_waiting_time": 4.68,
+        "throughput_vph": 1068.0,
+        "queue_error": 0.0,
+        "completed": 89,
+        "dec_p50_ms": 0.069,
+        "dec_p95_ms": 0.083
+      },
+      "fixed": {
+        "avg_waiting_time": 8.89,
+        "throughput_vph": 852.0,
+        "queue_error": 0.0,
+        "completed": 71,
+        "dec_p50_ms": 0.024,
+        "dec_p95_ms": 0.027
+      },
+      "delta_wait_pct": 47.36
+    },
+    {
+      "name": "x3way_typical_clear",
+      "incident_model": "none",
+      "adaptive": {
+        "avg_waiting_time": 4.05,
+        "throughput_vph": 720.0,
+        "queue_error": 0.0,
+        "completed": 60,
+        "dec_p50_ms": 0.028,
+        "dec_p95_ms": 0.034
+      },
+      "fixed": {
+        "avg_waiting_time": 8.65,
+        "throughput_vph": 780.0,
+        "queue_error": 0.0,
+        "completed": 65,
+        "dec_p50_ms": 0.024,
+        "dec_p95_ms": 0.027
+      },
+      "delta_wait_pct": 53.18
+    },
+    {
+      "name": "x5way_typical_clear",
+      "incident_model": "none",
+      "adaptive": {
+        "avg_waiting_time": 14.32,
+        "throughput_vph": 792.0,
+        "queue_error": 0.0,
+        "completed": 66,
+        "dec_p50_ms": 0.062,
+        "dec_p95_ms": 0.109
+      },
+      "fixed": {
+        "avg_waiting_time": 54.28,
+        "throughput_vph": 528.0,
+        "queue_error": 0.0,
+        "completed": 44,
+        "dec_p50_ms": 0.032,
+        "dec_p95_ms": 0.033
+      },
+      "delta_wait_pct": 73.62
+    },
+    {
+      "name": "x4way_typical_light_rain",
+      "incident_model": "none",
+      "adaptive": {
+        "avg_waiting_time": 12.47,
+        "throughput_vph": 852.0,
+        "queue_error": 0.149,
+        "completed": 71,
+        "dec_p50_ms": 0.032,
+        "dec_p95_ms": 0.033
+      },
+      "fixed": {
+        "avg_waiting_time": 19.1,
+        "throughput_vph": 744.0,
+        "queue_error": 0.23,
+        "completed": 62,
+        "dec_p50_ms": 0.025,
+        "dec_p95_ms": 0.026
+      },
+      "delta_wait_pct": 34.71
+    },
+    {
+      "name": "x4way_typical_heavy_monsoon",
+      "incident_model": "none",
+      "adaptive": {
+        "avg_waiting_time": 12.67,
+        "throughput_vph": 696.0,
+        "queue_error": 0.311,
+        "completed": 58,
+        "dec_p50_ms": 0.071,
+        "dec_p95_ms": 0.087
+      },
+      "fixed": {
+        "avg_waiting_time": 28.32,
+        "throughput_vph": 636.0,
+        "queue_error": 0.711,
+        "completed": 53,
+        "dec_p50_ms": 0.026,
+        "dec_p95_ms": 0.028
+      },
+      "delta_wait_pct": 55.26
+    },
+    {
+      "name": "x4way_typical_waterlogged",
+      "incident_model": "none",
+      "adaptive": {
+        "avg_waiting_time": 21.93,
+        "throughput_vph": 480.0,
+        "queue_error": 0.403,
+        "completed": 40,
+        "dec_p50_ms": 0.068,
+        "dec_p95_ms": 0.11
+      },
+      "fixed": {
+        "avg_waiting_time": 47.44,
+        "throughput_vph": 384.0,
+        "queue_error": 0.8,
+        "completed": 32,
+        "dec_p50_ms": 0.026,
+        "dec_p95_ms": 0.032
+      },
+      "delta_wait_pct": 53.77
+    },
+    {
+      "name": "x4way_aggressive_waterlogged",
+      "incident_model": "none",
+      "adaptive": {
+        "avg_waiting_time": 22.16,
+        "throughput_vph": 396.0,
+        "queue_error": 0.315,
+        "completed": 33,
+        "dec_p50_ms": 0.052,
+        "dec_p95_ms": 0.068
+      },
+      "fixed": {
+        "avg_waiting_time": 29.75,
+        "throughput_vph": 480.0,
+        "queue_error": 0.609,
+        "completed": 40,
+        "dec_p50_ms": 0.013,
+        "dec_p95_ms": 0.013
+      },
+      "delta_wait_pct": 25.51
+    },
+    {
+      "name": "x5way_aggressive_monsoon",
+      "incident_model": "none",
+      "adaptive": {
+        "avg_waiting_time": 23.92,
+        "throughput_vph": 576.0,
+        "queue_error": 0.522,
+        "completed": 48,
+        "dec_p50_ms": 0.056,
+        "dec_p95_ms": 0.083
+      },
+      "fixed": {
+        "avg_waiting_time": 96.66,
+        "throughput_vph": 324.0,
+        "queue_error": 1.318,
+        "completed": 27,
+        "dec_p50_ms": 0.015,
+        "dec_p95_ms": 0.031
+      },
+      "delta_wait_pct": 75.25
+    },
+    {
+      "name": "x4way_sensor_failure",
+      "incident_model": "synthetic-approx:sensor_failure",
+      "adaptive": {
+        "avg_waiting_time": 21.93,
+        "throughput_vph": 480.0,
+        "queue_error": 0.403,
+        "completed": 40,
+        "dec_p50_ms": 0.054,
+        "dec_p95_ms": 0.061
+      },
+      "fixed": {
+        "avg_waiting_time": 47.44,
+        "throughput_vph": 384.0,
+        "queue_error": 0.8,
+        "completed": 32,
+        "dec_p50_ms": 0.012,
+        "dec_p95_ms": 0.012
+      },
+      "delta_wait_pct": 53.77
+    },
+    {
+      "name": "x4way_lane_block",
+      "incident_model": "synthetic-approx:lane_block",
+      "adaptive": {
+        "avg_waiting_time": 8.47,
+        "throughput_vph": 876.0,
+        "queue_error": 0.0,
+        "completed": 73,
+        "dec_p50_ms": 0.039,
+        "dec_p95_ms": 0.04
+      },
+      "fixed": {
+        "avg_waiting_time": 10.49,
+        "throughput_vph": 852.0,
+        "queue_error": 0.0,
+        "completed": 71,
+        "dec_p50_ms": 0.023,
+        "dec_p95_ms": 0.024
+      },
+      "delta_wait_pct": 19.26
+    }
+  ]
+}
