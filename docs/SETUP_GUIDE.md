@@ -1,34 +1,47 @@
-# Enhanced Adaptive Traffic Signal Demo - Final Setup Guide
+# Adaptive Traffic Signal Timer - Setup Guide
 
 ## Overview
 
-This document provides instructions for setting up and running the Enhanced Adaptive Traffic Signal Demo, which showcases advanced AI-powered traffic management capabilities in a user-friendly interface.
+This document provides instructions for setting up and running the Adaptive Traffic Signal Timer: FastAPI control plane + Streamlit operations dashboard + YOLOv8 detection + microscopic simulation.
 
-## Quick Setup & Run
-
-### Option 1: Direct Run (Recommended)
-Since all required packages are already installed, you can run the demo directly:
+## Quick Setup and Run (Windows)
 
 ```bash
-cd "C:\Users\Admin\OneDrive\Desktop\IDEA\Adaptive-Traffic-Signal-Timer"
-streamlit run enhanced_demo.py
+cd C:\Users\Admin\OneDrive\Desktop\IDEA\Adaptive-Traffic-Signal-Timer
+python -m venv .venv
+.venv\Scripts\activate
+pip install -e ".[dev]"
 ```
 
-Then open your browser to http://localhost:8503
-
-### Option 2: Using the Batch File
-Double-click on `run_enhanced_demo.bat` in the project folder
-
-### Option 3: Drive-Native Finale Training (Recommended for Training)
-For the full training pipeline with Drive-native workflow:
+Verify the install (canonical gates — these are the ONLY verification entry points):
 
 ```bash
-cd "C:\Users\Admin\OneDrive\Desktop\IDEA\Adaptive-Traffic-Signal-Timer"
-# 1. Upload best_f007.pt to Colab (/content/best_f007.pt)
-# 2. Open train_bmd_finale_drive.ipynb in Colab
-# 3. Runtime → T4 GPU
-# 4. Run all cells (Drive mount → convert → train → export → zip)
+.venv\Scripts\python.exe -m pytest tests/unit tests/integration -q -x --no-header -p no:cacheprovider
+.venv\Scripts\python.exe evals/runner.py
 ```
+
+Start the services (two terminals, venv activated):
+
+```bash
+# Terminal 1 - API on http://localhost:8000 (docs at /docs)
+uvicorn adaptive_traffic.api.main:app --reload --host 0.0.0.0 --port 8000
+
+# Terminal 2 - dashboard on http://localhost:8501
+streamlit run src/adaptive_traffic/ui/app.py --server.port 8501
+```
+
+Or via Make on Linux/macOS: `make run-dev` and `make run-demo`.
+
+## Drive-Native Training (Colab T4)
+
+For the training pipeline, see the notebooks (no local GPU needed):
+
+1. `notebooks/train_bmd_loop.ipynb` - 8-loop cumulative chain (canonical BMD-45 training)
+2. `notebooks/train_bmd_finale_drive.ipynb` - 5-epoch joint polish from loop-8 best
+3. `notebooks/eval_trafficcam_drive.ipynb` - TrafficCAM eval (CPU-friendly)
+4. `notebooks/train_trafficcam_loop.ipynb` - TrafficCAM fine-tune (T4) + registry candidate
+5. `notebooks/pseudo_itd_x.ipynb` - ITD-X reference eval + pseudo-labels (T4)
+6. Hand-back zips go in `notebooks/training_output_zips/` (gitignored, local-only)
 
 ## Required Packages (Already Installed)
 

@@ -17,7 +17,7 @@ This repository contains the **Adaptive Traffic Signal Timer** — an AI-powered
 |--------|-------|-------|
 | **mAP50 (full 10k val)** | **0.8477** | +0.0184 vs loop-8 (0.8293) |
 | **Per-class mAP50** | car: 0.9189, auto: 0.9171, moto: 0.8887, bus: 0.846, truck: 0.8294, bicycle: 0.6859 | |
-| **Inference Speed** | **4.98 fps** (200.6 ms/frame) | CPU static int8 |
+| **Inference Speed** | **5.1–8.2 fps** (123–197 ms/frame) | CPU fp32 (static int8 voided 2026-09-21: degenerate all-zero scores) |
 | **Model Size** | 3.0M params (11.7 MB fp32 / 3.4 MB int8) | |
 | **Training** | 5-epoch joint polish @ lr=0.002 from loop-8 (0.8293) | |
 | **Val Set** | Official BMD-45 10k val (BMD-45-Val) | |
@@ -34,10 +34,11 @@ This repository contains the **Adaptive Traffic Signal Timer** — an AI-powered
 
 ### Verification Gates
 
-- `make verify` → 38 passed, 7 skipped
-- `make eval` → 11/11 adaptive wins, `dec_p95_ms` ≤ 0.08ms
-- `make bench-detect` → 4.98 fps CPU int8
-- `make bench-decide` → 1.11ms p50 / 1.83ms p95 @300 det
+- `make verify` → 92 passed, 1 skipped
+- `make eval` → 11/11 adaptive wins, `dec_p95_ms` ≤ 0.33ms
+- `make bench-detect` → 5.1–8.2 fps CPU fp32 (real frames)
+- `make bench-decide` → ~1.2ms p50 / ~1.7ms p95 @300 det
+- TrafficCAM val: finale mAP50 0.488; fine-tune candidate 0.635; ITD-X teacher 0.680
 
 ### Key Paths
 
@@ -52,10 +53,10 @@ This repository contains the **Adaptive Traffic Signal Timer** — an AI-powered
 ### Verification Gates (pre-push)
 
 ```bash
-make verify          # 38 passed, 7 skipped
-make eval            # 11/11 adaptive wins, dec_p95_ms ≤ 0.08ms
-make bench-detect    # 4.98 fps CPU int8
-make bench-decide    # 1.11ms p50 / 1.83ms p95 @300 det
+make verify          # 92 passed, 1 skipped
+make eval            # 11/11 adaptive wins, dec_p95_ms ≤ 0.33ms
+make bench-detect    # 5.1-8.2 fps CPU fp32 (real frames)
+make bench-decide    # ~1.2ms p50 / ~1.7ms p95 @300 det
 git lfs ls-files     # 2 tracked binaries
 ```
 

@@ -12,7 +12,7 @@
 | `pytest -q` (`make verify`) | Full suite (`loop-fast` scope today — perf/security dirs hold only the live classes below) |
 | `python evals/runner.py` (`make eval`) | 11 scenarios × adaptive/fixed, `dec_p95` regression flag (>10ms fails), >5% wait regression flag |
 | `python scripts/bench_sim.py` | Sim throughput (baseline 28,503 steps/s, 57× the 500 target) |
-| `python scripts/bench_detect.py --backend onnx --registry models/registry/india-yolov8n-final` | Detection latency on **synthetic noise** (4.98 fps canonical; 0 detections expected — NOT a quality proof) |
+| `python scripts/bench_detect.py --backend onnx --registry models/registry/india-yolov8n-final` | Detection latency on **synthetic noise** (fps varies by hardware; 0 detections expected — NOT a quality proof). For quality: `--frames-dir` on real frames (TrafficCAM val: fp32 finds vehicles on every frame) |
 | `python scripts/bench_detect.py --backend onnx --registry models/registry/india-yolov8n-final --frames-dir <dir> [--max-frames N]` | Detection latency + per-frame histogram + per-class counts on disk frames (rendered set or recorded footage) |
 | `python scripts/score_queue.py --frames-dir <dir> --labels-dir <labels> [--conf 0.45] [--out-csv out.csv]` | Detector + queue error vs YOLO labels (PROXY — see gaps). With `--gt-csv ground_truth.csv` instead of `--labels-dir`: honest qerr vs hand counts |
 | `python scripts/bench_detect.py --stages` | Staged detect+estimate path timing |

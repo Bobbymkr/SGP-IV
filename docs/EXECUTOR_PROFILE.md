@@ -74,11 +74,11 @@ Proof: `docs/MASTER_PLAN.md:27` row D1.
 You said Makefile targets are the ONLY check. No other way.
 Proof: `AGENTS.md:14-23` lists loop-fast, verify, bench-sim, eval, graph-update, scan-skills, and gives the exact Windows commands.
 
-Your gates are fixed numbers:
-- make verify: 38 passed, 7 skipped
+Your gates are fixed numbers (current; history in BENCHMARKS.md):
+- make verify: 92 passed, 1 skipped
 - make eval: 11 out of 11 adaptive wins
-- bench_detect: 4.98 fps CPU int8
-- bench_decide: 1.11ms p50 and 1.83ms p95 at 300 boxes
+- bench_detect: 5.1-8.2 fps CPU fp32 (real frames)
+- bench_decide: ~1.2ms p50 and ~1.7ms p95 at 300 boxes
 Proof: `AGENTS.md:51-56`.
 
 What this says: you hate mess. You cut extra paths. You keep one door for truth.
@@ -242,7 +242,7 @@ Proof: `AGENTS.md:31-40` and `AGENTS.md:70-73`.
 2. Small model first. yolov8n first strategy. 3.0M params. 11.7 MB fp32 and 3.4 MB int8. Cheap to run, easy to ship.
 Proof: `readme.md:22-23`.
 
-3. Static int8 for CPU. Finale int8 runs 4.98 fps on CPU, 200.6ms per frame. Faster than loop-8 3.14 fps and pilot dynamic quant 0.68 fps.
+3. fp32 for CPU (static int8 voided 2026-09-21: degenerate all-zero scores). Finale fp32 runs 5.1-8.2 fps on CPU, 123-197ms per frame on real frames.
 Proof: `docs/BENCHMARKS.md:19-23`.
 
 4. Sim is already fast, so you deferred heavy speed work. Vectorization deferred. Numba and Rust kept as later rungs only if wall-bound. Target 500 steps per second was already beaten 57 times.
