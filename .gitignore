@@ -143,6 +143,8 @@ yolov8n.pt
 !models/registry/india-yolov8n-final/**
 !models/registry/india-yolov8n-final/*.pt
 !models/registry/india-yolov8n-final/*.onnx
+# Candidate registries stay local-only (binaries + metadata, never committed)
+/models/registry/india-yolov8n-trafficcam/
 
 # Training phase release assets (not on main — see GitHub Release)
 notebooks/training_output_zips/
@@ -174,7 +176,6 @@ skills-lock.json
 # Internal documentation (duplicates or internal)
 AGENTS.md
 CLAUDE.md
-readme.md
 
 # Python cache directories
 .mypy_cache/

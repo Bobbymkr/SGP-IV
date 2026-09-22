@@ -172,6 +172,45 @@ lane/direction buckets — per-camera calibration is the follow-up). The
 hybrid-trigger FIRE on this proxy row is **not actionable** — the 0.5 trigger
 is calibrated for hand-count `--gt-csv` GT with a matching queue definition.
 
+## TrafficCAM Candidate (2026-09-21, NOT promoted)
+
+`notebooks/training_output_zips/trafficcam_candidate_2026-09-21.zip` (local-only,
+gitignored like all training zips): 10-ep T4 polish from `best_f007.pt`,
+12.3MB fp32 + 3.4MB int8. Local 50-frame val sample @conf 0.45, greedy IoU≥0.5:
+
+| Model | max score | det | P | R | F1 | fps CPU |
+|---|---|---|---|---|---|---|
+| finale fp32 (canonical) | 0.899 | 415 | 0.923 | 0.163 | 0.278 | 7.4 |
+| candidate fp32 | 0.959 | 446 | 0.868 | 0.165 | 0.277 | 7.3 |
+| candidate int8 (alive, non-zero) | 0.964 | 441 | 0.878 | 0.165 | 0.278 | 0.76 |
+
+Verdict: **finale stays canonical.** TrafficCAM F1 ties (0.277 vs 0.278, noise);
+candidate int8 is quality-alive but 10× too slow for low-tier (0.76 vs 5 fps
+target — dynamic-quant matmuls lose on this 3M-param model); BMD-45
+no-forgetting anchor unmeasured locally. Promote only on: TrafficCAM F1 up +
+BMD-Val within −0.02 + int8 ≥4.5fps.
+
+## Head-to-Head on TrafficCAM Val (2026-09-21, same 180 frames)
+
+Finale ONNX measured locally (`yolo val`, CPU): **mAP50 0.488** vs the run
+log's candidate **0.635** (car .582 / moto .633 / bus .541 / truck .696 /
+auto .728; bicycle has 0 val instances — unvalidated for both). That is
++0.147 (+30% relative) on the new domain: the fine-tune genuinely learned
+TrafficCAM. It does NOT clear the BMD no-forgetting anchor (unmeasurable
+locally — 153GB BMD val not on hand), so the candidate is staged as a
+**local-only alternative registry** `models/registry/india-yolov8n-trafficcam/`
+(gitignored; provenance in its metadata.json + the training zip): usable today
+via `--registry models/registry/india-yolov8n-trafficcam` for head-to-head
+evals, wired to nothing by default. Canonical path unchanged.
+
+Training notes from the run log (20ep — operator edit, not the notebook's 10):
+`optimizer=auto` silently overrode `lr0=0.002`/momentum → AdamW(lr=0.001);
+ultralytics removed duplicate labels on ~20 frames (source annotation
+duplicates, harmless); 6.5% of train frames are `UCF_*`-prefixed
+(non-Indian subset — val is pure-Indian: BLR/Mumbai/NITK4/Noida); static quant
+degenerate a second time → dynamic fallback won (max score 0.917, recipe now
+recorded as `quant_kind` in Cell 5 metadata).
+
 ## Detector QA Findings (2026-09-21, from the TrafficCAM bring-up)
 
 1. **Dead int8 (critical):** `model-int8.onnx` emits all-zero scores on every
@@ -206,6 +245,10 @@ day): OID BER set the continuation bit on the wrong bytes (every OID containing
 reached the wire. Fixed with correct base-128 continuation + BER long-form
 lengths. The real adapter had therefore never sent a complete timing plan;
 `_parse_stmp_response` remains an unimplemented stub (GET returns defaults).
+
+2026-09-21: first real-footage closed loop — candidate registry on 8 TrafficCAM
+val frames: 8/8 actuated (mock STMP), det 6–8 → queue 6–8 → demands [6–8, 0],
+cycle breathing 61–66s with demand. Screenshot-flow proven on real pixels.
 
 ## Deliberate skips (measured, not deferred)
 
