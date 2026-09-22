@@ -1,62 +1,143 @@
 # Architecture Overview
 
-**Last Updated:** 2026-09-03
+**Last Updated:** 2026-09-22 — diagrams are Mermaid and render natively on GitHub. Four views, pick yours:
 
-## System Architecture
+1. [System at a glance](#1-system-at-a-glance) — non-technical, 30 seconds.
+2. [Frame-to-green journey](#2-frame-to-green-journey) — how it works, with measured numbers.
+3. [Layered system view](#3-layered-system-view) — for implementers (ports, adapters, dependency rule).
+4. [Code map for contributors](#4-code-map-for-contributors) — which file to open first (boxes link to source).
 
+## 1. System at a glance
+
+```mermaid
+flowchart LR
+    A[Cameras at the junction] --> B[AI detects vehicles]
+    B --> C[Queue estimated per lane]
+    C --> D[Green time adapted]
+    D --> E[Signals and connected vehicles]
+    E -.->|result| F[Less waiting, less congestion]
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        Adaptive Traffic Signal System                    │
-├─────────────────────────────────────────────────────────────────────────┤
-│  UI/API Layer (FastAPI + Streamlit)                                     │
-│  ├── /api/v1/signals/*       → Signal control & NTCIP/J2735 endpoints   │
-│  ├── /api/v1/detection/*     → Detection inference endpoints            │
-│  ├── /api/v1/analytics/*     → Queue estimation, forecasting            │
-│  └── /api/v1/health          → System health                            │
-├─────────────────────────────────────────────────────────────────────────┤
-│  Services Layer (config.settings only)                                  │
-│  ├── SignalControlService    → Controller factory, timing plans         │
-│  ├── DetectionService        → DetectorPort factory, backends           │
-│  ├── SimulationService       → TrafficSimulation, behavior, weather     │
-│  ├── AnalyticsService        → QueueEstimator, RobustnessEvaluator      │
-│  └── CityProfileService      → Profile registry, loader                 │
-├─────────────────────────────────────────────────────────────────────────┤
-│  Core Domain (core/domain.py)                                           │
-│  ├── VehicleType (8 classes)                                            │
-│  ├── Direction (N/S/E/W + diagonals)                                    │
-│  ├── VehicleDetection / DetectionResult                                 │
-│  ├── SignalTiming / TrafficState                                        │
-│  └── NTCIP/J2735 dataclasses (PhaseTiming, CycleConfig, BSM, SPAT, MAP) │
-├─────────────────────────────────────────────────────────────────────────┤
-│  Ports Layer (core/ports/)                                              │
-│  ├── DetectorPort (base.py)     → detect(frame) → DetectionResult       │
-│  ├── NTCIPPort (ntcip_port.py)  → STMP actuation + SNMP monitoring     │
-│  └── J2735Port (ntcip_port.py)  → BSM receive + SPAT transmit          │
-├─────────────────────────────────────────────────────────────────────────┤
-│  Adapters Layer (adapters/ + core/detection/)                           │
-│  ├── UltralyticsDetector      → YOLOv8 (dev, GPU)                       │
-│  ├── OnnxDetector             → ONNX Runtime int8/fp32 (edge CPU/NPU)   │
-│  ├── NTCIP1202STMPAdapter     → UDP STMP SET/GET (actuation)            │
-│  ├── NTCIPSNMPAdapter         → SNMP GET/GETNEXT (monitoring)           │
-│  ├── J2735Adapter             → UDP BSM rx + SPAT tx (V2X)              │
-│  └── Mock adapters            → Testing without hardware                │
-├─────────────────────────────────────────────────────────────────────────┤
-│  Engine Layer                                                            │
-│  ├── TrafficSimulation        → Microscopic sim, N-way scheduler        │
-│  ├── BehaviorEngine           → 3 India presets (disciplined/urban/agg) │
-│  ├── WeatherModel             → 4 states (clear/rain/monsoon/waterlog)  │
-│  ├── Controllers (Fixed/Webster/Fuzzy/DQN — dormant alternatives)     │
-│  ├── Timing policies (Headway/Green/Order/Cap ports — canonical path)  │
-│  ├── QueueEstimator           → px_to_m, vehicle lengths, BSM fusion    │
-│  └── RobustnessEvaluator      → Incident scenarios with city weights    │
-├─────────────────────────────────────────────────────────────────────────┤
-│  Configuration (config/)                                                 │
-│  ├── settings.py              → Pydantic Settings + env vars            │
-│  ├── city_profile.py          → CityProfile Pydantic schema             │
-│  ├── city_profiles.py         → JSON loader + registry                  │
-│  ├── city_profiles/*.json     → mumbai, delhi, bangalore, tier2_default │
-│  └── device.yaml              → Hardware tier → backend/model mapping   │
-└─────────────────────────────────────────────────────────────────────────┘
+
+## 2. Frame-to-green journey
+
+Numbers are measured, not targets — see `docs/BENCHMARKS.md`.
+
+```mermaid
+flowchart LR
+    CAM[Camera frame] --> DET[DetectorPort<br/>YOLOv8 ONNX fp32<br/>5 to 8 fps CPU]
+    DET --> QUE[QueueEstimator<br/>per lane plus per class]
+    BSM([Connected vehicles<br/>BSM positions]) -. refine .-> QUE
+    QUE --> POL[Policies Green Order Cap<br/>decide p95 under 3 ms at 300 det]
+    SIMX[(Simulation state)] --> POL
+    POL --> STMP[NTCIP STMP SET<br/>cycle config to controller]
+    POL --> SPAT[J2735 SPAT 10 Hz<br/>to vehicles]
+    STMP --> SIG[Signal controller]
+```
+
+## 3. Layered system view
+
+```mermaid
+flowchart TB
+    subgraph EXT[External]
+        CAM2[Cameras]
+        CTRL[Signal controller]
+        VEH[Connected vehicles]
+        OBS[Prometheus and Grafana]
+    end
+    subgraph UI[UI and API layer]
+        API[FastAPI routes<br/>signals, detection, analytics, health]
+        DASH[Streamlit dashboard]
+    end
+    subgraph SVC[Services - settings only]
+        SS[SignalControlService]
+        SD[DetectionService]
+        SM[SimulationService]
+        SA[AnalyticsService]
+        SC[CityProfileService]
+    end
+    subgraph ENG[Engine]
+        CLOOP[ClosedLoop]
+        POL2[Headway Green Order Cap]
+        SIM2[TrafficSimulation]
+        QE[QueueEstimator]
+    end
+    subgraph PORTS[Ports - ABC interfaces]
+        PD[DetectorPort]
+        PN[NTCIPPort]
+        PJ[J2735Port]
+    end
+    DOM([core domain.py<br/>dataclasses only])
+    subgraph ADAPT[Adapters - heavy libs only here]
+        AU[UltralyticsDetector]
+        AO[OnnxDetector]
+        AT[TensorRTDetector]
+        AS[NTCIP STMP and SNMP]
+        AJ[J2735Adapter]
+    end
+    subgraph CFG[Configuration]
+        SET[settings.py]
+        CITY[city profiles]
+        DEV[device.yaml]
+    end
+    CAM2 --> AU & AO
+    AU & AO -. implements .-> PD
+    AT -. implements .-> PD
+    PD --> QE
+    QE --> CLOOP
+    CLOOP --> POL2
+    SIM2 --> POL2
+    POL2 --> CLOOP
+    CLOOP --> AS
+    AS --> CTRL
+    CLOOP --> AJ
+    AJ --> VEH
+    VEH --> AJ
+    API --> SS & SD & SA
+    DASH --> SS & SA
+    SD --> PD
+    SS --> POL2
+    SM --> SIM2
+    SA --> QE
+    SC --> SIM2 & POL2 & QE
+    CLOOP -. observe .-> OBS
+    SET -.-> SS & SD & SM
+    CITY -.-> SC
+    DEV -.-> SD
+    PD -.-> DOM
+    PN -.-> DOM
+    PJ -.-> DOM
+```
+
+## 4. Code map for contributors
+
+Read in numbered order. Click any box to open the source.
+
+```mermaid
+flowchart TB
+    R1[1 - config - settings and city profiles<br/>start here for behavior tuning]
+    R2[2 - core domain.py<br/>shared types, zero dependencies]
+    R3[3 - core ports<br/>interfaces you implement against]
+    R4[4 - core control policies.py<br/>canonical timing logic]
+    R5[5 - core closed_loop.py<br/>estimate, decide, actuate]
+    R6[6 - adapters<br/>hardware-specific code lives here]
+    R7[7 - api and ui<br/>presentation only]
+    R1 --> R2 --> R3 --> R4 --> R5 --> R6 --> R7
+    E1[(evals runner.py<br/>prove it with make eval)]
+    S1[(scripts<br/>bench and run helpers)]
+    N1[(notebooks plus models registry<br/>training)]
+    R5 --> E1
+    R4 --> S1
+    R6 --> N1
+    click R1 "https://github.com/Bobbymkr/SGP-IV/tree/main/src/adaptive_traffic/config"
+    click R2 "https://github.com/Bobbymkr/SGP-IV/blob/main/src/adaptive_traffic/core/domain.py"
+    click R3 "https://github.com/Bobbymkr/SGP-IV/tree/main/src/adaptive_traffic/core/ports"
+    click R4 "https://github.com/Bobbymkr/SGP-IV/blob/main/src/adaptive_traffic/core/control/policies.py"
+    click R5 "https://github.com/Bobbymkr/SGP-IV/blob/main/src/adaptive_traffic/core/closed_loop.py"
+    click R6 "https://github.com/Bobbymkr/SGP-IV/tree/main/src/adaptive_traffic/adapters"
+    click R7 "https://github.com/Bobbymkr/SGP-IV/tree/main/src/adaptive_traffic/api"
+    click E1 "https://github.com/Bobbymkr/SGP-IV/blob/main/evals/runner.py"
+    click S1 "https://github.com/Bobbymkr/SGP-IV/tree/main/scripts"
+    click N1 "https://github.com/Bobbymkr/SGP-IV/tree/main/notebooks"
 ```
 
 ## Dependency Rule

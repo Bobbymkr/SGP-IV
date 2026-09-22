@@ -9,6 +9,19 @@
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://docker.com)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+## How it works (30 seconds)
+
+```mermaid
+flowchart LR
+    A[Cameras at the junction] --> B[AI detects vehicles]
+    B --> C[Queue estimated per lane]
+    C --> D[Green time adapted]
+    D --> E[Signals and connected vehicles]
+    E -.->|result| F[Less waiting, less congestion]
+```
+
+More views for other readers: [frame-to-green journey](docs/ARCHITECTURE.md#2-frame-to-green-journey) (how it works, with numbers) · [layered system view](docs/ARCHITECTURE.md#3-layered-system-view) (for implementers) · [code map](docs/ARCHITECTURE.md#4-code-map-for-contributors) (where to start contributing).
+
 ---
 
 ## BMD-45 Finale Results
@@ -52,33 +65,12 @@ Legacy controllers (`Fixed`/`Webster`/`Fuzzy`/`DQN` in `src/adaptive_traffic/cor
 
 ## Architecture
 
-```
-UI/API Layer (FastAPI + Streamlit)
-  /api/v1/signals/*      Signal control, timing plans, NTCIP/J2735 endpoints
-  /api/v1/detection/*    Detection inference, cameras
-  /api/v1/analytics/*    Forecast, queue metrics, recommendations
-  /api/v1/health/*       Health, readiness, liveness, Prometheus metrics
-Services Layer (config.settings only)
-  SignalControlService / DetectionService / SimulationService /
-  AnalyticsService / CityProfileService
-Core Domain (core/domain.py: pure dataclasses, no external deps)
-Ports Layer (core/ports/)
-  DetectorPort  NTCIPPort (STMP actuation + SNMP monitoring)  J2735Port
-Adapters Layer (adapters/ + core/detection/; heavy libs live ONLY here)
-  UltralyticsDetector (dev/GPU)  OnnxDetector (edge CPU/NPU)
-  TensorRTDetector (Jetson fp16, engine cache; ONNX fallback off-Jetson)
-  NTCIP1202STMPAdapter  NTCIPSNMPAdapter  J2735Adapter  Mocks for tests
-Engine Layer
-  TrafficSimulation (N-way scheduler)  BehaviorEngine (3 India presets)
-  WeatherModel (clear/rain/monsoon/waterlogged)  Timing policies
-  (Headway/Green/Order/Cap in core/control/policies.py)
-  QueueEstimator  RobustnessEvaluator  ClosedLoop (`src/adaptive_traffic/core/closed_loop.py`: estimate->decide->actuate)
-Configuration (config/ + configs/)
-  settings.py (Pydantic Settings + env)  city_profiles/*.json
-  device.yaml (hardware tier -> backend/model mapping)
-```
+Dependency rule: `core/domain.py <- ports <- adapters`. UI/API import services and `config.settings` only.
 
-Dependency rule: `core/domain.py <- ports <- adapters`. UI/API import services and `config.settings` only. Full diagram and wiring points: `docs/ARCHITECTURE.md`.
+- [Layered system view](docs/ARCHITECTURE.md#3-layered-system-view) — ports, adapters, engine, config fan-out (for implementers).
+- [Frame-to-green journey](docs/ARCHITECTURE.md#2-frame-to-green-journey) — runtime data flow with measured numbers.
+- [Code map](docs/ARCHITECTURE.md#4-code-map-for-contributors) — which file to open first.
+- Wiring points, NTCIP/J2735 details, city-profile table: `docs/ARCHITECTURE.md`.
 
 ### Hardware Tiers (`configs/device.yaml`)
 
