@@ -53,13 +53,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Create non-root user
 RUN useradd -m -u 1000 appuser
 
-# Copy pyproject.toml and install dependencies
-COPY pyproject.toml .
+# Copy project metadata + code first: the editable install reads
+# readme/LICENSE from pyproject and packages from src/ — none exist yet
+# if only pyproject.toml is copied (fatal: 'src' does not exist).
+COPY pyproject.toml README.md LICENSE ./
+COPY src/ ./src/
 RUN pip install --upgrade pip && \
     pip install -e ".[prod]"
 
 # Copy application code
-COPY src/ ./src/
 COPY configs/ ./configs/
 COPY scripts/ ./scripts/
 
