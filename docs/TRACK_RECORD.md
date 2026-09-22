@@ -12,7 +12,7 @@ All three priorities from the implementation plan have been completed and verifi
 
 ---
 
-## Priority 1: NTCIP/J2735 V2X Adapter ✅
+## Priority 1: NTCIP/J2735 V2X Adapter PASS
 
 ### Files Created/Modified
 
@@ -35,7 +35,7 @@ All three priorities from the implementation plan have been completed and verifi
 
 ---
 
-## Priority 2: City-Profile Configuration System ✅
+## Priority 2: City-Profile Configuration System PASS
 
 ### Files Created/Modified
 
@@ -69,7 +69,7 @@ All three priorities from the implementation plan have been completed and verifi
 
 ---
 
-## Priority 3: ONNX Adapter + Model Registry + Training Pipeline ✅
+## Priority 3: ONNX Adapter + Model Registry + Training Pipeline PASS
 
 ### Files Modified
 
@@ -94,10 +94,10 @@ All three priorities from the implementation plan have been completed and verifi
 
 | Task | Status |
 |------|--------|
-| Fix quarantined integration tests | ✅ Removed `@unittest.skip` from `test_ntcip.py`; legacy tests remain quarantined in `conftest.py` (by design — they target removed `Code/YOLO/darkflow` modules) |
-| Create `evals/runner.py` for controller benchmarking | ✅ Already existed, works |
-| Add `graph-update` hook to CI | ✅ Already in Makefile |
-| Document city-profile + NTCIP + registry in `docs/ARCHITECTURE.md` | ✅ Created |
+| Fix quarantined integration tests | PASS Removed `@unittest.skip` from `test_ntcip.py`; legacy tests remain quarantined in `conftest.py` (by design — they target removed `Code/YOLO/darkflow` modules) |
+| Create `evals/runner.py` for controller benchmarking | PASS Already existed, works |
+| Add `graph-update` hook to CI | PASS Already in Makefile |
+| Document city-profile + NTCIP + registry in `docs/ARCHITECTURE.md` | PASS Created |
 
 ---
 

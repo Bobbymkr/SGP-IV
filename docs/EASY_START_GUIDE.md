@@ -1,31 +1,31 @@
-# 🚦 Easy Start Guide - Adaptive Traffic Signal Timer
+# Easy Start Guide - Adaptive Traffic Signal Timer
 
 **Made for everyone! No technical experience needed.**
 
 ---
 
-## 🎯 What This Project Does
+## What This Project Does
 
 This smart traffic system:
-- 🚗 Counts cars, buses, trucks, bikes at traffic signals
-- 🚦 Changes traffic light timing based on traffic
-- 🎮 Shows a visual simulation of traffic flow
-- 📊 Displays real-time traffic statistics
+- Counts cars, buses, trucks, bikes at traffic signals
+- Changes traffic light timing based on traffic
+- Shows a visual simulation of traffic flow
+- Displays real-time traffic statistics
 
 ---
 
-## 📋 What You'll Need (Simple Checklist)
+## What You'll Need (Simple Checklist)
 
-✅ **Computer** (Windows, Mac, or Linux)
-✅ **Internet connection**
-✅ **Python** (we'll help you install this)
-✅ **15 minutes** of your time
+PASS **Computer** (Windows, Mac, or Linux)
+PASS **Internet connection**
+PASS **Python** (we'll help you install this)
+PASS **15 minutes** of your time
 
 ---
 
-## 🚀 Quick Setup (Choose Your System)
+## Quick Setup (Choose Your System)
 
-### 🪟 **For Windows Users**
+### **For Windows Users**
 
 #### Step 1: Install Python
 1. Go to https://www.python.org/downloads/
@@ -57,7 +57,7 @@ python run_project.py --demo
 
 ---
 
-### 🍎 **For Mac Users**
+### **For Mac Users**
 
 #### Step 1: Install Python
 1. Open Terminal (press Command + Space, type `Terminal`, press Enter)
@@ -90,7 +90,7 @@ python3 run_project.py --demo
 
 ---
 
-### 🐧 **For Linux Users**
+### **For Linux Users**
 
 #### Step 1: Install Python
 1. Open Terminal (press Ctrl + Alt + T)
@@ -120,7 +120,7 @@ python3 run_project.py --demo
 
 ---
 
-## 🎮 What You'll See
+## What You'll See
 
 ### **Part 1: Vehicle Detection**
 - The system will process 3 traffic images
@@ -137,7 +137,7 @@ python3 run_project.py --demo
 
 ---
 
-## 🎯 Other Things You Can Try
+## Other Things You Can Try
 
 ### **Run Just Vehicle Detection**
 ```bash
@@ -168,7 +168,7 @@ python3 run_project.py --info
 
 ---
 
-## 🆘 Troubleshooting (Common Problems)
+## Troubleshooting (Common Problems)
 
 ### **Problem: "python is not recognized"**
 **Solution:** Make sure you checked "Add Python to PATH" during installation. Then restart Command Prompt/Terminal.
@@ -190,7 +190,7 @@ python3 run_project.py --info
 
 ---
 
-## 📁 Where to Find Your Results
+## Where to Find Your Results
 
 After running the demo:
 
@@ -200,19 +200,19 @@ After running the demo:
 
 ---
 
-## 🎉 Success!
+## Success!
 
 **Congratulations!** You've successfully run the Adaptive Traffic Signal Timer.
 
 You've seen:
-- ✅ Smart vehicle detection
-- ✅ Adaptive traffic signal timing
-- ✅ Real-time traffic simulation
-- ✅ Traffic statistics and analytics
+- PASS Smart vehicle detection
+- PASS Adaptive traffic signal timing
+- PASS Real-time traffic simulation
+- PASS Traffic statistics and analytics
 
 ---
 
-## 🤝 Need More Help?
+## Need More Help?
 
 If you run into any issues:
 1. Check the troubleshooting section above
@@ -224,15 +224,15 @@ If you run into any issues:
 
 ---
 
-## 📚 What's Next?
+## What's Next?
 
 Now that you've got it running, you can:
-- 📖 Read the full documentation in `readme.md`
-- 🧪 Run the comprehensive tests with `python run_tests.py`
-- 🔧 Explore advanced features in the `Code/YOLO/darkflow/` folder
-- 🐳 Try the Docker version for easy deployment
+- Read the full documentation in `readme.md`
+- Run the comprehensive tests with `python run_tests.py`
+- Explore advanced features in the `Code/YOLO/darkflow/` folder
+- Try the Docker version for easy deployment
 
-**Happy Traffic Management!** 🚦🚗🚌🚛🏍️
+**Happy Traffic Management!**
 
 ---
 

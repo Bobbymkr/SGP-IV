@@ -12,7 +12,7 @@ Indian Adaptive Traffic Control System (ATCS) deployments — BATCS-style progra
 
 ## What does success look like?
 
-`MASTER_PLAN` §5: loop-fast <30s ✅ · eval matrix covering geometry × discipline × weather × incident × tier ✅ (synthetic) · queue error demonstrably distorted by edge cases ✅ (0.00→1.32) · sim ≥500 steps/s ✅ (28,503 = 57×) · same codebase serves CPU-only box → Jetson via `device.yaml` alone ⏳ · N-way scheduler 3/4/5-way from config ✅ · graphify current ✅. Ultimate goal: adaptive control beating fixed-time on **real** deployments.
+`MASTER_PLAN` §5: loop-fast <30s PASS · eval matrix covering geometry × discipline × weather × incident × tier PASS (synthetic) · queue error demonstrably distorted by edge cases PASS (0.00→1.32) · sim ≥500 steps/s PASS (28,503 = 57×) · same codebase serves CPU-only box → Jetson via `device.yaml` alone PENDING · N-way scheduler 3/4/5-way from config PASS · graphify current PASS. Ultimate goal: adaptive control beating fixed-time on **real** deployments.
 
 ## Remaining work (the plan under test)
 
