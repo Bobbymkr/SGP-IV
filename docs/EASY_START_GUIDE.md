@@ -40,14 +40,16 @@ PASS **15 minutes** of your time
 
 ```bash
 cd Desktop
-git clone https://github.com/Bobbymkr/Updated-SGP.git
-cd Updated-SGP
+git clone https://github.com/Bobbymkr/SGP-IV.git
+cd SGP-IV
 ```
 
 #### Step 3: Install Required Programs
 ```bash
-cd Code/YOLO/darkflow
-pip install tensorflow opencv-python pygame matplotlib Pillow numpy
+python -m venv .venv
+.venv\Scripts\activate
+pip install -e ".[dev]"
+```
 ```
 
 #### Step 4: Run the Demo!

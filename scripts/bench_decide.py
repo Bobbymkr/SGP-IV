@@ -45,7 +45,7 @@ def synth_detections(n: int, seed: int = 7) -> list[VehicleDetection]:
 
 
 def populate(intersection: Intersection, n_per_lane: int = 8) -> None:
-    from adaptive_traffic.core.domain import Direction, VehicleType
+    from adaptive_traffic.core.domain import VehicleType
     from adaptive_traffic.core.simulation.engine import Vehicle
 
     vid = 0

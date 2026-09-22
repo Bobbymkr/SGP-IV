@@ -106,3 +106,27 @@ allows, else warns.
 - [ ] boxes within [0,1]
 - [ ] val/test junctions disjoint from train (when captures.json present)
 - [ ] calibration set exists and meets §6 coverage (best-effort)
+
+## 8. Approved sources (beyond the authority feed)
+
+- **TrafficCAM** (`--source trafficcam`, Option B default): stationary-camera
+  video dirs (`<video>/frame<N>.jpg + frame<N>.json`, labelme/polygon/RLE/box
+  geometries) from 8 Indian cities. Real label census: LMV, MotorBike
+  (+`Motor Bike`/`Moterbike` variants), Auto, e-Rickshaw, Bus, LCV, Truck,
+  Tractor, Bike, Pedestrian (+`Pesestrian` typo). Mapping: LMV→car,
+  MotorBike→motorcycle, Auto/e-Rickshaw→auto, Bus→bus, LCV/Truck/
+  Tractor→truck, Bike→bicycle, Pedestrian→dropped (no person class, D7).
+  Whole videos hash into one split (md5(video_id) mod 10; no temporal leak);
+  `captures.json` records clip city from the video-ID prefix. Unlabelled
+  frames are skipped. Known hygiene flags: ~20 frames carry duplicate source
+  boxes (deduped at train time, harmless); ~6.5% of train frames are
+  `UCF_*`-prefixed (non-Indian subset — excluded from val).
+- **ITD v1.2 (IIT Roorkee, pending data):** access granted for weights
+  (`best_xl_ITD_v1.2.pt`, 8 Indo-HCM classes incl. LCV/bicycle); annotated
+  images/video requested. Converter adapter to be added on arrival iff the
+  schema is non-standard.
+- **Pseudo-labels (model-derived GT):** permitted as a *separate* pool only —
+  shipped with `SOURCE.txt` provenance (teacher model, confidence, date),
+  reported separately from human GT, never mixed into human-GT metrics.
+  Requires a 12-frame overlay spot-check before trust (tight boxes, right
+  classes, no crowd merges).

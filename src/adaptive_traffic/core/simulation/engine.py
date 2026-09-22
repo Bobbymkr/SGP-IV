@@ -192,8 +192,7 @@ class TrafficSimulation:
                     "decel": 4.0,
                 },
             }
-            # Generation rates from vehicle mix
-            mix = city_profile.vehicle_mix
+            # Generation rates (uniform across approaches)
             total_rate = config.get("total_generation_rate", 2000)
             self.generation_rates = {
                 Direction.NORTH: total_rate * 0.25,
@@ -461,7 +460,6 @@ class TrafficSimulation:
 
     def _generate_vehicles(self):
         """Generate new vehicles based on rates"""
-        weather_profile = self.weather_model.current()
         for direction, base_rate in self.generation_rates.items():
             rate_per_hour = self.weather_model.apply_to_generation_rate(base_rate)
             rate_per_step = rate_per_hour * self.dt / 3600

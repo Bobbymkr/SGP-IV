@@ -4,7 +4,8 @@
 
 ## Executive Summary
 
-The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traffic signal detector with **0.8477 mAP50 on the full 10k official validation set** — a **+0.0184 improvement** over the 8-loop chain baseline (0.8293). The model is packaged as a **static int8 ONNX** model running at **4.98 fps (200.6 ms/frame)** on CPU, ready for deployment on low-tier edge devices (x86 IPC, ARM SBC, legacy traffic cabinets).
+The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traffic signal detector with **0.8477 mAP50 on the full 10k official validation set** — a **+0.0184 improvement** over the 8-loop chain baseline (0.8293). The model is packaged as **fp32 ONNX**
+running at **5.1–8.2 fps on CPU (real frames)** on low-tier edge devices (x86 IPC, ARM SBC, legacy traffic cabinets). (The static-int8 export is void — see correction above.)
 
 ---
 
@@ -26,7 +27,7 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 |--------|-------|-------|
 | **mAP50 (full 10k val)** | **0.8477** | +0.0184 vs loop-8 (0.8293) |
 | **Per-class mAP50** | car: 0.9189, auto: 0.9171, moto: 0.8887, bus: 0.846, truck: 0.8294, bicycle: 0.6859 | |
-| **Inference Speed** | **4.98 fps** (200.6 ms/frame) | CPU static int8, synthetic frames |
+| **Inference Speed** | **5.1–8.2 fps** (123–197 ms/frame) | CPU fp32, real frames |
 | **Model Size** | 3.0M params (11.7 MB fp32 / 3.4 MB int8) | |
 | **Training** | 5-epoch joint polish @ lr=0.002 from loop-8 (0.8293) | |
 | **Val Set** | Official BMD-45 10k val (BMD-45-Val) | |
@@ -40,7 +41,7 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 
 | Layer | Status | Evidence |
 |-------|--------|----------|
-| **Detector (int8 static)** | PASS Production | 0.8477 mAP50 full-val; 4.98 fps CPU on synthetic frames (recorded-footage bench pending Phase B) |
+| **Detector (fp32)** | PASS Production | 0.8477 mAP50 full-val; 5.1–8.2 fps CPU on real frames (TrafficCAM val: finale 0.488 / candidate 0.635 / ITD-X 0.680) |
 | **Decide Path** | PASS Production | 1.11 ms p50 / 1.83 ms p95 @300 boxes (6× under 10 ms budget) |
 | **Signals** | PASS Production | Adaptive beats fixed in 11/11 scenarios; `dec_p50/p95_ms` + regression flag |
 | **Integration** | PASS Production | 48 tests green, `device.yaml:14` → `india-yolov8n-final` |
@@ -54,7 +55,7 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 ### Pre-deployment
 - [ ] Verify `models/registry/india-yolov8n-final/` exists with `model.onnx`, `model-int8.onnx`, `metadata.json`
 - [ ] Confirm `configs/device.yaml:14` points to `models/registry/india-yolov8n-final`
-- [ ] Verify `python scripts/bench_detect.py --backend=onnx --registry=models/registry/india-yolov8n-final` → ~4.98 fps (synthetic-noise latency only; 0 detections expected)
+- [ ] Verify `python scripts/bench_detect.py --backend=onnx --registry=models/registry/india-yolov8n-final` → 5+ fps on real frames
 - [ ] Verify `make eval` → 11/11 adaptive wins, `dec_p95_ms` ≤ 10ms budget (typical ≤0.08ms on sim states)
 
 ### Deployment Steps
@@ -76,8 +77,8 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 |--------|-------|------------------|
 | **mAP50 (full 10k val)** | **0.8477** | +0.0184 over 8-loop baseline |
 | **Bicycle mAP50** | **0.6859** | 2.2× improvement over loop-1 (0.5635) |
-| **Inference Latency** | 200.6 ms/frame (CPU int8) | Suitable for 5 fps control loop |
-| **Model Size** | 3.4 MB (int8) | Fits on 64 MB flash |
+| **Inference Latency** | 123–197 ms/frame (CPU fp32) | Suitable for 5 fps control loop |
+| **Model Size** | 11.7 MB (fp32) | Fits on 64 MB flash |
 | **Training Compute** | 5 ep × T4 (~40 min) | Low retraining cost |
 | **Adaptive Win Rate** | 11/11 scenarios | Beats fixed-time in all scenarios |
 

@@ -22,8 +22,10 @@ class FakeDetector:
     def detect(self, frame):
         self.calls += 1
         if self.shaped:
+
             class Shaped:
                 pass
+
             out = Shaped()
             out.detections = self.dets
             return out
@@ -42,8 +44,9 @@ class FakeEstimator:
 
 
 def _det():
-    return VehicleDetection(class_id=2, class_name="car", confidence=0.9,
-                            bbox=(100, 300, 150, 360), center=(125, 330))
+    return VehicleDetection(
+        class_id=2, class_name="car", confidence=0.9, bbox=(100, 300, 150, 360), center=(125, 330)
+    )
 
 
 def test_buffer_drops_oldest():
@@ -57,8 +60,7 @@ def test_buffer_drops_oldest():
 
 @pytest.mark.parametrize("shaped", [False, True])
 def test_process_normalizes_detector_shapes(shaped):
-    pipe = StagedPipeline(FakeDetector([_det(), _det()], shaped=shaped),
-                          FakeEstimator())
+    pipe = StagedPipeline(FakeDetector([_det(), _det()], shaped=shaped), FakeEstimator())
     res = pipe.process(object())
     assert res.estimate == {"n": 2}
     assert res.decision is None
@@ -101,7 +103,8 @@ def test_worker_thread_processes_then_stops():
 
 
 def test_real_estimator_seam():
-    pipe = StagedPipeline(FakeDetector([_det(), _det()], shaped=True),
-                          QueueEstimator(get_city_profile("bangalore")))
+    pipe = StagedPipeline(
+        FakeDetector([_det(), _det()], shaped=True), QueueEstimator(get_city_profile("bangalore"))
+    )
     res = pipe.process(object())
     assert type(res.estimate).__name__ == "QueueEstimate"

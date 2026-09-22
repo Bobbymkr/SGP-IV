@@ -13,7 +13,7 @@ Run `make profile-device` to auto-detect and write `active_tier`.
 
 | Tier | Typical Hardware | Detection Backend | Expected FPS (baseline) | Queue-Estimation Notes |
 |------|------------------|-------------------|------------------------|------------------------|
-| **low** | x86 IPC, ARM SBC, legacy boxes — CPU only, no GPU | ONNX Runtime int8 (CPUExecutionProvider) | ~4.98 fps on india-yolov8n-final (int8) | Interpolation-only (D6). Frames skipped when inference > time-step; queue estimates interpolated from last two frames. |
+| **low** | x86 IPC, ARM SBC, legacy boxes — CPU only, no GPU | ONNX Runtime fp32 (CPUExecutionProvider) | 5.1–8.2 fps on india-yolov8n-final (fp32, real frames) | Interpolation-only (D6). Frames skipped when inference > time-step; queue estimates interpolated from last two frames. |
 | **mid** | Jetson TX2 / Xavier NX, RK3588 NPU boxes — GPU/NPU present | ONNX Runtime fp32 (CUDAExecutionProvider or NPU provider if available) | ~10–25 fps on yolov8n-final (fp32) | Full-frame detection each step. Confidence threshold standard (0.5). |
 | **high** | Jetson Orin NX / AGX, discrete GPU boxes — TensorRT-capable | TensorRT fp16 via ORT TRT-EP (engine built+cached on-device at first boot in `models/trt_cache/`) | fp16 on Jetson; `-final` fp32 fallback elsewhere | `TensorRTDetector`: fp32 source + fp16 provider options; warns + falls back to ONNX when the provider is absent. On-device latency validation pending Jetson hardware. |
 
@@ -66,10 +66,10 @@ The **india-yolov8n-final** model is the canonical low-tier detector for product
 
 | Property | Value |
 |----------|-------|
-| **Model** | india-yolov8n-final (static int8, ONNX) |
+| **Model** | india-yolov8n-final (fp32 ONNX; static int8 voided 2026-09-21 — degenerate all-zero scores, see `docs/BENCHMARKS.md` Detector QA) |
 | **mAP50 (full 10k val)** | **0.8477** |
 | **Per-class mAP50** | car: 0.9189, auto: 0.9171, motorcycle: 0.8887, bus: 0.8460, truck: 0.8294, bicycle: 0.6859 |
-| **Inference Speed** | 4.98 fps (200.6 ms/frame) on CPU (int8) |
+| **Inference Speed** | 5.1–8.2 fps (123–197 ms/frame) on CPU (fp32, real frames) |
 | **Model Size** | 3.0M params (11.7 MB fp32 / 3.4 MB int8) |
 | **Training** | 5-epoch joint polish @ lr=0.002 from loop-8 (0.8293) |
 | **Validation** | Official BMD-45 10k val split (BMD-45-Val) |
@@ -93,7 +93,7 @@ make bench-detect --backend=onnx         # requires onnxruntime + registry model
 
 Tier baselines (registry models live in `models/registry/india-yolov8n-final/`):
 ```bash
-# ONNX int8 (low tier)
+# ONNX fp32 (low tier; int8 voided — see Detector QA in BENCHMARKS.md)
 make bench-detect --backend=onnx --registry=models/registry/india-yolov8n-final
 
 # TensorRT fp16 (high tier, after adapter lands)

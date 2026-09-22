@@ -3,7 +3,7 @@ City Profile Schema
 Pydantic models for city-specific configuration
 """
 
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 from pydantic import BaseModel, Field
 

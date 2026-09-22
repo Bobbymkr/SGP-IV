@@ -60,13 +60,9 @@ def voc_split_dirs(tmp_path: Path) -> Path:
     (d / "xmls").mkdir(parents=True)
     (d / "images").mkdir(parents=True)
     (d / "images" / "frame_1.jpg").touch()
-    (d / "xmls" / "frame_1.xml").write_text(
-        VOC_XML.format(cls="car"), encoding="utf-8"
-    )
+    (d / "xmls" / "frame_1.xml").write_text(VOC_XML.format(cls="car"), encoding="utf-8")
     (d / "images" / "frame_2.jpg").touch()
-    (d / "xmls" / "frame_2.xml").write_text(
-        VOC_XML.format(cls="bus"), encoding="utf-8"
-    )
+    (d / "xmls" / "frame_2.xml").write_text(VOC_XML.format(cls="bus"), encoding="utf-8")
     (d / "trainval.txt").write_text("frame_1\n", encoding="utf-8")
     (d / "test.txt").write_text("frame_2\n", encoding="utf-8")
     return tmp_path
@@ -91,9 +87,7 @@ def test_contract_check_passes_after_calibration(voc_raw: Path, tmp_path: Path):
     assert check(out) == 0
 
 
-def test_data_yaml_uses_abspath_and_val_fallback(
-    voc_split_dirs: Path, tmp_path: Path
-):
+def test_data_yaml_uses_abspath_and_val_fallback(voc_split_dirs: Path, tmp_path: Path):
     """ultralytics resolves `path: .` against CWD; val falls back to test."""
     out = tmp_path / "out"
     convert_voc(voc_split_dirs, out)
@@ -195,40 +189,68 @@ def trafficcam_raw(tmp_path: Path) -> Path:
     v1.mkdir(parents=True)
     for stem in ("frame0", "frame2"):
         (v1 / f"{stem}.jpg").touch()
-    (v1 / "frame0.json").write_text(_json.dumps({
-        "imageWidth": 720, "imageHeight": 480,
-        "objects": [
-            {"category": "car", "bbox": [10, 20, 100, 100]},
-            {"category": "Person", "bbox": [0, 0, 10, 10]},
-        ],
-    }), encoding="utf-8")
-    (v1 / "frame2.json").write_text(_json.dumps({
-        "imageWidth": 720, "imageHeight": 480,
-        "objects": [
-            {"category": "bus", "segmentation": [[10, 20, 110, 20, 110, 120, 10, 120]]},
-        ],
-    }), encoding="utf-8")
+    (v1 / "frame0.json").write_text(
+        _json.dumps(
+            {
+                "imageWidth": 720,
+                "imageHeight": 480,
+                "objects": [
+                    {"category": "car", "bbox": [10, 20, 100, 100]},
+                    {"category": "Person", "bbox": [0, 0, 10, 10]},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    (v1 / "frame2.json").write_text(
+        _json.dumps(
+            {
+                "imageWidth": 720,
+                "imageHeight": 480,
+                "objects": [
+                    {"category": "bus", "segmentation": [[10, 20, 110, 20, 110, 120, 10, 120]]},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     v2 = raw / "DEL_clip02"
     v2.mkdir(parents=True)
     (v2 / "frame0.jpg").touch()
     # 4x4 mask, foreground cols/rows 1-2 -> bbox (1,1,2,2)
-    (v2 / "frame0.json").write_text(_json.dumps({
-        "imageWidth": 4, "imageHeight": 4,
-        "objects": [
-            {"category": "motor", "segmentation": {"counts": [5, 2, 2, 2, 5], "size": [4, 4]}},
-        ],
-    }), encoding="utf-8")
+    (v2 / "frame0.json").write_text(
+        _json.dumps(
+            {
+                "imageWidth": 4,
+                "imageHeight": 4,
+                "objects": [
+                    {
+                        "category": "motor",
+                        "segmentation": {"counts": [5, 2, 2, 2, 5], "size": [4, 4]},
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     # labelme-style point list: [[x,y],...] must box all points (regression:
     # an early branch read these as zero-area boxes and wrote 0 frames)
     v3 = raw / "HYD_clip03"
     v3.mkdir(parents=True)
     (v3 / "frame0.jpg").touch()
-    (v3 / "frame0.json").write_text(_json.dumps({
-        "version": "5.0.1", "imageHeight": 100, "imageWidth": 200,
-        "shapes": [
-            {"label": "MotorBike", "points": [[10, 10], [30, 10], [30, 50], [10, 50]]},
-        ],
-    }), encoding="utf-8")
+    (v3 / "frame0.json").write_text(
+        _json.dumps(
+            {
+                "version": "5.0.1",
+                "imageHeight": 100,
+                "imageWidth": 200,
+                "shapes": [
+                    {"label": "MotorBike", "points": [[10, 10], [30, 10], [30, 50], [10, 50]]},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     return raw
 
 

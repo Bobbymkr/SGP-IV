@@ -29,7 +29,8 @@ def load_frames(frames_dir, max_frames=0, exts=("jpg", "jpeg", "png")):
 
     exts = {e.lower().lstrip(".") for e in exts}
     paths = sorted(
-        p for p in Path(frames_dir).iterdir()
+        p
+        for p in Path(frames_dir).iterdir()
         if p.is_file() and p.suffix.lower().lstrip(".") in exts
     )
     if max_frames and max_frames > 0:

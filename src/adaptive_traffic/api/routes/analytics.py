@@ -4,6 +4,7 @@ Analytics and forecasting endpoints
 
 from datetime import datetime, timedelta
 
+import numpy as np
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 

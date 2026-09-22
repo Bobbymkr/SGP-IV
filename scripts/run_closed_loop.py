@@ -83,14 +83,18 @@ def main() -> int:
         r = run_frame(pipe, sim, ix_id, stmp, f)
         fails += not r["actuated"]
         phases.append(r["phase"])
-        print(f"frame={i:4d} det={r['detected']:3d} queue={r['queued']:3d} "
-              f"demands={r['demands']} phase={r['phase']:10s} "
-              f"cycle={r['cycle_length']:.0f}s actuated={r['actuated']}")
+        print(
+            f"frame={i:4d} det={r['detected']:3d} queue={r['queued']:3d} "
+            f"demands={r['demands']} phase={r['phase']:10s} "
+            f"cycle={r['cycle_length']:.0f}s actuated={r['actuated']}"
+        )
     wall = time.perf_counter() - t0
     served = sorted(set(phases))
-    print(f"loop frames={len(frames)} source={source} backend={args.backend} "
-          f"actuated={len(frames) - fails}/{len(frames)} phases_seen={served} "
-          f"wall={wall:.1f}s stmp={'mock' if args.ntcip_ip is None else args.ntcip_ip}")
+    print(
+        f"loop frames={len(frames)} source={source} backend={args.backend} "
+        f"actuated={len(frames) - fails}/{len(frames)} phases_seen={served} "
+        f"wall={wall:.1f}s stmp={'mock' if args.ntcip_ip is None else args.ntcip_ip}"
+    )
     return 1 if fails else 0
 
 

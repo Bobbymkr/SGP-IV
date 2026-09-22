@@ -6,9 +6,8 @@ Fast by design: no model, no camera — pure policy math + canned estimates.
 import pytest
 
 from adaptive_traffic.config.city_profile import get_city_profile
-from adaptive_traffic.core.analytics.queue_estimator import QueueEstimator
+from adaptive_traffic.core.analytics.queue_estimator import LaneQueue, QueueEstimate, QueueEstimator
 from adaptive_traffic.core.closed_loop import create_loop, decide, inject_estimate
-from adaptive_traffic.core.analytics.queue_estimator import LaneQueue, QueueEstimate
 from adaptive_traffic.core.control.policies import (
     ArgmaxOrder,
     ClockwiseOrder,

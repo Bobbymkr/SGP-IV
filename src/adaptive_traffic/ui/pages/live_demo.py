@@ -9,13 +9,9 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-from adaptive_traffic.config.settings import get_settings
-
 
 def show_live_demo():
     """Display live interactive demo"""
-    settings = get_settings()
-
     st.markdown("<h1 class='main-header'>🎮 Live Interactive Demo</h1>", unsafe_allow_html=True)
 
     st.markdown(
@@ -50,8 +46,8 @@ def show_live_demo():
             "Controller Algorithm", ["DQN (AI)", "Fixed Time", "Webster", "Fuzzy Logic"], index=0
         )
 
-        show_detection = st.checkbox("Show Vehicle Detection", True)
-        show_queue = st.checkbox("Show Queue Lengths", True)
+        st.checkbox("Show Vehicle Detection", True)
+        st.checkbox("Show Queue Lengths", True)
 
         if st.button("▶️ Run Simulation", type="primary"):
             run_simulation(north, south, east, west, controller, sim_speed)

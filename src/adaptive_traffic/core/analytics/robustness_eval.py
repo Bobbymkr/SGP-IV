@@ -7,10 +7,8 @@ import logging
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
-import numpy as np
-
 from adaptive_traffic.config.city_profile import CityProfile
-from adaptive_traffic.core.control.controllers import BaseController, SignalTiming, TrafficState
+from adaptive_traffic.core.control.controllers import BaseController, TrafficState
 from adaptive_traffic.core.simulation.engine import (
     TrafficSimulation,
     create_intersection,

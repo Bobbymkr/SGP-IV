@@ -15,11 +15,14 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /app
 
 # Install system dependencies
+# NOTE: libgl1 (not libgl1-mesa-glx) — the -mesa-glx transitional package was
+# removed in Debian 13 trixie (current python:3.11-slim base); it fails apt
+# with exit 100. libgl1 is the replacement for OpenCV headless/video deps.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
     make \
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
@@ -50,13 +53,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Create non-root user
 RUN useradd -m -u 1000 appuser
 
-# Copy pyproject.toml and install dependencies
-COPY pyproject.toml .
+# Copy project metadata + code first: the editable install reads
+# readme/LICENSE from pyproject and packages from src/ — none exist yet
+# if only pyproject.toml is copied (fatal: 'src' does not exist).
+COPY pyproject.toml README.md LICENSE ./
+COPY src/ ./src/
 RUN pip install --upgrade pip && \
     pip install -e ".[prod]"
 
 # Copy application code
-COPY src/ ./src/
 COPY configs/ ./configs/
 COPY scripts/ ./scripts/
 

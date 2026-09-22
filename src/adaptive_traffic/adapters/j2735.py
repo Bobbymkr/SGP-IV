@@ -6,7 +6,6 @@ Encoder/decoder for J2735 2020 messages:
 - MAP (Map Data) - static intersection geometry (loaded from city profile)
 """
 
-import json
 import logging
 import socket
 import struct
@@ -14,7 +13,7 @@ import time
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
-from adaptive_traffic.core.ports.ntcip_port import J2735BSM, J2735MAP, J2735SPAT, J2735Port
+from adaptive_traffic.core.ports.ntcip_port import J2735BSM, J2735MAP, J2735SPAT, J2735Port, NTCIPCycleConfig
 
 logger = logging.getLogger(__name__)
 

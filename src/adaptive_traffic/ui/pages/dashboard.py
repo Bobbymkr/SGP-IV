@@ -9,13 +9,9 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-from adaptive_traffic.config.settings import get_settings
-
 
 def show_dashboard():
     """Display real-time dashboard"""
-    settings = get_settings()
-
     st.markdown("<h1 class='main-header'>📊 Real-time Dashboard</h1>", unsafe_allow_html=True)
 
     # System status cards

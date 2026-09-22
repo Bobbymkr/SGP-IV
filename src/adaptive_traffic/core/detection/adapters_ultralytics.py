@@ -6,7 +6,6 @@ Heavy imports (ultralytics, torch) are lazy, inside this module only
 import logging
 from typing import Dict, List, Optional
 
-import cv2
 import numpy as np
 
 from adaptive_traffic.config.city_profile import CityProfile

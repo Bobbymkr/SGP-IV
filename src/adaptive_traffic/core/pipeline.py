@@ -76,8 +76,9 @@ class StageResult:
 class StagedPipeline:
     """Chains detector -> estimator -> optional decide callback per frame."""
 
-    def __init__(self, detector, estimator, decide: Optional[Callable] = None,
-                 buffer_size: int = 4):
+    def __init__(
+        self, detector, estimator, decide: Optional[Callable] = None, buffer_size: int = 4
+    ):
         self.detector = detector
         self.estimator = estimator
         self.decide = decide

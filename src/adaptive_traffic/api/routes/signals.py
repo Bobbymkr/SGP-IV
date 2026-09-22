@@ -14,7 +14,6 @@ from adaptive_traffic.adapters import (
 )
 from adaptive_traffic.config.settings import get_settings
 from adaptive_traffic.core.ports.ntcip_port import (
-    J2735SPAT,
     NTCIPCycleConfig,
     NTCIPPhaseTiming,
 )
@@ -328,9 +327,7 @@ async def transmit_spat(signal_id: str, request: SPATTransmitRequest):
     timing = ntcp_adapter.get_phase_timing()
 
     if timing is None:
-        # Fallback to local signal state
-        signal = signals_db[signal_id]
-        # Build mock timing from signal state
+        # Fallback to local signal state (existence already checked above)
         from adaptive_traffic.core.ports.ntcip_port import NTCIPCycleConfig, NTCIPPhaseTiming
 
         timing = NTCIPCycleConfig(

@@ -7,7 +7,6 @@ Handles phase timing, cycle length, offset SET/GET operations over UDP.
 import logging
 import socket
 import struct
-import time
 from typing import List, Optional
 
 from adaptive_traffic.core.monitoring import observe

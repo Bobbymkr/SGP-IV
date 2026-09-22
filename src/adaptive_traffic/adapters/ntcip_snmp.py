@@ -13,7 +13,6 @@ from adaptive_traffic.core.ports.ntcip_port import (
     NTCIPCycleCounter,
     NTCIPDetectorStatus,
     NTCIPFault,
-    NTCIPPhaseTiming,
     NTCIPPort,
 )
 
@@ -347,10 +346,6 @@ class NTCIPSNMPAdapter(NTCIPPort):
             return True
         status = self._snmp_get(self.OID_CONTROLLER_STATUS)
         return status is not None
-
-    # STMP methods - not implemented in SNMP adapter
-    def get_phase_timing(self) -> Optional[NTCIPCycleConfig]:
-        return None
 
 
 class MockNTCIPSNMPAdapter(NTCIPSNMPAdapter):

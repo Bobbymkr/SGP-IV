@@ -49,8 +49,8 @@ async def detect_vehicles(
     roi_config: str | None = Form(None),
 ):
     """Detect vehicles in uploaded image"""
-    # Read image
-    contents = await file.read()
+    # Read image (consumed by the decoder once wired; mock below ignores bytes)
+    await file.read()
 
     # In real implementation, decode image and run detection
     # For now, return mock response
@@ -92,7 +92,7 @@ async def detect_batch(files: list[UploadFile] = File(...), camera_id: str = For
     """Detect vehicles in batch of images"""
     results = []
     for i, file in enumerate(files):
-        contents = await file.read()
+        await file.read()
         # Process each image
         results.append(
             DetectionResponse(
