@@ -15,11 +15,14 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /app
 
 # Install system dependencies
+# NOTE: libgl1 (not libgl1-mesa-glx) — the -mesa-glx transitional package was
+# removed in Debian 13 trixie (current python:3.11-slim base); it fails apt
+# with exit 100. libgl1 is the replacement for OpenCV headless/video deps.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
     make \
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
