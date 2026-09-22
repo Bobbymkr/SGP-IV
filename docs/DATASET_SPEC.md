@@ -48,7 +48,7 @@ names:
 | 4 | bicycle | BICYCLE |
 | 5 | auto | AUTO |
 
-> ⚠️ **PROVISIONAL FLAG**: more classes are expected (tempos, e-rickshaws,
+> WARNING **PROVISIONAL FLAG**: more classes are expected (tempos, e-rickshaws,
 > tractors, etc.). The schema is deliberately cheap to extend: append new ids
 > at the END (never reorder existing ones), update `data.yaml`,
 > `core/domain.py::VehicleType`, and retrain. All downstream code reads class

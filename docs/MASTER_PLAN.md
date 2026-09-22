@@ -41,7 +41,7 @@ deployed on Indian traffic signals — and **fast in every measurable axis**.
   (`phase_sequence=["NS_green","NS_yellow","EW_green","EW_yellow"]`) — n-way impossible today
 - `core/detection/detector.py`: concrete `VehicleDetector`, imports `ultralytics`+`torch`
   at module top — no port interface
-- `core/control/controllers.py`: ✅ already has `BaseController` ABC with min/max green
+- `core/control/controllers.py`: PASS already has `BaseController` ABC with min/max green
   bounds — correct port pattern to follow
 - API/UI layers clean: import only `config.settings`
 - Perf tests quarantined (target deleted `Code/YOLO/darkflow` module) — no baseline exists
@@ -149,26 +149,26 @@ deployed on Indian traffic signals — and **fast in every measurable axis**.
    (TX2/Xavier/Orin family, RK3588-class, x86 IPC, generic ARM)
 3. Future-upgrade log: tier-low hybrid detector trigger = eval queue-error breach
 
-### Phase T — GPU training pipeline (train-on-GPU → deploy-anywhere) — STATUS: 🔶 ready, blocked on data
+### Phase T — GPU training pipeline (train-on-GPU → deploy-anywhere) — STATUS: READY - blocked on data
 Locked: annotated data will be provided by authorities · 6-class schema now, extend later
 (flagged) · free Colab T4 tier (yolov8n-first strategy).
 
-1. ✅ `docs/DATASET_SPEC.md` v1: YOLO-format contract, 6 classes (car, motorcycle,
+1. PASS `docs/DATASET_SPEC.md` v1: YOLO-format contract, 6 classes (car, motorcycle,
    bus, truck, bicycle, auto), junction×day split hygiene, capture-metadata request,
    calibration coverage rules. Class schema PROVISIONAL FLAG documented.
-2. ✅ `scripts/prepare_dataset.py`: YOLO + COCO-JSON converters, contract validator
+2. PASS `scripts/prepare_dataset.py`: YOLO + COCO-JSON converters, contract validator
    (`--check`), calibration sampler (`--make-calibration`). Dry-run passed on mock data.
-3. ✅ `notebooks/train_india_yolo.ipynb`: Colab notebook (20 cells) — validate → train
+3. PASS `notebooks/train_india_yolo.ipynb`: Colab notebook (20 cells) — validate → train
    yolov8n @70ep (T4-session sized; yolov8s optional second session, commented) →
    per-class mAP50 (auto highlighted) → ONNX export opset17 → int8 static quantization
    with dynamic fallback → registry packaging (`models/registry/india-yolov8{n,s}/`
    model.onnx + model-int8.onnx + metadata.json) → zip back to Drive.
-4. ✅ `OnnxDetector` completed: loads registry models via metadata.json (class list,
+4. PASS `OnnxDetector` completed: loads registry models via metadata.json (class list,
    imgsz, layout read from metadata, never hardcoded); fp32+int8 decode layouts;
    provider auto-pick CUDA→CPU; wired into `DetectorPort.create`.
-5. ✅ `configs/device.yaml`: tiers low/mid/high mapped to registry artifacts;
+5. PASS `configs/device.yaml`: tiers low/mid/high mapped to registry artifacts;
    high-tier TensorRT adapter still pending Phase 5 (falls back to ONNX).
-6. ⏸ When footage arrives: convert → `--check` → upload to Drive → Run all in Colab →
+6. PAUSED - When footage arrives: convert → `--check` → upload to Drive → Run all in Colab →
    drop registry zip into repo → rerun eval matrix.
 
 ## 5. Success Criteria (overall)
@@ -193,17 +193,17 @@ tier-low hybrid detector (until triggered).
 
 | Phase | Status | Completed On | Checkpoint File | Notes |
 |-------|--------|--------------|-----------------|-------|
-| 0 Measure | ✅ done | 2026-08-26 | `checkpoints/phase0.done` | sim 28,503 steps/s (57× target); loop-fast 7.4s; BENCHMARKS.md created |
-| 1 Dev loop | ✅ done | 2026-08-26 | `checkpoints/phase1.done` | 3 runners deleted; loop-fast/verify/eval/bench-sim/graph-update targets; [cv]/[ui] extras split |
-| 1.5 Modularity | ✅ done | 2026-08-26 | — (sub-phase, no ck) | core/domain.py (+AUTO, diagonal Directions); DetectorPort + Ultralytics/Onnx adapters; torch confined to adapters |
-| 2 Edge cases | ✅ done | 2026-08-26 | `checkpoints/phase2.done` | behavior.py (3 India presets, per-class overrides) + weather.py (4 states) integrated into engine |
-| 3 N-way scheduler | ✅ done | 2026-08-26 | — (sub-phase, no ck) | compatibility-graph groups; adaptive max-demand vs fixed round-robin; verified 3/4/5-way |
-| 4 Eval matrix | ✅ done | 2026-08-26 | `checkpoints/phase3.done` | evals/runner.py + configs/evals/scenarios.yaml; 11 scenarios ×2 modes in 22.4s; regression flagging live |
-| 5 Speed | ✅ done | 2026-09-18 | `checkpoints/phase5.done` | vectorization deferred (57× target); Steps 0–3: hygiene, -final refs, histograms+/metrics, staged pipeline. TRT rung: TensorRTDetector via ORT TRT-EP (fp16 + engine cache, fail-closed fallback) — code-complete, on-device latency validation pending Jetson hardware. |
-| 6 Graph/docs | ✅ done | 2026-09-03 | `checkpoints/phase6.done` | device-tiers.md added; AGENTS.md verification+dependency rules live |
-| T Training pipeline | ✅ done (finale) | 2026-09-13 | — | **Finale 5-ep joint polish from loop-8 best.pt:** 8-loop chain 0.7949→0.8293 → finale 0.8477 full-10k val (+0.0184, 6-class bicycle 0.6859); low-tier now india-yolov8n-final (4.98 fps static-int8, 200.6ms/frame). Earlier Option A pilot (HeTra mAP50 0.9816) superseded — finale is canonical. |
-| **Orca Autobuild** | ✅ wired | 2026-09-02 | `checkpoints/*.done` | `orca-pipeline.yaml` 5 phases + `scripts/resume.ps1` power-cut resume + `scripts/auto-graph.ps1` + `scripts/install-orca-startup.ps1` + single `.graph-mem` brain + `vault/` Obsidian mirror + freelm 6-pool `.env` — see `~/.agent/plans/orca-autobuild-plan.md` |
-| P Policy ports | ✅ done | 2026-09-21 | — | `core/control/policies.py` (Headway/Green/Order/Cap ports + Emergency/Manual priority + MARL slot); per-class weighted greens, clockwise default, demand-share cap, route-scoped manual-suppresses-EVP; `QueueEstimate.by_class`; engine delegates with legacy one flag away; 10 new unit tests; verify 92 passed; eval 11/11 wins (4 order-cost regressions documented in BENCHMARKS.md) |
+| 0 Measure | PASS done | 2026-08-26 | `checkpoints/phase0.done` | sim 28,503 steps/s (57× target); loop-fast 7.4s; BENCHMARKS.md created |
+| 1 Dev loop | PASS done | 2026-08-26 | `checkpoints/phase1.done` | 3 runners deleted; loop-fast/verify/eval/bench-sim/graph-update targets; [cv]/[ui] extras split |
+| 1.5 Modularity | PASS done | 2026-08-26 | — (sub-phase, no ck) | core/domain.py (+AUTO, diagonal Directions); DetectorPort + Ultralytics/Onnx adapters; torch confined to adapters |
+| 2 Edge cases | PASS done | 2026-08-26 | `checkpoints/phase2.done` | behavior.py (3 India presets, per-class overrides) + weather.py (4 states) integrated into engine |
+| 3 N-way scheduler | PASS done | 2026-08-26 | — (sub-phase, no ck) | compatibility-graph groups; adaptive max-demand vs fixed round-robin; verified 3/4/5-way |
+| 4 Eval matrix | PASS done | 2026-08-26 | `checkpoints/phase3.done` | evals/runner.py + configs/evals/scenarios.yaml; 11 scenarios ×2 modes in 22.4s; regression flagging live |
+| 5 Speed | PASS done | 2026-09-18 | `checkpoints/phase5.done` | vectorization deferred (57× target); Steps 0–3: hygiene, -final refs, histograms+/metrics, staged pipeline. TRT rung: TensorRTDetector via ORT TRT-EP (fp16 + engine cache, fail-closed fallback) — code-complete, on-device latency validation pending Jetson hardware. |
+| 6 Graph/docs | PASS done | 2026-09-03 | `checkpoints/phase6.done` | device-tiers.md added; AGENTS.md verification+dependency rules live |
+| T Training pipeline | PASS done (finale) | 2026-09-13 | — | **Finale 5-ep joint polish from loop-8 best.pt:** 8-loop chain 0.7949→0.8293 → finale 0.8477 full-10k val (+0.0184, 6-class bicycle 0.6859); low-tier now india-yolov8n-final (4.98 fps static-int8, 200.6ms/frame). Earlier Option A pilot (HeTra mAP50 0.9816) superseded — finale is canonical. |
+| **Orca Autobuild** | PASS wired | 2026-09-02 | `checkpoints/*.done` | `orca-pipeline.yaml` 5 phases + `scripts/resume.ps1` power-cut resume + `scripts/auto-graph.ps1` + `scripts/install-orca-startup.ps1` + single `.graph-mem` brain + `vault/` Obsidian mirror + freelm 6-pool `.env` — see `~/.agent/plans/orca-autobuild-plan.md` |
+| P Policy ports | PASS done | 2026-09-21 | — | `core/control/policies.py` (Headway/Green/Order/Cap ports + Emergency/Manual priority + MARL slot); per-class weighted greens, clockwise default, demand-share cap, route-scoped manual-suppresses-EVP; `QueueEstimate.by_class`; engine delegates with legacy one flag away; 10 new unit tests; verify 92 passed; eval 11/11 wins (4 order-cost regressions documented in BENCHMARKS.md) |
 
 ## 8. Change Log
 
@@ -212,7 +212,7 @@ tier-low hybrid detector (until triggered).
 | 2026-08-26 | Initial plan committed; execution started |
 | 2026-08-26 | Phases 0–4 complete. Key results: eval matrix shows adaptive wins +76.5% wait reduction on 5-way, +31% on 3-way; queue_error gradient 0.00→0.88 across weather/discipline axes. Direction enum extended with diagonal legs for 5/6-way. VehicleType AUTO added. Legacy runners hard-deleted. |
 | 2026-08-26 | Phase T built data-ready: DATASET_SPEC v1 (classes provisional — extend for tempos/e-rickshaws when confirmed), prepare_dataset.py dry-run passed on mock dataset, Colab notebook validated, OnnxDetector completed + device.yaml tiers wired. onnxruntime installed to venv. |
-| 2026-09-03 | Phase 6 complete: device-tiers.md added; tensorrt→onnx fallback in DetectorPort; profile_device.py + bench_detect.py created; make bench-detect target added; loop-fast 7.4s ✅ |
+| 2026-09-03 | Phase 6 complete: device-tiers.md added; tensorrt→onnx fallback in DetectorPort; profile_device.py + bench_detect.py created; make bench-detect target added; loop-fast 7.4s PASS |
 | 2026-09-04 | Phase T unblocked via HF IITM-HeTra_v2 (Option A pilot): convert_voc (recursive splits, BOM-tolerant, image index) + 8 regression tests; Colab yolov8n mAP50 0.9816/auto 0.9744 → models/registry/india-yolov8n/; eval matrix rerun clean (17.8s); bench-detect first real row; fixed ONNX export transpose + bench_detect len bugs; data.yaml now absolute-path with val→test fallback. |
 | 2026-09-05 | Source switch to official iisc-aim/BMD-45 (CC-BY-4.0, commercial OK; 153 GB PNGs): notebook rewired to chunked PNG→JPG transcode pipeline (peak ~35 GB) + official 10k-image val split (no synthetic split); Option B merge covers 13/14 classes (Other dropped); pipeline dry-run green. Old kalyan1729 copy superseded. |
 | 2026-09-10 | 8-loop cumulative chain complete (train_bmd_loop.ipynb): 0.7949→0.8293 overall on fixed official-val anchor, all 6 classes monotonic-or-flat, bicycle 0.56→0.66, zero forgetting; winner registry india-yolov8n-bmd/ extracted + wired as low-tier default; eval matrix clean (18.5s); full suite 48 passed. |
