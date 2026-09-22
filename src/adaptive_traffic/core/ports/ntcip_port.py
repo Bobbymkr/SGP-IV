@@ -8,8 +8,6 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
-from adaptive_traffic.core.domain import SignalTiming, TrafficState
-
 
 @dataclass
 class NTCIPPhaseTiming:

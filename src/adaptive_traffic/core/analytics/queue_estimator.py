@@ -7,11 +7,9 @@ import logging
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
-import numpy as np
-
 from adaptive_traffic.config.city_profile import CityProfile
 from adaptive_traffic.core.control.policies import normalize_class
-from adaptive_traffic.core.domain import VehicleDetection, VehicleType
+from adaptive_traffic.core.domain import VehicleDetection
 from adaptive_traffic.core.monitoring import observe
 
 logger = logging.getLogger(__name__)
@@ -151,9 +149,6 @@ class QueueEstimator:
         lane_groups = {}
 
         for det in detections:
-            # Get vehicle class name
-            class_name = self.class_mapping.get(det.class_id, "car")
-
             # Get lane from detection (if available) or estimate from bbox
             lane_id = getattr(det, "lane_id", None)
             if lane_id is None:
@@ -279,11 +274,9 @@ class QueueEstimator:
         # Use bottom of bbox (closest to camera) for distance estimation
         vehicle_bottom_y = y2
 
-        # Get calibration factor for this approach
-        px_to_m = self.detector_calibration.__dict__.get(direction, 0.05)
-
         # Simple perspective projection: distance proportional to vertical position
         # In production, use full homography matrix from camera calibration
+        # (per-approach px_to_m lives in detector_calibration for that upgrade)
         normalized_y = vehicle_bottom_y / self.image_height_px
 
         # Distance increases as vehicle is higher in image (further from camera)
@@ -302,7 +295,6 @@ class QueueEstimator:
         for vehicle in bsm_vehicles:
             lane_id = vehicle.get("lane_id", 0)
             direction = vehicle.get("direction", "north")
-            distance = vehicle.get("distance_to_stop_line", 0)
 
             lane_key = f"{direction}_{lane_id}"
             if lane_key not in lane_groups:

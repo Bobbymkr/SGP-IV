@@ -6,13 +6,9 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from adaptive_traffic.config.settings import get_settings
-
 
 def show_comparison():
     """Display algorithm comparison"""
-    settings = get_settings()
-
     st.markdown("<h1 class='main-header'>📈 Algorithm Comparison</h1>", unsafe_allow_html=True)
 
     st.markdown("""

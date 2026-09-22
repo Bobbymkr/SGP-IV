@@ -6,7 +6,7 @@ Works with fp32 and int8-quantized exports from the training pipeline.
 
 import json
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Optional
 
 import numpy as np
 

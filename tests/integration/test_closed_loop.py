@@ -11,18 +11,20 @@ import pytest
 
 from adaptive_traffic.adapters.ntcip_stmp import MockNTCIP1202STMPAdapter
 from adaptive_traffic.config.city_profile import get_city_profile
-from adaptive_traffic.core.analytics.queue_estimator import LaneQueue, QueueEstimate
+from adaptive_traffic.core.analytics.queue_estimator import LaneQueue, QueueEstimate, QueueEstimator
 from adaptive_traffic.core.closed_loop import create_loop, decide, run_frame
 from adaptive_traffic.core.domain import VehicleDetection
 from adaptive_traffic.core.pipeline import StagedPipeline
-from adaptive_traffic.core.analytics.queue_estimator import QueueEstimator
 
 
 def _car(x1, y1=300, y2=460):
     cx = (x1 + x1 + 50) // 2
     return VehicleDetection(
-        class_id=0, class_name="car", confidence=0.9,
-        bbox=(x1, y1, x1 + 50, y2), center=(cx, (y1 + y2) // 2),
+        class_id=0,
+        class_name="car",
+        confidence=0.9,
+        bbox=(x1, y1, x1 + 50, y2),
+        center=(cx, (y1 + y2) // 2),
     )
 
 
@@ -45,8 +47,7 @@ def loop():
 def test_full_loop_canned_detections(loop):
     profile, sim, ix_id, stmp = loop
     # bottom-half bboxes -> south approach, inside the 50m queue zone
-    pipe = StagedPipeline(FakeDetector([_car(50), _car(300), _car(500)]),
-                          QueueEstimator(profile))
+    pipe = StagedPipeline(FakeDetector([_car(50), _car(300), _car(500)]), QueueEstimator(profile))
     r = run_frame(pipe, sim, ix_id, stmp, object())
 
     assert r["detected"] == 3 and r["queued"] == 3
@@ -64,14 +65,17 @@ def test_full_loop_canned_detections(loop):
 def test_demand_steers_next_phase(loop):
     _, sim, ix_id, _ = loop
     est = QueueEstimate(
-        intersection_id=ix_id, timestamp=0.0, lanes=[],
+        intersection_id=ix_id,
+        timestamp=0.0,
+        lanes=[],
         by_direction={"east": LaneQueue("east_0", "east", 6, 30.0, 5.0, 0.9)},
-        total_vehicles=6, total_length_m=30.0,
+        total_vehicles=6,
+        total_length_m=30.0,
     )
     from adaptive_traffic.core.closed_loop import inject_estimate
 
     inject_estimate(sim, ix_id, est)
-    first = decide(sim, ix_id)   # 0_green -> 0_yellow (yellow always follows green)
+    first = decide(sim, ix_id)  # 0_green -> 0_yellow (yellow always follows green)
     assert first["phase"] == "0_yellow"
     second = decide(sim, ix_id)  # east-only demand -> E/W group served next
     assert second["phase"] == "1_green"
@@ -97,7 +101,6 @@ def test_real_model_end_to_end(loop):
     pipe = StagedPipeline(detector, QueueEstimator(profile))
     rng = np.random.default_rng(42)
     for _ in range(2):
-        r = run_frame(pipe, sim, ix_id, stmp,
-                      rng.integers(0, 255, (640, 640, 3), dtype=np.uint8))
+        r = run_frame(pipe, sim, ix_id, stmp, rng.integers(0, 255, (640, 640, 3), dtype=np.uint8))
         assert r["actuated"] is True
         assert set(r["stage_ms"]) >= {"detect", "estimate"}

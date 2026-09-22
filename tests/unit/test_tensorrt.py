@@ -19,8 +19,7 @@ from adaptive_traffic.core.detection.adapters_tensorrt import (
 from adaptive_traffic.core.detection.base import DetectorPort
 
 FINAL = "models/registry/india-yolov8n-final"
-TRT_PROVIDERS = ["TensorrtExecutionProvider", "CUDAExecutionProvider",
-                 "CPUExecutionProvider"]
+TRT_PROVIDERS = ["TensorrtExecutionProvider", "CUDAExecutionProvider", "CPUExecutionProvider"]
 CPU_PROVIDERS = ["CPUExecutionProvider"]
 
 
@@ -41,8 +40,7 @@ class FakeSession:
 def _mock_ort(monkeypatch, providers):
     import onnxruntime
 
-    monkeypatch.setattr(onnxruntime, "get_available_providers",
-                        lambda: providers)
+    monkeypatch.setattr(onnxruntime, "get_available_providers", lambda: providers)
     return onnxruntime
 
 
@@ -77,8 +75,7 @@ def test_from_registry_needs_provider(monkeypatch):
 
 
 def test_from_registry_selects_fp32_and_trt_options(trt_available):
-    det = TensorRTDetector.from_registry(
-        FINAL, trt_cache_dir=str(trt_available))
+    det = TensorRTDetector.from_registry(FINAL, trt_cache_dir=str(trt_available))
     assert det.model_path.name == "model.onnx"
     providers = FakeSession.created[-1][1]["providers"]
     name, opts = providers[0]
@@ -87,30 +84,29 @@ def test_from_registry_selects_fp32_and_trt_options(trt_available):
     assert opts["trt_engine_cache_enable"] == "1"
     assert opts["trt_engine_cache_path"].startswith(str(trt_available))
     from pathlib import Path
+
     assert Path(opts["trt_engine_cache_path"]).is_dir()
 
 
 def test_from_registry_honors_prefer_int8(trt_available):
-    det = TensorRTDetector.from_registry(FINAL, prefer_int8=True,
-                                         trt_cache_dir=str(trt_available))
+    det = TensorRTDetector.from_registry(FINAL, prefer_int8=True, trt_cache_dir=str(trt_available))
     assert det.model_path.name == "model-int8.onnx"
 
 
 def test_factory_falls_back_without_provider(monkeypatch):
     _mock_ort(monkeypatch, CPU_PROVIDERS)
     with pytest.warns(RuntimeWarning):
-        det = DetectorPort.create(
-            {"backend": "tensorrt", "registry_dir": FINAL})
+        det = DetectorPort.create({"backend": "tensorrt", "registry_dir": FINAL})
     assert type(det) is OnnxDetector  # real fp32 fallback, loaded on CPU
 
 
 def test_factory_uses_trt_when_available(trt_available):
-    det = DetectorPort.create({"backend": "tensorrt", "registry_dir": FINAL,
-                               "trt_cache_dir": str(trt_available)})
+    det = DetectorPort.create(
+        {"backend": "tensorrt", "registry_dir": FINAL, "trt_cache_dir": str(trt_available)}
+    )
     assert isinstance(det, TensorRTDetector)
 
 
 def test_factory_nonregistry_trt_path(trt_available):
-    det = DetectorPort.create({"backend": "tensorrt",
-                               "model_path": f"{FINAL}/model.onnx"})
+    det = DetectorPort.create({"backend": "tensorrt", "model_path": f"{FINAL}/model.onnx"})
     assert isinstance(det, TensorRTDetector)

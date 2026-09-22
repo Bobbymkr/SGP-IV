@@ -3,9 +3,9 @@ Detector Port
 Backend-agnostic vehicle detection contract
 """
 
+import warnings
 from abc import ABC, abstractmethod
 from typing import Optional
-import warnings
 
 import numpy as np
 
@@ -50,7 +50,8 @@ class DetectorPort(ABC):
                 )
             return OnnxDetector(
                 model_path=config.get(
-                    "                model_path", "models/registry/india-yolov8n-final/model-int8.onnx"
+                    "                model_path",
+                    "models/registry/india-yolov8n-final/model-int8.onnx",
                 ),
                 confidence_threshold=config.get("confidence_threshold", 0.5),
                 iou_threshold=config.get("iou_threshold", 0.45),
@@ -69,8 +70,7 @@ class DetectorPort(ABC):
                         city_profile=city_profile,
                         **{
                             k: config[k]
-                            for k in ("prefer_int8", "confidence_threshold",
-                                      "trt_cache_dir")
+                            for k in ("prefer_int8", "confidence_threshold", "trt_cache_dir")
                             if k in config
                         },
                     )
@@ -82,8 +82,12 @@ class DetectorPort(ABC):
                     city_profile=city_profile,
                     **{
                         k: config[k]
-                        for k in ("confidence_threshold", "iou_threshold",
-                                  "providers", "trt_cache_dir")
+                        for k in (
+                            "confidence_threshold",
+                            "iou_threshold",
+                            "providers",
+                            "trt_cache_dir",
+                        )
                         if k in config
                     },
                 )

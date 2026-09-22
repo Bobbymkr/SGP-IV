@@ -33,15 +33,21 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--backend", default="ultralytics", choices=["ultralytics", "onnx", "tensorrt"])
     p.add_argument("--model", default="yolov8n.pt", help="ultralytics model path")
-    p.add_argument("--registry", default="models/registry/india-yolov8n-final",
-                   help="onnx registry dir")
+    p.add_argument(
+        "--registry", default="models/registry/india-yolov8n-final", help="onnx registry dir"
+    )
     p.add_argument("--frames", type=int, default=20)
-    p.add_argument("--frames-dir", default=None,
-                   help="directory of jpg/png frames (recorded footage or rendered set)")
-    p.add_argument("--max-frames", type=int, default=0,
-                   help="cap frames from --frames-dir (0 = all)")
-    p.add_argument("--stages", action="store_true",
-                   help="route detect+estimate through StagedPipeline")
+    p.add_argument(
+        "--frames-dir",
+        default=None,
+        help="directory of jpg/png frames (recorded footage or rendered set)",
+    )
+    p.add_argument(
+        "--max-frames", type=int, default=0, help="cap frames from --frames-dir (0 = all)"
+    )
+    p.add_argument(
+        "--stages", action="store_true", help="route detect+estimate through StagedPipeline"
+    )
     args = p.parse_args()
 
     cfg = {"backend": args.backend}
@@ -88,8 +94,10 @@ def main() -> int:
             counts.append(len(dets))
             classes.update(d.class_name for d in dets)
         n = len(results)
-        print(f"backend={args.backend} source={source} stages=detect+estimate frames={n} "
-              f"detect_ms={det_ms / n:.3f} estimate_ms={est_ms / n:.3f} det_total={sum(counts)}")
+        print(
+            f"backend={args.backend} source={source} stages=detect+estimate frames={n} "
+            f"detect_ms={det_ms / n:.3f} estimate_ms={est_ms / n:.3f} det_total={sum(counts)}"
+        )
         print(f"det_hist={det_hist(counts)} class_counts={dict(classes)}")
         return 0
     det = detector.detect(frames[0])  # warmup
@@ -105,8 +113,10 @@ def main() -> int:
 
     fps = len(frames) / elapsed
     lat_ms = elapsed / len(frames) * 1000
-    print(f"backend={args.backend} source={source} frames={len(frames)} fps={fps:.2f} "
-          f"latency={lat_ms:.1f}ms/frame det_total={sum(counts)}")
+    print(
+        f"backend={args.backend} source={source} frames={len(frames)} fps={fps:.2f} "
+        f"latency={lat_ms:.1f}ms/frame det_total={sum(counts)}"
+    )
     print(f"det_hist={det_hist(counts)} class_counts={dict(classes)}")
     return 0
 

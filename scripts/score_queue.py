@@ -91,8 +91,10 @@ def main() -> int:
         weathers.append(parse_weather(n))
     elapsed = time.perf_counter() - t0
 
-    print(f"backend={args.backend} conf={args.conf} city={args.city} "
-          f"frames={len(frames)} gt_source={gt_source} wall={elapsed:.1f}s")
+    print(
+        f"backend={args.backend} conf={args.conf} city={args.city} "
+        f"frames={len(frames)} gt_source={gt_source} wall={elapsed:.1f}s"
+    )
     print(f"det_vs_gt   {err_stats(pred_det, gt)} hist={det_hist(pred_det)}")
     print(f"queue_vs_gt {err_stats(pred_queue, gt)} hist={det_hist(pred_queue)}")
 
@@ -108,8 +110,10 @@ def main() -> int:
         # Detector blind on this source (e.g. schematic renders vs a photo-
         # trained model): the error is domain gap, not interpolation error,
         # so the trigger cannot be read. Fix the source before deciding.
-        print(f"hybrid-trigger: INCONCLUSIVE — detector blind "
-              f"(pred total 0 vs gt mean {sum(gt)/len(gt):.2f}); trigger undecided")
+        print(
+            f"hybrid-trigger: INCONCLUSIVE — detector blind "
+            f"(pred total 0 vs gt mean {sum(gt)/len(gt):.2f}); trigger undecided"
+        )
     else:
         fires = q_rmse > 0.5
         verdict = "FIRES — build frame-skip hybrid" if fires else "holds — interpolation stays"

@@ -6,13 +6,9 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from adaptive_traffic.config.settings import get_settings
-
 
 def show_metrics():
     """Display environmental and economic impact metrics"""
-    settings = get_settings()
-
     st.markdown(
         "<h1 class='main-header'>🌍 Environmental & Economic Impact</h1>", unsafe_allow_html=True
     )
@@ -88,7 +84,7 @@ def show_metrics():
         )
 
     with col2:
-        avg_daily_traffic = st.number_input(
+        st.number_input(
             "Average Daily Traffic per Intersection", min_value=1000, max_value=100000, value=25000
         )
 

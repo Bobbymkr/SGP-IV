@@ -10,8 +10,6 @@ from adaptive_traffic.config.settings import get_settings
 
 def show_advanced():
     """Display advanced features and settings"""
-    settings = get_settings()
-
     st.markdown(
         "<h1 class='main-header'>⚙️ Advanced Features & Settings</h1>", unsafe_allow_html=True
     )
@@ -57,12 +55,10 @@ def show_emergency_priority():
 
     with col1:
         st.markdown("### Configuration")
-        evp_enabled = st.checkbox("Enable EVP", value=True)
-        detection_range = st.slider("Detection Range (meters)", 100, 1000, 300)
-        priority_duration = st.slider("Green Extension (seconds)", 10, 120, 30)
-        preemption_mode = st.selectbox(
-            "Preemption Mode", ["Immediate", "Next Cycle", "Coordinated"], index=0
-        )
+        st.checkbox("Enable EVP", value=True)
+        st.slider("Detection Range (meters)", 100, 1000, 300)
+        st.slider("Green Extension (seconds)", 10, 120, 30)
+        st.selectbox("Preemption Mode", ["Immediate", "Next Cycle", "Coordinated"], index=0)
 
         st.markdown("### Supported Vehicle Types")
         st.checkbox("Ambulance", True)
@@ -209,6 +205,7 @@ def show_pedestrian_cyclist():
 
 def show_system_config():
     """System configuration"""
+    settings = get_settings()
     st.subheader("🔧 System Configuration")
 
     st.markdown("### Signal Timing Parameters")
@@ -217,18 +214,16 @@ def show_system_config():
 
     with col1:
         st.markdown("**Base Timing**")
-        min_green = st.number_input("Minimum Green (s)", 5, 60, settings.min_green_time)
-        max_green = st.number_input("Maximum Green (s)", 30, 180, settings.max_green_time)
-        yellow = st.number_input("Yellow Time (s)", 3, 10, settings.default_yellow_time)
-        all_red = st.number_input("All-Red Clearance (s)", 1, 5, 2)
+        st.number_input("Minimum Green (s)", 5, 60, settings.min_green_time)
+        st.number_input("Maximum Green (s)", 30, 180, settings.max_green_time)
+        st.number_input("Yellow Time (s)", 3, 10, settings.default_yellow_time)
+        st.number_input("All-Red Clearance (s)", 1, 5, 2)
 
     with col2:
         st.markdown("**Detection Settings**")
-        det_time = st.number_input("Advance Detection (s)", 1, 15, settings.detection_time)
-        det_conf = st.slider(
-            "Detection Confidence", 0.1, 1.0, settings.yolo_confidence_threshold, 0.05
-        )
-        det_iou = st.slider("Detection IoU Threshold", 0.1, 1.0, settings.yolo_iou_threshold, 0.05)
+        st.number_input("Advance Detection (s)", 1, 15, settings.detection_time)
+        st.slider("Detection Confidence", 0.1, 1.0, settings.yolo_confidence_threshold, 0.05)
+        st.slider("Detection IoU Threshold", 0.1, 1.0, settings.yolo_iou_threshold, 0.05)
 
     st.markdown("### Controller Settings")
 
@@ -249,9 +244,9 @@ def show_system_config():
 
     with col4:
         st.markdown("**Simulation Parameters**")
-        sim_time = st.number_input("Simulation Time (s)", 60, 3600, settings.simulation_time)
-        num_sig = st.number_input("Number of Signals", 2, 8, settings.num_signals)
-        num_lanes = st.number_input("Lanes per Approach", 1, 4, 2)
+        st.number_input("Simulation Time (s)", 60, 3600, settings.simulation_time)
+        st.number_input("Number of Signals", 2, 8, settings.num_signals)
+        st.number_input("Lanes per Approach", 1, 4, 2)
 
     if st.button("💾 Save Configuration"):
         st.success("✅ Configuration saved! Restart services to apply changes.")
@@ -362,8 +357,8 @@ ws.onmessage = (event) => {
         )
 
     st.markdown("### Webhook Configuration")
-    webhook_url = st.text_input("Webhook URL", placeholder="https://your-system.com/webhook")
-    events = st.multiselect(
+    st.text_input("Webhook URL", placeholder="https://your-system.com/webhook")
+    st.multiselect(
         "Subscribe to Events",
         ["signal_change", "detection_alert", "traffic_anomaly", "system_health", "evp_activated"],
         default=["signal_change", "traffic_anomaly"],

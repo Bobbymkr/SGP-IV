@@ -41,7 +41,7 @@ class TestSystemStress(unittest.TestCase):
 
                     # Mock intensive computation
                     data = np.random.random((1000, 1000))
-                    result = np.fft.fft2(data)
+                    np.fft.fft2(data)
 
                     computation_time = time.time() - start_time
 
@@ -49,7 +49,7 @@ class TestSystemStress(unittest.TestCase):
                     green_time = np.random.randint(10, 60)
 
                     # Simulate dashboard update
-                    dashboard_data = {
+                    _ = {
                         "vehicle_count": np.random.randint(0, 50),
                         "signal_time": green_time,
                         "computation_time": computation_time,
@@ -129,7 +129,7 @@ class TestSystemStress(unittest.TestCase):
 
                 # Process data
                 for array in data:
-                    result = np.mean(array)
+                    np.mean(array)
 
                 # Clean up
                 del data

@@ -35,10 +35,16 @@ SPLITS = ("train", "val", "test")
 # Rationale: visual similarity at CCTV distance; keeps every id stable.
 MERGE_B = {
     # car-like passenger vehicles
-    "sedan": "car", "hatchback": "car", "suv": "car", "muv": "car",
+    "sedan": "car",
+    "hatchback": "car",
+    "suv": "car",
+    "muv": "car",
     # bus-like people carriers
-    "minibus": "bus", "mini_bus": "bus", "van": "bus",
-    "tempo_traveller": "bus", "tempo": "bus",
+    "minibus": "bus",
+    "mini_bus": "bus",
+    "van": "bus",
+    "tempo_traveller": "bus",
+    "tempo": "bus",
     # truck-like goods carriers
     "lcv": "truck",
     # tractor discharges like heavy goods; no dedicated contract class (D7)
@@ -49,12 +55,18 @@ MERGE_B = {
 def _class_index(name: str, option: str = "A"):
     n = name.lower().strip().replace(" ", "_").replace("-", "_")
     aliases = {
-        "motorbike": "motorcycle", "moto": "motorcycle", "motor": "motorcycle",
-        "motor_bike": "motorcycle", "moterbike": "motorcycle",
+        "motorbike": "motorcycle",
+        "moto": "motorcycle",
+        "motor": "motorcycle",
+        "motor_bike": "motorcycle",
+        "moterbike": "motorcycle",
         "two_wheeler": "motorcycle",
-        "bicycle": "bicycle", "bike": "bicycle",
-        "autorickshaw": "auto", "rickshaw": "auto",
-        "three_wheeler": "auto", "auto_rickshaw": "auto",
+        "bicycle": "bicycle",
+        "bike": "bicycle",
+        "autorickshaw": "auto",
+        "rickshaw": "auto",
+        "three_wheeler": "auto",
+        "auto_rickshaw": "auto",
         "e_rickshaw": "auto",
         "lmv": "car",
     }
@@ -109,8 +121,11 @@ def convert_yolo(raw_root: Path, out_root: Path):
             valid = True
             for line in lbl.read_text().splitlines():
                 parts = line.split()
-                if len(parts) != 5 or int(parts[0]) >= len(CONTRACT_CLASSES) or \
-                   any(not (0.0 <= float(v) <= 1.0) for v in parts[1:]):
+                if (
+                    len(parts) != 5
+                    or int(parts[0]) >= len(CONTRACT_CLASSES)
+                    or any(not (0.0 <= float(v) <= 1.0) for v in parts[1:])
+                ):
                     valid = False
                     break
             if not valid:
@@ -289,7 +304,9 @@ def convert_voc(raw_root: Path, out_root: Path, option: str = "A"):
             "voc: wrote 0 images — check raw_root layout (expected VOC *.xml files). "
             f"Top-level entries: {[p.name for p in sorted(raw_root.iterdir())][:10]}"
         )
-    print(f"voc: wrote {n_with_boxes} images; dropped {n_dropped_class} objects (class not in Option A schema); {n_missing_img} xmls without matching image")
+    print(
+        f"voc: wrote {n_with_boxes} images; dropped {n_dropped_class} objects (class not in Option A schema); {n_missing_img} xmls without matching image"
+    )
     _write_data_yaml(out_root)
 
 
@@ -553,15 +570,17 @@ def check(dataset_root: Path) -> int:
         for lbl in lbl_dir.glob("*.txt"):
             for i, line in enumerate(lbl.read_text().splitlines()):
                 parts = line.split()
-                if len(parts) != 5 or int(parts[0]) >= len(CONTRACT_CLASSES) or \
-                   any(not (0.0 <= float(v) <= 1.0) for v in parts[1:]):
+                if (
+                    len(parts) != 5
+                    or int(parts[0]) >= len(CONTRACT_CLASSES)
+                    or any(not (0.0 <= float(v) <= 1.0) for v in parts[1:])
+                ):
                     errors.append(f"{lbl.name}:{i + 1} invalid label line")
                     break
 
     captures = dataset_root / "meta" / "captures.json"
     if captures.exists():
         meta = json.loads(captures.read_text(encoding="utf-8"))
-        train_junctions = {c["junction_type"] + "_" + c.get("day", "") for c in meta}
         print(f"captures.json: {len(meta)} clips; verify splits are junction-day disjoint manually")
 
     calib = dataset_root / "calibration" / "frames"
@@ -582,7 +601,11 @@ def make_calibration(dataset_root: Path, count: int = 200):
     rainy = set()
     if captures.exists():
         meta = json.loads(captures.read_text(encoding="utf-8"))
-        rainy = {c["clip_id"] for c in meta if c.get("weather") in ("light_rain", "heavy_rain", "waterlogged")}
+        rainy = {
+            c["clip_id"]
+            for c in meta
+            if c.get("weather") in ("light_rain", "heavy_rain", "waterlogged")
+        }
     all_frames = [p for s in SPLITS for p in (dataset_root / "images" / s).glob("*.jpg")]
     rng = random.Random(42)
 
@@ -605,8 +628,12 @@ def main():
     ap.add_argument("root", type=Path)
     ap.add_argument("--out", type=Path, help="output dataset root when converting")
     ap.add_argument("--source", choices=("yolo", "coco", "voc", "trafficcam"), default="yolo")
-    ap.add_argument("--option", choices=("A", "B"), default="A",
-                    help="A: exact 6-class match only; B: merge Bengaluru fine-grained classes")
+    ap.add_argument(
+        "--option",
+        choices=("A", "B"),
+        default="A",
+        help="A: exact 6-class match only; B: merge Bengaluru fine-grained classes",
+    )
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--make-calibration", action="store_true")
     args = ap.parse_args()

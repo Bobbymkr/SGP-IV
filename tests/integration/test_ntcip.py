@@ -3,8 +3,6 @@ NTCIP Integration Tests
 Tests for NTCIP 1202 STMP actuation, SNMP monitoring, and J2735 V2X communication.
 """
 
-from unittest.mock import MagicMock, patch
-
 import pytest
 
 from adaptive_traffic.adapters.j2735 import MockJ2735Adapter

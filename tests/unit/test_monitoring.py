@@ -10,8 +10,7 @@ from adaptive_traffic.core.monitoring import observe, timed
 
 
 def _count(stage: str) -> float:
-    m = re.search(rf"^traffic_{stage}_seconds_count (\S+)$",
-                  generate_latest().decode(), re.M)
+    m = re.search(rf"^traffic_{stage}_seconds_count (\S+)$", generate_latest().decode(), re.M)
     return float(m.group(1)) if m else 0.0
 
 
@@ -37,6 +36,7 @@ def test_disabled_records_nothing():
     before = _count("actuate")
     old, settings.prometheus_enabled = settings.prometheus_enabled, False
     try:
+
         @observe("actuate")
         def fn():
             return 1

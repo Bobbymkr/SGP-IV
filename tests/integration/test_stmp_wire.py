@@ -46,7 +46,7 @@ class FakeController:
             self.seen.append(data)
             tid = struct.unpack("!H", data[3:5])[0]
             comm_len = data[5]
-            comm = data[6:6 + comm_len]
+            comm = data[6 : 6 + comm_len]
             self.sock.sendto(
                 struct.pack("!BBBHB", 1, STMP_RESPONSE, 0, tid, comm_len) + comm + b"OK",
                 addr,
@@ -91,7 +91,8 @@ def adapter(controller):
 
 def _cycle(green=20.0):
     return NTCIPCycleConfig(
-        cycle_length=120.0, offset=0.0,
+        cycle_length=120.0,
+        offset=0.0,
         phases=[NTCIPPhaseTiming(i + 1, green, 5.0, 85.0) for i in range(4)],
     )
 
