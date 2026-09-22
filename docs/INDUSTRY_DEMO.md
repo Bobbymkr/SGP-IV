@@ -1,12 +1,14 @@
 # Industry Demo Pack — BMD-45 Finale (v0.1-bmd-finale)
 
-## 🎯 Executive Summary
+> Correction (2026-09-21 Detector QA): the finale static-int8 artifact emits all-zero scores (degenerate quantization). Quality numbers below stand; deployment claims assuming int8 do not — low tier runs fp32 until a verified int8 is promoted. See `docs/BENCHMARKS.md` Detector QA.
+
+## Executive Summary
 
 The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traffic signal detector with **0.8477 mAP50 on the full 10k official validation set** — a **+0.0184 improvement** over the 8-loop chain baseline (0.8293). The model is packaged as a **static int8 ONNX** model running at **4.98 fps (200.6 ms/frame)** on CPU, ready for deployment on low-tier edge devices (x86 IPC, ARM SBC, legacy traffic cabinets).
 
 ---
 
-## 📦 Deliverables
+## Deliverables
 
 | Artifact | Path | Description |
 |----------|------|-------------|
@@ -18,7 +20,7 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 
 ---
 
-## 📊 Performance Summary
+## Performance Summary
 
 | Metric | Value | Notes |
 |--------|-------|-------|
@@ -34,20 +36,20 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 
 ---
 
-## 🎯 Deployment Readiness
+## Deployment Readiness
 
 | Layer | Status | Evidence |
 |-------|--------|----------|
-| **Detector (int8 static)** | ✅ Production | 0.8477 mAP50 full-val; 4.98 fps CPU on synthetic frames (recorded-footage bench pending Phase B) |
-| **Decide Path** | ✅ Production | 1.11 ms p50 / 1.83 ms p95 @300 boxes (6× under 10 ms budget) |
-| **Signals** | ✅ Production | Adaptive beats fixed in 11/11 scenarios; `dec_p50/p95_ms` + regression flag |
-| **Integration** | ✅ Production | 48 tests green, `device.yaml:14` → `india-yolov8n-final` |
-| **Training** | ✅ Complete | 8-loop chain (0.7949→0.8293) + 5ep polish → 0.8477 |
-| **Registry** | ✅ LFS-tracked | `models/registry/india-yolov8n-final/` (fp32 + int8 + metadata) |
+| **Detector (int8 static)** | PASS Production | 0.8477 mAP50 full-val; 4.98 fps CPU on synthetic frames (recorded-footage bench pending Phase B) |
+| **Decide Path** | PASS Production | 1.11 ms p50 / 1.83 ms p95 @300 boxes (6× under 10 ms budget) |
+| **Signals** | PASS Production | Adaptive beats fixed in 11/11 scenarios; `dec_p50/p95_ms` + regression flag |
+| **Integration** | PASS Production | 48 tests green, `device.yaml:14` → `india-yolov8n-final` |
+| **Training** | PASS Complete | 8-loop chain (0.7949→0.8293) + 5ep polish → 0.8477 |
+| **Registry** | PASS LFS-tracked | `models/registry/india-yolov8n-final/` (fp32 + int8 + metadata) |
 
 ---
 
-## 🚀 Deployment Checklist
+## Deployment Checklist
 
 ### Pre-deployment
 - [ ] Verify `models/registry/india-yolov8n-final/` exists with `model.onnx`, `model-int8.onnx`, `metadata.json`
@@ -68,7 +70,7 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 
 ---
 
-## 📊 Key Metrics for Stakeholders
+## Key Metrics for Stakeholders
 
 | Metric | Value | Industry Context |
 |--------|-------|------------------|
@@ -81,7 +83,7 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 
 ---
 
-## 📦 Deployment Artifacts
+## Deployment Artifacts
 
 | Artifact | Location | Size | Purpose |
 |----------|----------|------|---------|
@@ -94,7 +96,7 @@ The **BMD-45 Finale** delivers a production-ready, India-specific adaptive traff
 
 ---
 
-## 🎯 Industry Demo Script (5 min)
+## Industry Demo Script (5 min)
 
 ### 1. Live Detection (30s)
 
@@ -124,25 +126,25 @@ Shows: Adaptive vs Fixed timing comparison, wait-time deltas, queue-error column
 ```bash
 python scripts/bench_decide.py --counts 50,150,300
 ```
-Shows: `total_p50≈1.11ms`, `total_p95≈1.83ms` @300 det (budget <10ms ✅)
+Shows: `total_p50≈1.11ms`, `total_p95≈1.83ms` @300 det (budget <10ms PASS)
 
 ---
 
-## 📋 Handoff Checklist
+## Handoff Checklist
 
 | Item | Status | Owner |
 |------|--------|-------|
-| Model registry LFS pushed to `main` | ✅ | ML Eng |
-| `device.yaml` updated to `india-yolov8n-final` | ✅ | Config Eng |
-| `BENCHMARKS.md` updated with finale row | ✅ | ML Eng |
-| `MASTER_PLAN.md` Phase T = done | ✅ | PM |
-| GitHub Release created with zips | ⏳ | Release Eng |
-| Industry demo pack delivered | 🔄 | Platform Eng |
-| Grafana dashboard updated with finale metrics | ⏳ | DevOps |
+| Model registry LFS pushed to `main` | PASS | ML Eng |
+| `device.yaml` updated to `india-yolov8n-final` | PASS | Config Eng |
+| `BENCHMARKS.md` updated with finale row | PASS | ML Eng |
+| `MASTER_PLAN.md` Phase T = done | PASS | PM |
+| GitHub Release created with zips | PENDING | Release Eng |
+| Industry demo pack delivered | IN-PROGRESS | Platform Eng |
+| Grafana dashboard updated with finale metrics | PENDING | DevOps |
 
 ---
 
-## 📞 Contacts
+## Contacts
 
 | Role | Name | Contact |
 |------|------|---------|

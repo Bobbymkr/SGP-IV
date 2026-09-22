@@ -30,15 +30,15 @@ unnecessary; NumPy vectorization still planned if eval matrix wall-time demands 
 
 | Date | Detections | estimate | +state | +decide | total p50 | total p95 | Budget |
 |------|-----------|----------|--------|---------|-----------|-----------|--------|
-| 2026-09-10 | 50 | 0.18ms | ~0ms | 0.02ms | 0.18ms | 0.28ms | <10ms ✅ |
-| 2026-09-10 | 150 | 0.48ms | ~0ms | 0.03ms | 0.48ms | 0.66ms | <10ms ✅ |
-| 2026-09-10 | 300 | 0.98ms | ~0ms | 0.02ms | 1.02ms | 1.68ms | <10ms ✅ (6× headroom) |
-| 2026-09-13 | 50 | 0.30ms | ~0ms | 0.04ms | 0.30ms | 0.45ms | <10ms ✅ |
-| 2026-09-13 | 150 | 0.81ms | ~0ms | 0.03ms | 0.56ms | 0.93ms | <10ms ✅ |
-| 2026-09-13 | 300 | 1.13ms | ~0ms | 0.02ms | 1.11ms | 1.83ms | <10ms ✅ (5× headroom) |
-| 2026-09-21 | 50 | 0.30ms | ~0ms | 0.04ms | 0.30ms | 0.54ms | <10ms ✅ |
-| 2026-09-21 | 150 | 0.74ms | ~0ms | 0.03ms | 0.82ms | 1.28ms | <10ms ✅ |
-| 2026-09-21 | 300 | 2.01ms | ~0ms | 0.06ms | 2.16ms | 2.93ms | <10ms ✅ (3× headroom) |
+| 2026-09-10 | 50 | 0.18ms | ~0ms | 0.02ms | 0.18ms | 0.28ms | <10ms PASS |
+| 2026-09-10 | 150 | 0.48ms | ~0ms | 0.03ms | 0.48ms | 0.66ms | <10ms PASS |
+| 2026-09-10 | 300 | 0.98ms | ~0ms | 0.02ms | 1.02ms | 1.68ms | <10ms PASS (6× headroom) |
+| 2026-09-13 | 50 | 0.30ms | ~0ms | 0.04ms | 0.30ms | 0.45ms | <10ms PASS |
+| 2026-09-13 | 150 | 0.81ms | ~0ms | 0.03ms | 0.56ms | 0.93ms | <10ms PASS |
+| 2026-09-13 | 300 | 1.13ms | ~0ms | 0.02ms | 1.11ms | 1.83ms | <10ms PASS (5× headroom) |
+| 2026-09-21 | 50 | 0.30ms | ~0ms | 0.04ms | 0.30ms | 0.54ms | <10ms PASS |
+| 2026-09-21 | 150 | 0.74ms | ~0ms | 0.03ms | 0.82ms | 1.28ms | <10ms PASS |
+| 2026-09-21 | 300 | 2.01ms | ~0ms | 0.06ms | 2.16ms | 2.93ms | <10ms PASS (3× headroom) |
 
 Estimator scales ~3.3µs/detection (linear); decide path flat ~0.02ms.
 Verdict: Steps 3–4 (estimator optimization) NOT needed — budget met with 6×
@@ -86,8 +86,8 @@ scenarios (deltas +2.9% … +79.6%); scorecard carries `dec_p50/p95_ms` with a
 
 | Date | Scope | Wall |
 |------|-------|------|
-| 2026-08-26 | unit+integration (`loop-fast` scope) | 7.4s ✅ (<30s target) |
-| 2026-08-26 | unit+integration (post engine refactor) | 1.1–1.5s ✅ |
+| 2026-08-26 | unit+integration (`loop-fast` scope) | 7.4s PASS (<30s target) |
+| 2026-08-26 | unit+integration (post engine refactor) | 1.1–1.5s PASS |
 
 ## Eval Matrix (`make eval`)
 
@@ -148,7 +148,7 @@ verdict on detector non-blindness. Per-frame rows in
 `evals/results/queue_proxy_conf04{5,0}.csv`. First honest qerr needs phone
 footage + `--gt-csv` hand counts (protocol in TESTING_DOCUMENTATION.md).
 
-> ⚠️ 2026-09-21 correction: those two proxy rows were computed with the
+> WARNING 2026-09-21 correction: those two proxy rows were computed with the
 > **degenerate int8** (all-zero scores — see §Detector QA below), so the
 > RMSE numbers are invalid, not just proxy-limited. Real fp32 proxy rows
 > follow in the TrafficCAM table. The renders-unsuitable verdict itself was

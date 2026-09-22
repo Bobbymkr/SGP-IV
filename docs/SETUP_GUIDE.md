@@ -1,10 +1,10 @@
-# 🚦 Enhanced Adaptive Traffic Signal Demo - Final Setup Guide
+# Enhanced Adaptive Traffic Signal Demo - Final Setup Guide
 
-## 🎯 Overview
+## Overview
 
 This document provides instructions for setting up and running the Enhanced Adaptive Traffic Signal Demo, which showcases advanced AI-powered traffic management capabilities in a user-friendly interface.
 
-## 🚀 Quick Setup & Run
+## Quick Setup & Run
 
 ### Option 1: Direct Run (Recommended)
 Since all required packages are already installed, you can run the demo directly:
@@ -30,9 +30,9 @@ cd "C:\Users\Admin\OneDrive\Desktop\IDEA\Adaptive-Traffic-Signal-Timer"
 # 4. Run all cells (Drive mount → convert → train → export → zip)
 ```
 
-## 📋 Required Packages (Already Installed)
+## Required Packages (Already Installed)
 
-## 📋 Required Packages (Already Installed)
+## Required Packages (Already Installed)
 
 All required packages are already present in your Python environment:
 - **streamlit** - For the web interface
@@ -42,14 +42,14 @@ All required packages are already present in your Python environment:
 - **Pillow** - For image handling
 - **opencv-python** - For computer vision (if needed)
 
-## ⚠️ Installation Notes
+## WARNING Installation Notes
 
 You may see warnings about matplotlib during installation. These can be safely ignored as:
 1. The enhanced demo doesn't directly use matplotlib
 2. All required functionality is provided by other packages (altair for visualization)
 3. The warnings don't affect demo performance
 
-## 🎨 Demo Features
+## Demo Features
 
 ### 1. **System Overview**
 - Introduction to AI-powered traffic management
@@ -79,7 +79,7 @@ You may see warnings about matplotlib during installation. These can be safely i
 - Multi-intersection coordination
 - Traffic forecasting
 
-## 🎯 Key Benefits Demonstrated
+## Key Benefits Demonstrated
 
 ### Performance Improvements
 - **42% reduction in wait times** compared to traditional systems
@@ -96,7 +96,7 @@ You may see warnings about matplotlib during installation. These can be safely i
 - **$2.3M in time savings** per city per year
 - **$180K infrastructure savings** per intersection per year
 
-## 🤝 For Non-Technical Audiences
+## For Non-Technical Audiences
 
 The demo is specifically designed to be accessible to all users:
 - **Plain Language**: No technical jargon
@@ -105,7 +105,7 @@ The demo is specifically designed to be accessible to all users:
 - **Immediate Feedback**: Real-time system responses
 - **Contextual Help**: Explanations when you need them
 
-## 📈 Navigation Tips
+## Navigation Tips
 
 1. Use the sidebar to switch between demo sections
 2. Start with "System Overview" for context
@@ -114,7 +114,7 @@ The demo is specifically designed to be accessible to all users:
 5. Learn about benefits in "Impact Metrics"
 6. Explore special features in "Advanced Features"
 
-## 🆘 Troubleshooting
+## Troubleshooting
 
 ### If the demo doesn't start:
 1. Make sure you're in the correct directory
@@ -130,7 +130,7 @@ The demo is specifically designed to be accessible to all users:
 - Go to http://localhost:8503 in your browser
 - The port number may change (8501, 8502, 8503, etc.)
 
-## 📞 Support
+## Support
 
 For questions about this demo or the underlying technology:
 - Contact the development team
