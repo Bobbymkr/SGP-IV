@@ -203,6 +203,23 @@ locally — 153GB BMD val not on hand), so the candidate is staged as a
 via `--registry models/registry/india-yolov8n-trafficcam` for head-to-head
 evals, wired to nothing by default. Canonical path unchanged.
 
+## Three-Way Head-to-Head, TrafficCAM Val (2026-09-22, same 180 frames)
+
+IIT-Roorkee's `best_xl_ITD_v1.2.pt` evaluated via taxonomy-aligned remap
+(contract→ITD ids; two earlier 0.012 runs were index-misaligned and void):
+
+| Model | mAP50 | car | moto | bus | truck | auto |
+|---|---|---|---|---|---|---|
+| finale (nano, BMD-trained) | 0.488 | — | — | — | — | — |
+| candidate (nano, +TrafficCAM 20ep) | 0.635 | .582 | .633 | .541 | .696 | .728 |
+| ITD-X (X-large, in-domain teacher) | **0.680** | .682 | .778 | .712 | .339 | .886 |
+
+Teacher leads overall (+0.045 over candidate) and dominates auto/moto/bus;
+candidate leads truck (.696 vs .339). Bicycle unvalidated everywhere (0 val
+instances). Distillation (ITD-X → nano) is the obvious next lever if the BMD
+anchor ever clears the candidate: teacher accuracy at student budget. Pseudo
+labels from this teacher already shipped as a model-derived pool (above).
+
 Training notes from the run log (20ep — operator edit, not the notebook's 10):
 `optimizer=auto` silently overrode `lr0=0.002`/momentum → AdamW(lr=0.001);
 ultralytics removed duplicate labels on ~20 frames (source annotation
