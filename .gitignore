@@ -176,7 +176,6 @@ skills-lock.json
 # Internal documentation (duplicates or internal)
 AGENTS.md
 CLAUDE.md
-readme.md
 
 # Python cache directories
 .mypy_cache/
