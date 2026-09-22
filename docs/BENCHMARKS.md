@@ -211,6 +211,20 @@ duplicates, harmless); 6.5% of train frames are `UCF_*`-prefixed
 degenerate a second time → dynamic fallback won (max score 0.917, recipe now
 recorded as `quant_kind` in Cell 5 metadata).
 
+## ITD-X Pseudo-Label Pool (2026-09-22, SHIPPED as model-derived GT)
+
+`notebooks/training_output_zips/itd_x_2026-09-22.zip` (local-only): ITD-X at
+conf 0.35 over 300 unlabelled TrafficCAM frames (frame0 human labels skipped),
+mapped to the 6-contract (pedestrain dropped). Validation on receipt: 300/300
+image↔label match, **0 invalid lines**, 8,253 boxes (27.5/frame), per-class
+car 3363 / moto 3106 / bus 511 / truck 461 / auto 803 / bicycle 9.
+Spot-check grid eyeballed: tight boxes, correct classes incl. dense scenes and
+distant vehicles; label-text overlap in the densest zones is rendering-only.
+Verdict: ship as a model-derived pool (SOURCE.txt provenance in-zip); reported
+separately from human GT, never mixed. Bicycle remains thin (9) — the class
+still needs a dedicated source. Still owed from the run: Cell-2 ITD-X val mAP
+table for the head-to-head (finale 0.488 / candidate 0.635).
+
 ## Detector QA Findings (2026-09-21, from the TrafficCAM bring-up)
 
 1. **Dead int8 (critical):** `model-int8.onnx` emits all-zero scores on every
