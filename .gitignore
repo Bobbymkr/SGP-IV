@@ -189,3 +189,8 @@ CLAUDE.md
 # Agent session state (local-only caches, never commit)
 .backboard/
 .superbrain/
+
+# Session-local heavy mirrors (never commit; Drive is the source of truth)
+data/trafficcam/
+data/trafficcam_raw/
+vault-obsidian/
