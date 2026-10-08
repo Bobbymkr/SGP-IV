@@ -1,0 +1,52 @@
+{
+  "src": "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\models\\registry\\india-yolov8n-final\\model.onnx",
+  "eval_frames": [
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame0.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame10.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame12.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame14.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame16.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame18.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame2.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame20.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame22.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame24.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame26.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame28.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame30.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame32.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame34.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame36.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame38.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame4.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame40.jpg",
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame42.jpg"
+  ],
+  "variants": {
+    "v1-static-entropy-qdq": {
+      "path": "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\models\\registry\\india-yolov8n-final-candidates\\model-v1-static-entropy-qdq.onnx",
+      "ok": false,
+      "error": "error(\"OpenCV(5.0.0) D:\\\\a\\\\opencv-python\\\\opencv-python\\\\opencv\\\\modules\\\\core\\\\src\\\\alloc.cpp:73: error: (-4:Insufficient memory) Failed to allocate 6220800 bytes in function 'cv::OutOfMemoryError'\\n\")",
+      "calibrate_method": "CalibrationMethod.Entropy",
+      "quant_format": "QDQ",
+      "activation_type": "QUInt8",
+      "weight_type": "QInt8",
+      "per_channel": "True"
+    },
+    "v2-static-minmax-qdq": {
+      "path": "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\models\\registry\\india-yolov8n-final-candidates\\model-v2-static-minmax-qdq.onnx",
+      "ok": false,
+      "error": "eval:FileNotFoundError(2, 'No such file or directory')",
+      "calibrate_method": "CalibrationMethod.MinMax",
+      "quant_format": "QDQ",
+      "activation_type": "QUInt8",
+      "weight_type": "QInt8",
+      "per_channel": "True"
+    },
+    "v3-dynamic": {
+      "path": "C:\\Users\\Admin\\OneDrive\\Desktop\\IDEA\\Adaptive-Traffic-Signal-Timer\\models\\registry\\india-yolov8n-final-candidates\\model-v3-dynamic.onnx",
+      "ok": false,
+      "error": "eval:FileNotFoundError(2, 'No such file or directory')"
+    }
+  }
+}
