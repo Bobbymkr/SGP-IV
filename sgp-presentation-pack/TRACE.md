@@ -1,0 +1,22 @@
+# TRACE — claim → source (commit 4f7176e)
+
+- 0.8477 overall, per-class, optionB-merge-6class, 5ep lr0.002, official-full-10k → `models/registry/india-yolov8n-final/metadata.json:28-47`
+- fp32 5.1–8.2 fps CPU; int8 voided all-zero → `docs/INDUSTRY_DEMO.md:3-8`; `configs/device.yaml:18-21`
+- OnnxDetector preprocess/NMS/city thresholds → `src/adaptive_traffic/core/detection/adapters_onnx.py:19-29`
+- Dataset contract → `docs/DATASET_SPEC.md:9-30`; `scripts/prepare_dataset.py`
+- Loop chain + finale_drive canonical → `notebooks/train_bmd_loop.ipynb`, `notebooks/train_bmd_finale_drive.ipynb`
+- data.yaml 6 names → `data/synthetic_india_yolo/data.yaml:1-11`; frames 4032 synth / 2340 trafficcam (counted 2026-10-08)
+- Mumbai mix/bounds/behavior/weather → `config/city_profiles/mumbai.json:4-31`; cities: bangalore/delhi/mumbai/tier2_default
+- Green rule + EVP/manual + MARL slot → `src/adaptive_traffic/core/control/policies.py:1-17`
+- Queues → `src/adaptive_traffic/core/analytics/queue_estimator.py:1-14`
+- Pipeline buffer/process/submit → `src/adaptive_traffic/core/pipeline.py:1-20`
+- run_frame loop → `src/adaptive_traffic/core/closed_loop.py:1-13`; lab slice → `scripts/run_closed_loop.py:1-8`
+- Footage helpers + bench sources → `scripts/footage.py:1-10`; `scripts/bench_detect.py:1-9`
+- 11 scenarios ×2 → `configs/evals/scenarios.yaml:1-17`; wins + dec_p95 → `evals/results/scorecard_1789305524.json:1-38`
+- Sim 28,503 steps/s 57× → `docs/BENCHMARKS.md:10-13`
+- Frame-to-green diagram → `docs/ARCHITECTURE.md:21-29`; deck → `docs/demo-deck/bmd-finale.html`
+- v6b anchor (KEEP): fp32 0.8469 vs int8 0.8224 full-val; TrafficCAM 0.4882 vs 0.4646 → `evals/results/anchor_bmdval_2026-10-11.txt`; `docs/BENCHMARKS.md` Static-int8 Anchor
+- Surat 15/15 card (rally/cattle/VIP) → `evals/results/scorecard_1790419766.json`
+- Anchor-only notebook (Drive-direct) → `notebooks/val_int8_drive.ipynb`
+- STMP GET parser + wire tests (9 loopback) → `src/adaptive_traffic/adapters/ntcip_stmp.py:163-`; `tests/integration/test_stmp_wire.py`
+- Per-camera geometry + tests → `src/adaptive_traffic/config/city_profile.py:46-`; `core/analytics/queue_estimator.py:56-`; `tests/unit/test_estimator_geometry.py`

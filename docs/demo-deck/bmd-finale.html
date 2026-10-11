@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BMD-45 Finale — Industry Demo Deck</title>
+<!-- Google Fonts w/ system-font fallback (only external dep) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ============ THEME: "Signal Amber" — ink + paper + traffic-amber ============ */
+:root{
+  --ink:#131210; --ink2:#1d1b17; --paper:#f5efe1; --paper-dim:#cfc7b2;
+  --amber:#ffb000; --amber-deep:#e08e00; --green:#2fbf71; --red:#e5484d;
+  --font-display:"Archivo Black",Arial Black,Impact,sans-serif;
+  --font-body:"Space Grotesk",Segoe UI,Arial,sans-serif;
+  --pad:clamp(1.5rem,4vw,3.5rem);
+  --title:clamp(1.8rem,5.2vw,4rem); --sub:clamp(.85rem,1.8vw,1.15rem); --body:clamp(.72rem,1.25vw,.98rem);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--paper);font-family:var(--font-body);overflow-x:hidden}
+/* ---- viewport fit: each slide = exactly 100vh, no inner scroll ---- */
+.slide{height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;
+  padding:var(--pad);position:relative;scroll-snap-align:start}
+html{scroll-snap-type:y mandatory}
+body{scroll-snap-type:y mandatory}
+/* progress + nav */
+.progress{position:fixed;top:0;left:0;height:4px;background:var(--amber);width:0;z-index:50}
+.dots{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:8px}
+.dots a{width:9px;height:9px;border-radius:50%;background:#4a463c;display:block}
+.dots a.on{background:var(--amber)}
+.count{position:fixed;left:16px;bottom:12px;z-index:50;color:var(--paper-dim);font-size:.75rem;letter-spacing:.1em}
+.hint{position:fixed;right:16px;bottom:12px;z-index:50;color:var(--paper-dim);font-size:.72rem}
+/* type + components */
+.kicker{color:var(--amber);text-transform:uppercase;letter-spacing:.22em;font-size:clamp(.65rem,1.1vw,.8rem);font-weight:700}
+h1{font-family:var(--font-display);font-size:var(--title);line-height:1.02;margin:.4em 0 .2em}
+h2{font-family:var(--font-display);font-size:clamp(1.2rem,3vw,2.2rem);line-height:1.1;margin:.3em 0 .5em}
+.sub{color:var(--paper-dim);font-size:var(--sub);max-width:60ch}
+.grid{display:grid;gap:clamp(.6rem,1.5vw,1.2rem)}
+.g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--ink2);border:1px solid #33302a;border-left:4px solid var(--amber);border-radius:10px;padding:.9em 1em}
+.card b{color:#fff} .card .n{font-family:var(--font-display);font-size:clamp(1.3rem,2.6vw,2rem);color:var(--amber)}
+.hero-num{font-family:var(--font-display);font-size:clamp(3rem,10vw,7.5rem);color:var(--amber);line-height:1}
+table{border-collapse:collapse;font-size:var(--body);width:100%}
+th,td{text-align:left;padding:.35em .6em;border-bottom:1px solid #33302a}
+th{color:var(--amber);text-transform:uppercase;font-size:.72em;letter-spacing:.12em}
+.src{position:absolute;left:var(--pad);bottom:12px;color:#6f6a5c;font-size:.68rem;letter-spacing:.04em}
+.tag{display:inline-block;background:var(--amber);color:#171410;font-weight:700;border-radius:99px;padding:.25em .9em;font-size:.75rem;letter-spacing:.08em}
+.ok{color:var(--green);font-weight:700} .bad{color:var(--red);font-weight:700}
+.pipe{display:flex;align-items:center;gap:.4em;flex-wrap:wrap;font-size:var(--body)}
+.pipe span{background:var(--ink2);border:1px solid #3a362c;border-radius:8px;padding:.45em .8em}
+.pipe i{color:var(--amber);font-style:normal;font-weight:700}
+/* reveal animation */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.slide.on .reveal{opacity:1;transform:none}
+.slide.on .reveal:nth-child(2){transition-delay:.12s}.slide.on .reveal:nth-child(3){transition-delay:.22s}
+.slide.on .reveal:nth-child(4){transition-delay:.32s}.slide.on .reveal:nth-child(5){transition-delay:.42s}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+@media print{.dots,.hint,.progress,.count{display:none}.slide{height:auto;page-break-after:always}}
+@media (max-width:700px){.g3,.g4{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<nav class="dots" id="dots" aria-label="Slide navigation"></nav>
+<div class="count" id="count"></div>
+<div class="hint">← → / space to move</div>
+
+<!-- 1 TITLE -->
+<section class="slide" id="s1"><div class="kicker reveal">Industry demo · India-specific detector</div>
+<h1 class="reveal">BMD-45 FINALE:<br/>0.8477 mAP50 ON 10k FRAMES.</h1>
+<p class="sub reveal">A production-ready YOLOv8n traffic detector for Indian junctions — full official val, fp32 ONNX at 11.7&nbsp;MB, running CPU-only on low-tier edge boxes.</p>
+<p class="reveal" style="margin-top:1em"><span class="tag">ADAPTIVE TRAFFIC SIGNAL TIMER</span></p>
+<div class="src">docs/INDUSTRY_DEMO.md · docs/MASTER_PLAN.md §7</div></section>
+
+<!-- 2 WHY -->
+<section class="slide" id="s2"><div class="kicker reveal">Why · the problem</div>
+<h2 class="reveal">Indian junctions don't look like COCO.</h2>
+<div class="grid g2 reveal"><div class="card"><b>2-wheeler-heavy mix</b><br/>motos, autos, e-rickshaws, bicycles share lanes — generic detectors miss the tail classes.</div>
+<div class="card"><b>Fixed timers waste green</b><br/>empty approaches sit green while queued lanes wait. Fixed-time can't see demand.</div></div>
+<div class="src">docs/ARCHITECTURE.md §1–2 · docs/INDUSTRY_DEMO.md</div></section>
+
+<!-- 3 WHO -->
+<section class="slide" id="s3"><div class="kicker reveal">Who · built for</div>
+<h2 class="reveal">Runs where the cabinets already are.</h2>
+<div class="grid g3 reveal"><div class="card"><b>Municipal traffic corps</b><br/>retrofit cameras, no new hardware.</div>
+<div class="card"><b>SI / infra vendors</b><br/>NTCIP STMP actuation, J2735 SPAT output.</div>
+<div class="card"><b>Low-tier edge</b><br/>any x86/ARM box, CPU-only, ~5 fps target.</div></div>
+<div class="src">configs/device.yaml · docs/ARCHITECTURE.md §NTCIP/J2735</div></section>
+
+<!-- 4 METRIC HERO -->
+<section class="slide" id="s4"><div class="kicker reveal">Hero metric · measured, not target</div>
+<div class="hero-num reveal" data-count="0.8477">0.0000</div>
+<h2 class="reveal">mAP50 — full 10k official BMD-45 val</h2>
+<p class="sub reveal">Finale: 5 epochs @ lr 0.002 from loop-8 best.pt · per-class car .9189 · auto .9171 · moto .8887 · bus .846 · truck .8294 · bicycle .6859</p>
+<div class="src">docs/MASTER_PLAN.md §7 (2026-09-13) · evals/results/scorecard_1789305524.json</div></section>
+
+<!-- 5 BEFORE -->
+<section class="slide" id="s5"><div class="kicker reveal">Before · 8-loop chain baseline</div>
+<h2 class="reveal">The chain climbed 0.7949 → 0.8293.</h2>
+<div class="grid g2 reveal"><div class="card"><span class="n">8 loops</span><br/>images_000 → images_007, cumulative rehearsal chain from COCO.</div>
+<div class="card"><span class="n">0.8293</span><br/>chain-best mAP50 · bicycle 0.56 → 0.66 along the way.</div></div>
+<div class="src">docs/MASTER_PLAN.md §7 (2026-09-10)</div></section>
+
+<!-- 6 AFTER -->
+<section class="slide" id="s6"><div class="kicker reveal">After · finale delta</div>
+<h2 class="reveal">+0.0184 over the chain. Tail classes moved.</h2>
+<table class="reveal"><tr><th>Class</th><th>Finale</th><th>Note</th></tr>
+<tr><td>Overall</td><td><b>0.8477</b></td><td>+0.0184 vs 0.8293 chain</td></tr>
+<tr><td>Bicycle</td><td><b>0.6859</b></td><td>hardest tail class, still climbing</td></tr>
+<tr><td>Car / Auto / Moto</td><td><b>.9189 / .9171 / .8887</b></td><td>head classes saturated</td></tr></table>
+<div class="src">docs/MASTER_PLAN.md §7 (2026-09-13) · docs/INDUSTRY_DEMO.md</div></section>
+
+<!-- 7 BLOCK: DETECTOR -->
+<section class="slide" id="s7"><div class="kicker reveal">Block 1/3 · Detector</div>
+<h2 class="reveal">YOLOv8n · 11.7 MB fp32 ONNX · 5.1–8.2 fps CPU.</h2>
+<div class="grid g3 reveal"><div class="card"><span class="n">11.7 MB</span><br/>fp32 ONNX in <b>models/registry/india-yolov8n-final</b> (LFS).</div>
+<div class="card"><span class="n">8.15</span><br/>fps fp32 CPU measured — above the 5 fps tier target.</div>
+<div class="card"><span class="n">0.45</span><br/>confidence threshold, low-tier CPU-only backend.</div></div>
+<div class="src">docs/INDUSTRY_DEMO.md · configs/device.yaml · docs/BENCHMARKS.md</div></section>
+
+<!-- 8 BLOCK: QUEUE -->
+<section class="slide" id="s8"><div class="kicker reveal">Block 2/3 · Queue estimator</div>
+<h2 class="reveal">Detections → per-lane queue lengths.</h2>
+<div class="grid g2 reveal"><div class="card"><b>Name-first lengths + EMA α=0.6</b><br/>Review-track estimator: stable lengths, smoothed against flicker.</div>
+<div class="card"><b>Per-city calibration</b><br/>CityProfile discharge headways override PCE defaults.</div></div>
+<div class="src">docs/MASTER_PLAN.md §7 Phase R · docs/ARCHITECTURE.md (estimate layer)</div></section>
+
+<!-- 9 BLOCK: POLICIES -->
+<section class="slide" id="s9"><div class="kicker reveal">Block 3/3 · Signal policies</div>
+<h2 class="reveal">Green · Order · Cap — plus priority.</h2>
+<div class="grid g3 reveal"><div class="card"><b>GreenPolicy</b><br/>weighted-discharge greens from per-city headways.</div>
+<div class="card"><b>Order + Cap</b><br/>clockwise default order; demand-share ceiling from cycle budget.</div>
+<div class="card"><b>Priority</b><br/>ManualRegistry + EmergencyEvent; manual suppresses EVP, route-scoped.</div></div>
+<div class="src">docs/MASTER_PLAN.md §7 (2026-09-21) · docs/ARCHITECTURE.md</div></section>
+
+<!-- 10 CLAIM: EVAL -->
+<section class="slide" id="s10"><div class="kicker reveal">Claim 1/2 · closed-loop eval</div>
+<h2 class="reveal"><span class="ok">11/11 adaptive wins.</span> Extended: 15/15.</h2>
+<p class="sub reveal">City-threading run incl. 4 Surat/incident scenarios: Surat typical +41%, rally +32%, cattle +28%, VIP-hold +25%. Sim engine does 28,503 steps/s (57× target).</p>
+<div class="src">docs/MASTER_PLAN.md §7 Phase 4 · docs/BENCHMARKS.md (scorecard_1790419766)</div></section>
+
+<!-- 11 CLAIM: LATENCY -->
+<section class="slide" id="s11"><div class="kicker reveal">Claim 2/2 · decide latency</div>
+<h2 class="reveal">Decide p95 under 3 ms at 300 detections.</h2>
+<div class="grid g2 reveal"><div class="card"><span class="n">2.93 ms</span><br/>bench_decide p95 @300 det (p50 2.16 ms) — under the 10 ms budget.</div>
+<div class="card"><span class="n">≤0.11 ms</span><br/>eval dec95 on the 11/11 matrix run. Frame-to-green, measured.</div></div>
+<div class="src">docs/ARCHITECTURE.md §2 · docs/BENCHMARKS.md · docs/MASTER_PLAN.md §7</div></section>
+
+<!-- 12 HONESTY: INT8 -->
+<section class="slide" id="s12"><div class="kicker reveal">Honesty 1/2 · what broke</div>
+<h2 class="reveal">The static-int8 export is <span class="bad">void</span>.</h2>
+<p class="sub reveal">2026-09-13 static int8 emits all-zero scores (degenerate quantization). Low tier runs <b>fp32</b> (prefer_int8: false) until a verified int8 is promoted. Quality numbers stand; int8 deployment claims do not.</p>
+<div class="src">docs/INDUSTRY_DEMO.md (correction) · docs/BENCHMARKS.md Detector QA · configs/device.yaml</div></section>
+
+<!-- 13 HONESTY: HW-GATED -->
+<section class="slide" id="s13"><div class="kicker reveal">Honesty 2/2 · hardware-gated</div>
+<h2 class="reveal">Lab-proven. Three things need hardware.</h2>
+<div class="grid g3 reveal"><div class="card"><b>Real-controller STMP</b><br/>mock STMP only; <b>--ntcip-ip</b> handoff untested.</div>
+<div class="card"><b>On-device TRT latency</b><br/>Jetson engine builds at first boot — not yet measured.</div>
+<div class="card"><b>Live capture thread</b><br/>runner primitives tested; no live camera thread yet.</div></div>
+<div class="src">docs/MASTER_PLAN.md §7 Phase C · docs/TESTING_DOCUMENTATION.md</div></section>
+
+<!-- 14 MARKET: SCALE -->
+<section class="slide" id="s14"><div class="kicker reveal">Market 1/4 · scale</div>
+<h2 class="reveal">Every signalized junction is a retrofit.</h2>
+<div class="grid g2 reveal"><div class="card"><span class="n">CPU-only</span><br/>no GPU buy, no cabinet swap — camera + existing box.</div>
+<div class="card"><span class="n">28,503</span><br/>sim steps/s lets us pre-validate any junction offline.</div></div>
+<div class="src">docs/BENCHMARKS.md · configs/device.yaml (low tier)</div></section>
+
+<!-- 15 MARKET: TIERS -->
+<section class="slide" id="s15"><div class="kicker reveal">Market 2/4 · deploy anywhere</div>
+<h2 class="reveal">One registry, three tiers.</h2>
+<div class="grid g3 reveal"><div class="card"><b>Low</b><br/>x86/ARM, CPU-only, nano fp32 — live today.</div>
+<div class="card"><b>Mid</b><br/>GPU/NPU present, fp32 path reserved.</div>
+<div class="card"><b>High</b><br/>Jetson-class, TensorRT built on-device.</div></div>
+<div class="src">configs/device.yaml · docs/ARCHITECTURE.md</div></section>
+
+<!-- 16 MARKET: CITIES -->
+<section class="slide" id="s16"><div class="kicker reveal">Market 3/4 · city profiles</div>
+<h2 class="reveal">Mumbai ≠ Surat. The config knows.</h2>
+<p class="sub reveal">Per-city discharge headways + cycle budgets: Mumbai (4-lane aggressive metro, heavy monsoon), Delhi (balanced), Bangalore (3-lane, light rain), Surat (+ e-rickshaw row), Tier-2 default. Surat profile wins on home turf in 4/15 eval scenarios.</p>
+<div class="src">docs/ARCHITECTURE.md (city table) · docs/REVIEW_BRIEF.md · docs/MASTER_PLAN.md §7</div></section>
+
+<!-- 17 MARKET: STANDARDS -->
+<section class="slide" id="s17"><div class="kicker reveal">Market 4/4 · speaks the standards</div>
+<h2 class="reveal">NTCIP in, J2735 out.</h2>
+<div class="pipe reveal"><span>Camera frame</span><i>→</i><span>YOLOv8 ONNX detect</span><i>→</i><span>per-lane queue</span><i>→</i><span>policies</span><i>→</i><span>STMP SET :5000</span><i>+</i><span>SPAT 10 Hz :1736</span></div>
+<p class="sub reveal" style="margin-top:1em">Wire tests caught 2 real STMP bugs (OID continuation bits, &gt;255 B SET pack crash). 20 NTCIP integration tests green.</p>
+<div class="src">docs/ARCHITECTURE.md (frame-to-green) · docs/BENCHMARKS.md · docs/TRACK_RECORD.md</div></section>
+
+<!-- 18 ROADMAP: DONE -->
+<section class="slide" id="s18"><div class="kicker reveal">Roadmap 1/2 · done</div>
+<h2 class="reveal">Phases 0–6, T and P: <span class="ok">PASS</span>.</h2>
+<table class="reveal"><tr><th>Phase</th><th>Gate</th></tr>
+<tr><td>0–1.5 Measure / loop / modularity</td><td>sim 57× target · runners deleted</td></tr>
+<tr><td>2–6 Engine → eval → hardware path</td><td>11/11 wins · closed loop + STMP bridge</td></tr>
+<tr><td>T Training pipeline · P Productization</td><td>0.8477 finale · verify 38 passed</td></tr></table>
+<div class="src">docs/MASTER_PLAN.md §7 status board</div></section>
+
+<!-- 19 ROADMAP: NEXT -->
+<section class="slide" id="s19"><div class="kicker reveal">Roadmap 2/2 · in execution</div>
+<h2 class="reveal">Review track R is running.</h2>
+<div class="grid g2 reveal"><div class="card"><b>Camera-free demo</b><br/>val replay → dashboard operator strip, per-stage ms, NTCIP panel.</div>
+<div class="card"><b>Candidates queued</b><br/>TrafficCAM (2340 fr) prepped; verified-int8 + Jetson TRT next.</div></div>
+<div class="src">docs/MASTER_PLAN.md §7 Phase R · evals 15/15 + REVIEW_BRIEF.md</div></section>
+
+<!-- 20 ASK -->
+<section class="slide" id="s20"><div class="kicker reveal">Ask · pilot</div>
+<h2 class="reveal">Give us one junction. We bring the box.</h2>
+<p class="sub reveal">4-week pilot: week 1 camera + low-tier box install, weeks 2–3 shadow-mode measurement vs fixed-time, week 4 actuated control with manual override. Success = lower avg wait at equal throughput, on your controller, over STMP.</p>
+<p class="reveal" style="margin-top:1em"><span class="tag">SHADOW MODE FIRST — NO SIGNAL TOUCHED UNTIL PROVEN</span></p>
+<div class="src">scripts/run_closed_loop.py --ntcip-ip · docs/TESTING_DOCUMENTATION.md</div></section>
+
+<!-- 21 THANKS -->
+<section class="slide" id="s21"><div class="kicker reveal">Thank you</div>
+<h1 class="reveal">0.8477. CPU-ONLY. YOUR CABINET.</h1>
+<p class="sub reveal">Registry: models/registry/india-yolov8n-final · Demo pack: docs/INDUSTRY_DEMO.md · Benchmarks: docs/BENCHMARKS.md · Review brief: docs/REVIEW_BRIEF.md</p>
+<div class="src">BMD-45 Finale · Adaptive Traffic Signal Timer</div></section>
+
+<script>
+/* Slide controller: dots + counter + progress + keyboard + counters */
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide')),
+      dots=document.getElementById('dots'), prog=document.getElementById('prog'),
+      count=document.getElementById('count'), cur=0;
+  dots.innerHTML='';
+  slides.forEach(function(s,i){var a=document.createElement('a');a.href='#s'+(i+1);a.title='Slide '+(i+1);
+    a.addEventListener('click',function(e){e.preventDefault();go(i);});dots.appendChild(a);});
+  function go(i){cur=Math.max(0,Math.min(slides.length-1,i));
+    slides[cur].scrollIntoView({behavior:'smooth'});paint();}
+  function paint(){var ds=dots.children;
+    for(var k=0;k<ds.length;k++)ds[k].className=k===cur?'on':'';
+    prog.style.width=((cur+1)/slides.length*100)+'%';
+    count.textContent=(cur+1)+' / '+slides.length;
+    slides.forEach(function(s,j){s.classList.toggle('on',j===cur);});
+    slides[cur].querySelectorAll('[data-count]').forEach(function(el){
+      var t=parseFloat(el.getAttribute('data-count')),t0=performance.now();
+      (function tick(n){var p=Math.min(1,(n-t0)/900);el.textContent=(t*p).toFixed(4);
+        if(p<1)requestAnimationFrame(tick);})(t0);});}
+  /* IntersectionObserver keeps dots/counter true on wheel/touch scroll */
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){cur=slides.indexOf(e.target);paint();}});},{threshold:.55});
+  slides.forEach(function(s){io.observe(s);});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')go(cur+1);
+    else if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1);
+    else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);});
+  paint();
+})();
+</script>
+</body>
+</html>
