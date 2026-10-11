@@ -53,11 +53,11 @@ class QueueEstimator:
         self.detector_calibration = city_profile.detector_calibration
         self.queue_params = city_profile.queue_estimation
 
-        # Camera geometry parameters (would come from calibration in production)
+        # Camera geometry: per-camera calibration when present, legacy 640x480 otherwise
         self.camera_height_m = 8.0
         self.camera_fov_deg = 90.0
-        self.image_width_px = 640
-        self.image_height_px = 480
+        self.image_width_px = getattr(self.detector_calibration, "frame_width_px", 640) or 640
+        self.image_height_px = getattr(self.detector_calibration, "frame_height_px", 480) or 480
 
     def _get_vehicle_lengths(self) -> Dict[str, float]:
         """Get vehicle lengths from profile"""

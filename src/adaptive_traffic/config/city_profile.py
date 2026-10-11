@@ -50,6 +50,10 @@ class DetectorCalibration(BaseModel):
     south: float = 0.05
     east: float = 0.05
     west: float = 0.05
+    # Per-camera frame geometry. Defaults preserve the legacy 640x480 buckets;
+    # set from hand-measured footage (e.g. 1920x1080 phone/CCTV) at calibration.
+    frame_width_px: int = 640
+    frame_height_px: int = 480
 
 
 class IntersectionGeometry(BaseModel):
