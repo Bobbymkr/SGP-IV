@@ -4,10 +4,9 @@ A fake-controller UDP socket on 127.0.0.1 answers requests, proving the
 adapter's bytes-on-wire (header, OID BER, varbind framing), the retry/timeout
 path, and transaction-id sequencing.
 
-Explicit non-goal: response parsing. ``_parse_stmp_response`` is an
-unimplemented stub returning ``{}`` (so GET yields default cycle values).
-That is asserted below as DOCUMENTED behavior — when someone implements the
-ASN.1 parser, ``test_get_returns_defaults`` must be rewritten, not deleted.
+Response parsing IS covered: ``_parse_stmp_response`` BER-decodes the
+RESPONSE varbind list (symmetric with ``_build_varbind``); malformed bodies
+fail closed to ``{}`` so GET yields default cycle values.
 """
 
 import socket
@@ -24,6 +23,8 @@ STMP_SET, STMP_GET, STMP_RESPONSE = 0x40, 0x41, 0x42
 
 class FakeController:
     """Minimal UDP controller: records requests, replies canned responses."""
+
+    canned: bytes | None = None  # when set, appended after the header instead of b"OK"
 
     def __init__(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -47,8 +48,9 @@ class FakeController:
             tid = struct.unpack("!H", data[3:5])[0]
             comm_len = data[5]
             comm = data[6 : 6 + comm_len]
+            body = self.canned if self.canned is not None else b"OK"
             self.sock.sendto(
-                struct.pack("!BBBHB", 1, STMP_RESPONSE, 0, tid, comm_len) + comm + b"OK",
+                struct.pack("!BBBHB", 1, STMP_RESPONSE, 0, tid, comm_len) + comm + body,
                 addr,
             )
 
@@ -155,11 +157,33 @@ def test_timeout_returns_false_fast(controller):
             pass
 
 
-def test_get_returns_defaults_parser_stub_documented(adapter, controller):
-    """GET succeeds on the wire but the stub parser drops the body, so the
-    adapter returns default cycle values. Update (don't delete) this test
-    when _parse_stmp_response is implemented."""
+def _canned_cycle(adapter):
+    vbs = [adapter._build_varbind(adapter.OID_CYCLE_LENGTH, 100)]
+    vbs.append(adapter._build_varbind(adapter.OID_OFFSET, 15))  # 1.5s in tenths
+    for n in (1, 2, 3, 4):
+        vbs.append(adapter._build_varbind(f"{adapter.OID_PHASE_GREEN}.{n}", 20 + n))
+        vbs.append(adapter._build_varbind(f"{adapter.OID_PHASE_YELLOW}.{n}", 5))
+        vbs.append(adapter._build_varbind(f"{adapter.OID_PHASE_RED}.{n}", 70 - n))
+    blob = b"".join(vbs)
+    return b"\x30" + adapter._encode_length(len(blob)) + blob
+
+
+def test_get_parses_varbind_response(adapter, controller):
+    """GET decodes a real varbind list (was: stub returned {} -> defaults)."""
+    controller.canned = _canned_cycle(adapter)
     cfg = adapter.get_phase_timing()
     assert controller.pdu_types() == [STMP_GET]
-    assert cfg is not None and cfg.cycle_length == 120
-    assert len(cfg.phases) == 4
+    assert cfg is not None
+    assert cfg.cycle_length == 100
+    assert cfg.offset == 1.5
+    assert [p.green_time for p in cfg.phases] == [21, 22, 23, 24]
+    assert [p.yellow_time for p in cfg.phases] == [5, 5, 5, 5]
+    assert [p.red_time for p in cfg.phases] == [69, 68, 67, 66]
+
+
+def test_get_malformed_body_falls_back_to_defaults(adapter, controller):
+    controller.canned = b"\x30\x03\x06\x01\x2b"  # truncated varbind list
+    cfg = adapter.get_phase_timing()
+    assert cfg is not None and cfg.cycle_length == 120  # documented defaults
+    assert adapter._parse_stmp_response(b"\x00\x01") == {}
+    assert adapter._parse_stmp_response(b"\x01\x40\x00\x00\x00\x00") == {}  # wrong PDU

@@ -160,11 +160,72 @@ class NTCIP1202STMPAdapter(NTCIPPort):
 
         return None
 
+    @staticmethod
+    def _decode_length(buf: bytes, pos: int) -> tuple:
+        """BER length at pos -> (value, next pos). Fail-closed ValueError."""
+        first = buf[pos]
+        if first < 128:
+            return first, pos + 1
+        n = first & 0x7F
+        if n == 0 or n > 4 or pos + 1 + n > len(buf):
+            raise ValueError("bad BER length")
+        return int.from_bytes(buf[pos + 1 : pos + 1 + n], "big"), pos + 1 + n
+
+    @staticmethod
+    def _decode_oid(raw: bytes) -> str:
+        """Invert _encode_oid: BER bytes -> dotted string. Fail-closed ValueError."""
+        groups, cur = [], 0
+        for b in raw:
+            cur = (cur << 7) | (b & 0x7F)
+            if not b & 0x80:
+                groups.append(cur)
+                cur = 0
+        if not groups or cur != 0:
+            raise ValueError("bad BER OID")
+        first = groups[0]
+        a = min(first // 40, 2)
+        return ".".join([str(a), str(first - 40 * a)] + [str(g) for g in groups[1:]])
+
     def _parse_stmp_response(self, response: bytes) -> dict:
-        """Parse STMP response and return dict of OID -> value"""
-        # Simplified parsing - in production, use proper ASN.1 parser
-        # For now, return mock data for testing
-        return {}
+        """Parse STMP RESPONSE varbind list -> {dotted OID: int}.
+
+        Symmetric with _build_varbind (unsigned big-endian INTEGERs; timings
+        are non-negative). Any framing error returns {} (fail-closed: GET
+        yields default cycle values via _build_cycle_config).
+        """
+        try:
+            if len(response) < 6 or response[1] != self.STMP_RESPONSE:
+                return {}
+            pos = 6 + response[5]  # skip community
+            if pos >= len(response) or response[pos] != 0x30:
+                return {}
+            pos += 1
+            total, pos = self._decode_length(response, pos)
+            end = min(len(response), pos + total)
+            out = {}
+            while pos < end:
+                if response[pos] != 0x30:
+                    raise ValueError("bad varbind SEQUENCE")
+                pos += 1
+                vb_len, pos = self._decode_length(response, pos)
+                vb_end = pos + vb_len
+                if response[pos] != 0x06:
+                    raise ValueError("bad OID tag")
+                pos += 1
+                oid_len, pos = self._decode_length(response, pos)
+                oid = self._decode_oid(response[pos : pos + oid_len])
+                pos += oid_len
+                if pos >= vb_end or response[pos] != 0x02:
+                    raise ValueError("bad INTEGER tag")
+                pos += 1
+                int_len, pos = self._decode_length(response, pos)
+                out[oid] = int.from_bytes(response[pos : pos + int_len], "big")
+                pos += int_len
+                pos = vb_end
+            return out
+        except (ValueError, IndexError, struct.error) as e:
+            logger.warning(f"STMP response parse failed, using defaults: {e}")
+            return {}
 
     @observe("actuate")
     def set_phase_timing(self, timing: NTCIPCycleConfig) -> bool:
