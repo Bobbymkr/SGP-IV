@@ -211,6 +211,27 @@ duplicates, harmless); 6.5% of train frames are `UCF_*`-prefixed
 degenerate a second time → dynamic fallback won (max score 0.917, recipe now
 recorded as `quant_kind` in Cell 5 metadata).
 
+## Static-int8 Anchor (2026-10-11, Colab full BMD-45 val — KEEP fp32)
+
+`evals/results/anchor_bmdval_2026-10-11.txt`: v6b recipe (static MinMax-QDQ, backbone
+quantized, last-20 `/model.22/*` nodes fp32, 200-frame stratified calib) validated on the
+official 10k val via Drive (`notebooks/val_int8_drive.ipynb`, no HF download):
+
+| Model | mAP50 | delta vs fp32 | fps CPU (Colab) |
+|---|---|---|---|
+| fp32 (canonical) | 0.8469 | — (reproduces the 0.8477 claim within 0.001) | 6.58 |
+| int8 v6b | 0.8224 | -0.0245 | 9.39 |
+
+Gate was BMD-Val within -0.02 + int8 >= 4.5fps: speed passes, quality misses by 0.0045
+-> **KEEP fp32** (`prefer_int8: false` unchanged in `configs/device.yaml`). First
+verified-alive static int8 (all prior static rows were degenerate; dynamic was alive but
+~1fps). Remaining gap is calibration coverage, not score collapse.
+
+Cross-dataset (local, 2026-10-11, same 180 TrafficCAM val frames): fp32 **0.4882**
+(reproduces the 2026-09-21 0.488 claim) vs int8 v6b **0.4646** (delta -0.0236) —
+same ~-0.024 signature as BMD-45 (-0.0245). ITD / IITM-HeTra / IDD: no local
+copies, unevaluated (see dataset table in agent handoff 2026-10-11).
+
 ## Detector QA Findings (2026-09-21, from the TrafficCAM bring-up)
 
 1. **Dead int8 (critical):** `model-int8.onnx` emits all-zero scores on every
