@@ -8,6 +8,7 @@
 [![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-orange.svg)](https://ultralytics.com)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://docker.com)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI](https://github.com/Bobbymkr/SGP-IV/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Bobbymkr/SGP-IV/actions)
 
 ## How it works (30 seconds)
 

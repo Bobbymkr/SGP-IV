@@ -60,6 +60,7 @@ jobs:
           # runner disk (ENOSPC 2026-10-14); --no-cache-dir keeps pip lean.
           pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
           pip install --no-cache-dir -e ".[dev,cv]"
+          pip install --no-cache-dir -r requirements-lint.txt
 
       - name: Run Black
         run: black --check --line-length=100 ${{ env.LINT_PATHS }}
