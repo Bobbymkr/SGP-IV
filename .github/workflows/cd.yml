@@ -105,6 +105,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Deploy to Production
         run: |
           echo "Deploying to production environment..."
@@ -122,7 +125,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          generate_release_notes: true
+          generate_release_notes: false
+          fail_on_unmatched_files: false
           files: |
             configs/docker/Dockerfile
             configs/docker/docker-compose.yml

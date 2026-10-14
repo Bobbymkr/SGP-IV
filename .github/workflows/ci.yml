@@ -56,7 +56,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev,cv]"
+          # CPU-only torch first: the default CUDA wheel (~2.5GB) exhausts
+          # runner disk (ENOSPC 2026-10-14); --no-cache-dir keeps pip lean.
+          pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+          pip install --no-cache-dir -e ".[dev,cv]"
 
       - name: Run Black
         run: black --check --line-length=100 ${{ env.LINT_PATHS }}
@@ -85,7 +88,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev,cv]"
+          # CPU-only torch first: the default CUDA wheel (~2.5GB) exhausts
+          # runner disk (ENOSPC 2026-10-14); --no-cache-dir keeps pip lean.
+          pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+          pip install --no-cache-dir -e ".[dev,cv]"
 
       - name: Run unit + integration tests
         run: python -m pytest tests/unit tests/integration -q --no-header -p no:cacheprovider
@@ -109,7 +115,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev,cv]"
+          # CPU-only torch first: the default CUDA wheel (~2.5GB) exhausts
+          # runner disk (ENOSPC 2026-10-14); --no-cache-dir keeps pip lean.
+          pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+          pip install --no-cache-dir -e ".[dev,cv]"
 
       # Deterministic (seed 42): 11/11 adaptive wins, dec_p95 regression flag
       # (>10ms fails), >5% wait regression flag vs previous scorecard.
