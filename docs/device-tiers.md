@@ -66,7 +66,7 @@ The **india-yolov8n-final** model is the canonical low-tier detector for product
 
 | Property | Value |
 |----------|-------|
-| **Model** | india-yolov8n-final (fp32 ONNX; static int8 voided 2026-09-21 — degenerate all-zero scores, see `docs/BENCHMARKS.md` Detector QA) |
+| **Model** | india-yolov8n-final (fp32 ONNX; shipped static int8 voided 2026-09-21 — all-zero; v6b static int8 alive 2026-10-11 at 0.8224 but KEEP, see `docs/BENCHMARKS.md` Static-int8 Anchor) |
 | **mAP50 (full 10k val)** | **0.8477** |
 | **Per-class mAP50** | car: 0.9189, auto: 0.9171, motorcycle: 0.8887, bus: 0.8460, truck: 0.8294, bicycle: 0.6859 |
 | **Inference Speed** | 5.1–8.2 fps (123–197 ms/frame) on CPU (fp32, real frames) |

@@ -41,6 +41,7 @@ For the training pipeline, see the notebooks (no local GPU needed):
 3. `notebooks/eval_trafficcam_drive.ipynb` - TrafficCAM eval (CPU-friendly)
 4. `notebooks/train_trafficcam_loop.ipynb` - TrafficCAM fine-tune (T4) + registry candidate
 5. `notebooks/pseudo_itd_x.ipynb` - ITD-X reference eval + pseudo-labels (T4)
+6. `notebooks/val_int8_drive.ipynb` - fp32 vs int8 full-val anchor, no training (CPU-friendly)
 6. Hand-back zips go in `notebooks/training_output_zips/` (gitignored, local-only)
 
 ## Required Packages (Already Installed)

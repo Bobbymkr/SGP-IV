@@ -255,7 +255,7 @@ Screenshot/approach (all-red) → DetectorPort.detect
 
 | Tier | Backend | Model | Quantization | Target FPS |
 |------|---------|-------|--------------|------------|
-| low  | onnx    | india-yolov8n-final | int8  | 5  |
+| low  | onnx    | india-yolov8n-final | fp32 (v6b static int8 alive 0.8224 but KEEP: -0.0245 vs -0.02 gate) | 5  |
 | mid  | onnx    | india-yolov8n-final | fp32  | 15 |
 | high | tensorrt (fp16 + engine cache; onnx fallback off-Jetson) | india-yolov8n-final | fp16 on Jetson | valid. pending HW |
 

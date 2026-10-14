@@ -35,9 +35,9 @@ Canonical model: `models/registry/india-yolov8n-final/` (Git LFS: fp32 ONNX, int
 | **Inference speed** | **5.1-8.2 fps CPU (fp32)** | Low-tier runs fp32; see note below |
 | **Model size** | 3.0M params (11.7 MB fp32 / 3.4 MB int8) | YOLOv8n, ONNX opset17 |
 | **Training** | 8-loop chain (0.7949 to 0.8293) + 5-epoch joint polish at lr 0.002 from loop-8 | Colab T4; see `notebooks/` |
-| **Eval matrix** | 11/11 adaptive wins over fixed-time | `make eval`; decide p95 under 3 ms at 300 detections |
+| **Eval matrix** | 11/11 adaptive wins over fixed-time (15/15 incl. Surat rally/cattle/VIP incident scenarios) | `make eval`; decide p95 under 3 ms at 300 detections |
 
-Note (2026-09-21 Detector QA): the finale static-int8 artifact emits all-zero scores (degenerate quantization), so every pre-2026-09-21 int8 quality claim is void. Latency rows stand. Low tier runs fp32 (`prefer_int8: false` in `configs/device.yaml`) until a verified int8 is promoted. The TrafficCAM fine-tune candidate (+30% on TrafficCAM val) is staged as a local-only alternative registry, not promoted: finale stays canonical. Details in `docs/BENCHMARKS.md`.
+Note (2026-09-21 Detector QA): the finale static-int8 artifact emits all-zero scores (degenerate quantization), so every pre-2026-09-21 int8 quality claim is void. Latency rows stand. Low tier runs fp32 (`prefer_int8: false` in `configs/device.yaml`) until a verified int8 is promoted. Update 2026-10-11: first alive static int8 (v6b, 0.8224 full-val, 9.4fps) missed the -0.02 gate by 0.0045 — staged, not promoted. The TrafficCAM fine-tune candidate (+30% on TrafficCAM val) is staged as a local-only alternative registry, not promoted: finale stays canonical. Details in `docs/BENCHMARKS.md`.
 
 ---
 

@@ -12,6 +12,7 @@
 | `eval_trafficcam_drive.ipynb` | CPU (T4 optional) | TrafficCAM download → convert → mAP + benches | `trafficcam_eval_<date>.zip` |
 | `train_trafficcam_loop.ipynb` | T4 | TrafficCAM fine-tune → registry candidate | `trafficcam_candidate_<date>.zip` |
 | `pseudo_itd_x.ipynb` | T4 | ITD-X compare + pseudo-labels | `itd_x_<date>.zip` |
+| `val_int8_drive.ipynb` | CPU (T4 optional) | fp32 vs int8 full-val anchor (no training) | `anchor_report.txt` |
 
 ## Hand-back convention
 

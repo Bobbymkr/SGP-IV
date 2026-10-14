@@ -9,6 +9,8 @@ running at **5.1–8.2 fps on CPU (real frames)** on low-tier edge devices (x86 
 
 ---
 
+> Update 2026-10-11: fp32 re-validated at 0.8469 full-val (reproduces 0.8477); v6b static int8 alive at 0.8224 but KEEP (misses -0.02 gate by 0.0045, 9.4fps CPU). Eval now 15/15 incl. Surat incident scenarios.
+
 ## Deliverables
 
 | Artifact | Path | Description |
