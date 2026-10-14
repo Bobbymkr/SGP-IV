@@ -1,4 +1,5 @@
 ﻿"""Per-camera estimator geometry: calibration overrides legacy 640x480 buckets."""
+
 from adaptive_traffic.config.city_profile import DetectorCalibration, get_city_profile
 from adaptive_traffic.core.analytics.queue_estimator import QueueEstimator
 from adaptive_traffic.core.domain import VehicleDetection
@@ -6,8 +7,11 @@ from adaptive_traffic.core.domain import VehicleDetection
 
 def _det(y1=400, y2=460):
     return VehicleDetection(
-        class_id=0, class_name="car", confidence=0.9,
-        bbox=(10, y1, 60, y2), center=(35, (y1 + y2) // 2),
+        class_id=0,
+        class_name="car",
+        confidence=0.9,
+        bbox=(10, y1, 60, y2),
+        center=(35, (y1 + y2) // 2),
     )
 
 
