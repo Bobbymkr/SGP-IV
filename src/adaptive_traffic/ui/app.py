@@ -17,7 +17,7 @@ from adaptive_traffic.ui.theme import ACCENT, BASE_CSS, svg
 from adaptive_traffic.ui.views.advanced import show_advanced
 from adaptive_traffic.ui.views.comparison import show_comparison
 from adaptive_traffic.ui.views.dashboard import show_dashboard
-from adaptive_traffic.ui.views.live_demo import show_live_demo
+from adaptive_traffic.ui.views.live_demo import get_run_history, show_live_demo
 from adaptive_traffic.ui.views.metrics import show_metrics
 
 # Import page modules
@@ -58,6 +58,13 @@ st.sidebar.markdown(
     f"{_model['overall'] * 100:.1f}% mAP50 · fp32 · {_model['speed_short']}</div>",
     unsafe_allow_html=True,
 )
+_history = get_run_history()
+if _history:
+    _last = _history[0]
+    st.sidebar.markdown(
+        f"<div class='model-badge'>Last real run: {_last['time']}<br>{_last['summary']}</div>",
+        unsafe_allow_html=True,
+    )
 
 page = st.sidebar.radio(
     "Navigate",
