@@ -1,26 +1,81 @@
-"""
-Advanced Features Page
+"""Advanced Features & Settings.
+
+Rule for this page: show what the running system actually does, and mark the
+rest as specification. Every control here either feeds the real pipeline
+(city, confidence, model, frames) or is a read-only value the engine reads.
 """
 
-import pandas as pd
 import streamlit as st
 
+from adaptive_traffic.config.city_profiles import get_city_profile_or_default
 from adaptive_traffic.config.settings import get_settings
+from adaptive_traffic.ui._facts import get_eval_table, get_model_facts
+from adaptive_traffic.ui.theme import ACCENT, banner, card, heading, svg, tagline
+
+# Real routes served by src/adaptive_traffic/api (see api/main.py).
+API_ROUTES = [
+    ("GET", "/", "Service root"),
+    ("GET", "/api/v1/health", "Health summary"),
+    ("GET", "/api/v1/health/live", "Liveness probe"),
+    ("GET", "/api/v1/health/ready", "Readiness probe"),
+    ("GET", "/api/v1/metrics", "Service metrics"),
+    ("GET", "/api/v1/version", "Build version"),
+    ("GET", "/api/v1/signals/", "List signal controllers"),
+    ("GET", "/api/v1/signals/{signal_id}", "Signal status and timing"),
+    ("GET", "/api/v1/signals/{signal_id}/status", "Current phase state"),
+    ("GET", "/api/v1/signals/{signal_id}/health", "NTCIP health of one signal"),
+    ("GET", "/api/v1/signals/{signal_id}/ntcip/timing", "Live NTCIP timing plan"),
+    ("POST", "/api/v1/signals/{signal_id}/timing", "Update the timing plan"),
+    ("GET", "/api/v1/signals/{signal_id}/v2x/queue-refinement", "V2X queue refinement"),
+    ("POST", "/api/v1/signals/{signal_id}/v2x/spat", "Publish SPAT to vehicles"),
+    ("GET", "/api/v1/signals/plans/", "List timing plans"),
+    ("POST", "/api/v1/signals/plans/", "Create a timing plan"),
+    ("GET", "/api/v1/signals/plans/{plan_id}", "One timing plan"),
+    ("PUT", "/api/v1/signals/plans/{plan_id}", "Replace a timing plan"),
+    ("DELETE", "/api/v1/signals/plans/{plan_id}", "Delete a timing plan"),
+    ("GET", "/api/v1/detection/cameras/", "List cameras"),
+    ("POST", "/api/v1/detection/cameras/", "Add a camera"),
+    ("GET", "/api/v1/detection/cameras/{camera_id}", "One camera"),
+    ("PUT", "/api/v1/detection/cameras/{camera_id}", "Update a camera"),
+    ("DELETE", "/api/v1/detection/cameras/{camera_id}", "Remove a camera"),
+    ("GET", "/api/v1/detection/counts/{camera_id}", "Live vehicle counts"),
+    ("GET", "/api/v1/detection/history", "Detection history"),
+    ("POST", "/api/v1/detection/detect", "Detect vehicles in one frame"),
+    ("POST", "/api/v1/detection/detect/batch", "Detect vehicles in a batch"),
+    ("GET", "/api/v1/analytics/metrics/{intersection_id}", "Performance metrics"),
+    ("GET", "/api/v1/analytics/performance/{intersection_id}", "Timing performance"),
+    ("GET", "/api/v1/analytics/environmental/{intersection_id}", "Environmental impact"),
+    ("GET", "/api/v1/analytics/recommendations/{intersection_id}", "Timing suggestions"),
+    ("POST", "/api/v1/analytics/forecast", "Traffic flow forecast"),
+    ("POST", "/api/v1/analytics/ingest", "Push events in"),
+    ("POST", "/api/v1/analytics/scenario", "Run a scenario"),
+]
 
 
 def show_advanced():
     """Display advanced features and settings"""
     st.markdown(
-        "<h1 class='main-header'>⚙️ Advanced Features & Settings</h1>", unsafe_allow_html=True
+        f"<h1 class='main-header'>{svg('gauge', 32, ACCENT)} Advanced Features & Settings</h1>",
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        banner(
+            "The Configuration tab feeds the real pipeline and the API tab lists the real "
+            "routes. The other three tabs are the specification of features this build "
+            "does not run yet.",
+            tag="SPEC",
+        ),
+        unsafe_allow_html=True,
     )
 
     tabs = st.tabs(
         [
-            "🚑 Emergency Vehicle Priority",
-            "🌤️ Weather Adaptation",
-            "🚶 Pedestrian & Cyclist Detection",
-            "🔧 System Configuration",
-            "📡 API & Integration",
+            "Emergency Priority",
+            "Weather Adaptation",
+            "Pedestrian & Cyclist",
+            "Configuration",
+            "API & Integration",
         ]
     )
 
@@ -41,290 +96,297 @@ def show_advanced():
 
 
 def show_emergency_priority():
-    """Emergency vehicle priority feature"""
-    st.subheader("🚑 Emergency Vehicle Priority (EVP)")
+    """Emergency vehicle priority — specification, not wired in this build."""
+    st.markdown(heading("signal", "Emergency Vehicle Priority (EVP)"), unsafe_allow_html=True)
 
-    st.markdown("""
-    The system detects emergency vehicles (ambulances, fire trucks, police) via:
-    - **Optical detection**: Flashing light pattern recognition
-    - **Audio detection**: Siren classification (CNN-based)
-    - **V2X communication**: Direct vehicle-to-infrastructure messages
-    """)
+    st.markdown(
+        tagline(
+            "SPEC",
+            "Not implemented in this build. The detector has no emergency-vehicle class, "
+            "so no preemption can run.",
+        ),
+        unsafe_allow_html=True,
+    )
 
-    col1, col2 = st.columns(2)
+    st.markdown(
+        """
+    The planned feature detects emergency vehicles (ambulances, fire trucks, police) by:
+    - **Optical detection**: flashing light pattern recognition
+    - **Audio detection**: siren classification
+    - **V2X message**: direct vehicle-to-infrastructure alert
+    """
+    )
 
-    with col1:
-        st.markdown("### Configuration")
-        st.checkbox("Enable EVP", value=True)
-        st.slider("Detection Range (meters)", 100, 1000, 300)
-        st.slider("Green Extension (seconds)", 10, 120, 30)
-        st.selectbox("Preemption Mode", ["Immediate", "Next Cycle", "Coordinated"], index=0)
+    model = get_model_facts()
+    st.markdown("**What the current model can see**")
+    st.markdown(
+        f"Classes in `{model['name']}`: " + ", ".join(sorted(model["per_class"].keys())) + "."
+    )
+    st.caption("No ambulance, fire or police class, so EVP would need a separate model.")
 
-        st.markdown("### Supported Vehicle Types")
-        st.checkbox("Ambulance", True)
-        st.checkbox("Fire Truck", True)
-        st.checkbox("Police", True)
-        st.checkbox("Other Authorized", False)
-
-    with col2:
-        st.markdown("### Performance Metrics")
-        st.metric("Detection Accuracy", "96.2%")
-        st.metric("False Positive Rate", "0.8%")
-        st.metric("Avg Response Improvement", "30%")
-        st.metric("Intersection Clearance", "94% within 15s")
-
-        st.markdown("### Detection Methods")
-        st.progress(0.95, "Optical (Light Patterns)")
-        st.progress(0.87, "Audio (Siren CNN)")
-        st.progress(0.72, "V2X (DSRC/C-V2X)")
-
-    if st.button("Test EVP Activation"):
-        st.success("✅ Emergency preemption sequence initiated!")
-        st.info("All signals on route: GREEN | Cross traffic: RED | Duration: 30s")
+    st.markdown(
+        "**What is live instead**: priority for the ordinary vehicles we do detect, "
+        "using the adaptive plan on the Comparison page."
+    )
 
 
 def show_weather_adaptation():
-    """Weather adaptation feature"""
-    st.subheader("🌤️ Weather-Adaptive Signal Control")
+    """Weather adaptation — the real city weather profile plus eval evidence."""
+    st.markdown(heading("leaf", "Weather-Adaptive Signal Control"), unsafe_allow_html=True)
 
-    st.markdown("""
-    The system integrates real-time weather data to adjust signal timing for safety and efficiency:
-    """)
+    city = st.session_state.get("city", "mumbai")
+    profile = get_city_profile_or_default(city)
 
-    col1, col2 = st.columns(2)
+    st.markdown(
+        tagline(
+            "MEASURED",
+            "The engine reads the city weather profile. The eval matrix includes "
+            "rain, monsoon and waterlogged scenes.",
+        ),
+        unsafe_allow_html=True,
+    )
 
-    with col1:
-        st.markdown("### Weather Impact Matrix")
-
-        weather_data = pd.DataFrame(
-            {
-                "Condition": [
-                    "Clear",
-                    "Light Rain",
-                    "Heavy Rain",
-                    "Snow",
-                    "Ice",
-                    "Fog",
-                    "High Wind",
-                ],
-                "Visibility Factor": [1.0, 0.85, 0.65, 0.55, 0.45, 0.60, 0.90],
-                "Traction Factor": [1.0, 0.80, 0.60, 0.40, 0.25, 1.0, 0.95],
-                "Speed Adjustment": [0, -10, -25, -35, -50, -20, -15],
-                "Gap Increase": [0, 2, 5, 8, 12, 4, 3],
-            }
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown(
+            card(
+                "Weather in use",
+                str(profile.weather_profile).replace("_", " ").title(),
+                f"city profile: {city}",
+                ACCENT,
+                "leaf",
+            ),
+            unsafe_allow_html=True,
+        )
+    with c2:
+        st.markdown(
+            card(
+                "Driving behaviour",
+                str(profile.behavior_preset).replace("_", " ").title(),
+                f"city profile: {city}",
+                ACCENT,
+                "car",
+            ),
+            unsafe_allow_html=True,
         )
 
-        st.dataframe(weather_data, use_container_width=True)
+    st.markdown(
+        "**Rain and flood scenes in the eval matrix** (real runs, same policy):"
+    )
+    table = get_eval_table()
+    rain_scenes = [
+        row["Scenario"]
+        for row in table["fresh"]
+        if any(k in row["Scenario"] for k in ("rain", "monsoon", "waterlogged"))
+    ]
+    st.markdown("\n".join(f"- `{s}`" for s in rain_scenes) or "- none in this scorecard")
+    st.caption("Scene names come from the eval scorecards; the per-scene times are on Comparison.")
 
-    with col2:
-        st.markdown("### Current Conditions")
-        st.metric("Temperature", "22°C", "Sunny")
-        st.metric("Visibility", "10 km", "Clear")
-        st.metric("Precipitation", "0 mm", "None")
-        st.metric("Wind", "5 km/h", "Light")
-
-        st.markdown("### Adaptive Parameters")
-        st.slider("Min Green Extension (rain)", 0, 30, 10)
-        st.slider("Max Cycle Extension (snow)", 0, 60, 20)
-        st.slider("Pedestrian Time Increase (ice)", 0, 20, 10)
-
-        if st.button("Fetch Live Weather"):
-            st.info("🌤️ Connected to weather API - data updated every 5 minutes")
-
-    st.markdown("---")
-
-    st.markdown("### Safety Adjustments")
-    st.markdown("""
-    | Weather | Green Time | Yellow Time | Pedestrian Time | Detection Sensitivity |
-    |---------|------------|-------------|-----------------|----------------------|
-    | Clear   | Baseline   | Baseline    | Baseline        | Standard             |
-    | Rain    | +10-15%    | +2s         | +15%            | Increased            |
-    | Snow    | +20-30%    | +3s         | +30%            | High                 |
-    | Ice     | +25-40%    | +5s         | +50%            | Maximum              |
-    | Fog     | +15%       | +2s         | +20%            | High                 |
-    """)
+    st.markdown(
+        "**Not in this build**: a live weather feed, per-condition speed factors and "
+        "gap tables. Those would need a weather API and a timing model that reads it."
+    )
 
 
 def show_pedestrian_cyclist():
-    """Pedestrian and cyclist detection"""
-    st.subheader("🚶 Pedestrian & Cyclist Safety")
+    """Pedestrian and cyclist safety — honest status against the real model."""
+    st.markdown(heading("car", "Pedestrian & Cyclist Safety"), unsafe_allow_html=True)
 
-    st.markdown("""
-    Dedicated detection and protection for vulnerable road users:
-    """)
+    model = get_model_facts()
+    st.markdown(
+        tagline(
+            "SPEC",
+            "Not implemented in this build: the model detects vehicles only, "
+            "no pedestrian or cyclist class.",
+        ),
+        unsafe_allow_html=True,
+    )
 
-    col1, col2 = st.columns(2)
+    st.markdown("**Classes the current model can see**")
+    st.markdown(", ".join(sorted(model["per_class"].keys())))
 
-    with col1:
-        st.markdown("### Detection Zones")
-
-        zones = pd.DataFrame(
-            {
-                "Zone": [
-                    "Crosswalk N",
-                    "Crosswalk E",
-                    "Crosswalk S",
-                    "Crosswalk W",
-                    "Bike Lane N",
-                    "Bike Lane S",
-                ],
-                "Type": ["Pedestrian"] * 4 + ["Cyclist"] * 2,
-                "Active": [True, True, True, True, True, True],
-                "Count (hr)": [145, 98, 167, 123, 45, 38],
-                "Avg Wait (s)": [12, 18, 15, 22, 8, 10],
-            }
-        )
-
-        st.dataframe(zones, use_container_width=True)
-
-    with col2:
-        st.markdown("### Safety Features")
-        st.checkbox("Pedestrian Countdown Timer", True)
-        st.checkbox("Leading Pedestrian Interval (LPI)", True)
-        st.checkbox("Cyclist Green Wave", True)
-        st.checkbox("Right-Turn-on-Red Restriction", False)
-        st.checkbox("Accessible Pedestrian Signals (APS)", True)
-
-        st.metric("Pedestrian Compliance", "87%")
-        st.metric("Cyclist Violations", "12%")
-
-    st.markdown("---")
-
-    st.markdown("### Leading Pedestrian Interval (LPI) Demo")
-
-    lpi_time = st.slider("LPI Duration (seconds)", 3, 10, 5)
-
-    st.markdown(f"""
-    **Sequence with LPI ({lpi_time}s):**
-    1. 🟢 **Pedestrian WALK** - {lpi_time}s head start
-    2. 🟡 **Vehicle RED** - All vehicles stopped
-    3. 🟢 **Vehicle GREEN** - Normal vehicle phase begins
-    4. 🔴 **Pedestrian DON'T WALK** - Flashing countdown
-    """)
+    st.markdown(
+        "**What the planned feature needs**\n"
+        "- a pedestrian and cyclist class in the detector\n"
+        "- crossing and cycle-lane zones per intersection\n"
+        "- a leading pedestrian interval and clearance phase in the timing plan\n"
+        "- accessible signal support (audio + vibrotactile)"
+    )
+    st.caption("The signal plan already carries a pedestrian phase field; it is not filled yet.")
 
 
 def show_system_config():
-    """System configuration"""
+    """System configuration — the knobs that really drive the pipeline."""
     settings = get_settings()
-    st.subheader("🔧 System Configuration")
+    st.markdown(heading("cpu", "System Configuration"), unsafe_allow_html=True)
 
-    st.markdown("### Signal Timing Parameters")
+    st.markdown(
+        tagline(
+            "MEASURED",
+            "These five controls are passed to the real pipeline run on the Live Demo page.",
+        ),
+        unsafe_allow_html=True,
+    )
+
+    city = st.session_state.get("city", "mumbai")
+    profile = get_city_profile_or_default(city)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("**Base Timing**")
-        st.number_input("Minimum Green (s)", 5, 60, settings.min_green_time)
-        st.number_input("Maximum Green (s)", 30, 180, settings.max_green_time)
-        st.number_input("Yellow Time (s)", 3, 10, settings.default_yellow_time)
-        st.number_input("All-Red Clearance (s)", 1, 5, 2)
-
-    with col2:
-        st.markdown("**Detection Settings**")
-        st.number_input("Advance Detection (s)", 1, 15, settings.detection_time)
-        st.slider("Detection Confidence", 0.1, 1.0, settings.yolo_confidence_threshold, 0.05)
-        st.slider("Detection IoU Threshold", 0.1, 1.0, settings.yolo_iou_threshold, 0.05)
-
-    st.markdown("### Controller Settings")
-
-    col3, col4 = st.columns(2)
-
-    with col3:
-        controller = st.selectbox(
-            "Active Controller",
-            ["dqn", "fixed", "webster", "fuzzy"],
-            index=["dqn", "fixed", "webster", "fuzzy"].index(settings.controller_type),
+        st.markdown("**Pipeline**")
+        st.number_input(
+            "Detection confidence",
+            min_value=0.05,
+            max_value=0.95,
+            value=0.45,
+            step=0.05,
+            key="det_conf",
+            help="Passed to the real detector as --conf.",
+        )
+        st.number_input(
+            "Photos to run",
+            min_value=1,
+            max_value=40,
+            value=8,
+            step=1,
+            key="run_frames",
+            help="Passed to the real run as --max-frames.",
+        )
+        st.number_input(
+            "Closed-loop frames",
+            min_value=1,
+            max_value=20,
+            value=3,
+            step=1,
+            key="run_closed_frames",
+            help="Passed to the real run as --closed-frames.",
         )
 
-        if controller == "dqn":
-            st.number_input("State Dimension", 2, 20, 4)
-            st.number_input("Action Dimension", 5, 50, 12)
-            st.slider("Learning Rate", 0.0001, 0.01, 0.001, 0.0001)
-            st.slider("Gamma (Discount)", 0.8, 0.99, 0.95, 0.01)
+    with col2:
+        st.markdown("**Model**")
+        st.text_input(
+            "Model registry",
+            value="models/registry/india-yolov8n-final",
+            key="model_registry",
+            help="Passed to the real run as --registry.",
+        )
+        st.selectbox(
+            "Backend",
+            ["onnx", "ultralytics", "tensorrt"],
+            index=0,
+            key="run_backend",
+            help="Passed to the real run as --backend.",
+        )
 
-    with col4:
-        st.markdown("**Simulation Parameters**")
-        st.number_input("Simulation Time (s)", 60, 3600, settings.simulation_time)
-        st.number_input("Number of Signals", 2, 8, settings.num_signals)
-        st.number_input("Lanes per Approach", 1, 4, 2)
+    st.markdown("### City in use")
+    st.markdown(
+        f"`{city}` — {profile.lanes_per_approach} lanes per approach, "
+        f"green {profile.signal_bounds.min_green}-{profile.signal_bounds.max_green}s. "
+        "Change the city in the sidebar."
+    )
 
-    if st.button("💾 Save Configuration"):
-        st.success("✅ Configuration saved! Restart services to apply changes.")
+    st.markdown("### Engine defaults (read-only)")
+    st.markdown(
+        tagline(
+            "SPEC",
+            "Read from config/settings.py. The engine reads them, this page does not change them.",
+        ),
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        f"- Minimum green: {settings.min_green_time}s\n"
+        f"- Maximum green: {settings.max_green_time}s\n"
+        f"- Yellow time: {settings.default_yellow_time}s\n"
+        f"- Detection time: {settings.detection_time}s\n"
+        f"- Controller in use: adaptive weighted + clockwise (Green / Order / Cap)\n"
+        f"- Simulation time: {settings.simulation_time}s, signals: {settings.num_signals}"
+    )
+    st.caption(
+        "These come from config/settings.py and the .env file. The engine reads them, "
+        "this page does not change them. The controller listed above is the one wired "
+        "into eval and the closed loop; the old DQN setting is unused."
+    )
 
-    st.markdown("---")
-
-    st.markdown("### Export / Import Config")
-    c1, c2 = st.columns(2)
-    with c1:
-        if st.button("📤 Export Config (YAML)"):
-            st.download_button("Download", "config.yaml", "adaptive_traffic_config.yaml")
-    with c2:
-        uploaded = st.file_uploader("📥 Import Config", type=["yaml", "yml"])
-        if uploaded:
-            st.success("Configuration imported!")
+    st.markdown("### Export current setup")
+    export = (
+        f"city: {city}\n"
+        f"backend: {st.session_state.get('run_backend', 'onnx')}\n"
+        f"registry: {st.session_state.get('model_registry', '')}\n"
+        f"confidence: {st.session_state.get('det_conf', 0.45)}\n"
+        f"max_frames: {st.session_state.get('run_frames', 8)}\n"
+        f"closed_frames: {st.session_state.get('run_closed_frames', 3)}\n"
+    )
+    st.download_button("Download setup (YAML)", export, "adaptive_traffic_setup.yaml")
 
 
 def show_api_integration():
-    """API and integration settings"""
-    st.subheader("📡 API & Integration")
+    """API and integration — the routes the FastAPI app really serves."""
+    st.markdown(heading("cpu", "API & Integration"), unsafe_allow_html=True)
 
-    st.markdown("### REST API Endpoints")
-
-    endpoints = pd.DataFrame(
-        {
-            "Endpoint": [
-                "GET /api/v1/signals",
-                "GET /api/v1/signals/{id}",
-                "POST /api/v1/signals/{id}/timing",
-                "GET /api/v1/detection/live",
-                "GET /api/v1/traffic/metrics",
-                "GET /api/v1/analytics/forecast",
-                "WS /api/v1/stream",
-            ],
-            "Description": [
-                "List all signal controllers",
-                "Get signal status and timing",
-                "Update signal timing plan",
-                "Live vehicle detection feed",
-                "Real-time traffic metrics",
-                "Traffic flow predictions",
-                "WebSocket live updates",
-            ],
-            "Auth": ["Bearer"] * 7,
-        }
+    st.markdown(
+        tagline(
+            "MEASURED",
+            "These routes are served by the FastAPI app in src/adaptive_traffic/api.",
+        ),
+        unsafe_allow_html=True,
     )
 
-    st.dataframe(endpoints, use_container_width=True)
+    groups = [
+        ("Health", "/api/v1/health", "/api/v1/version"),
+        ("Signals and timing", "/api/v1/signals", "/api/v1/signals/plans"),
+        ("Detection", "/api/v1/detection",),
+        ("Analytics", "/api/v1/analytics",),
+    ]
+    for name, *prefixes in groups:
+        st.markdown(f"**{name}**")
+        rows = "\n".join(
+            f"| `{m}` | `{p}` | {d} |"
+            for m, p, d in API_ROUTES
+            if any(p.startswith(pref) for pref in prefixes)
+        )
+        st.markdown(
+            f"""
+| Method | Path | What it does |
+|---|---|---|
+{rows}
+"""
+        )
 
-    st.markdown("### Authentication")
+    st.markdown("### Run the API")
     st.code(
-        """
-# API Key Header
-Authorization: Bearer YOUR_API_KEY
-
-# Or JWT Token
-Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
-    """,
+        "# Windows\n"
+        ".venv\\Scripts\\python.exe -m uvicorn adaptive_traffic.api.main:app --port 8000\n"
+        "\n"
+        "# Linux / macOS\n"
+        ".venv/bin/python -m uvicorn adaptive_traffic.api.main:app --port 8000",
         language="bash",
     )
+    st.caption("Read the docs at /docs once it is running.")
 
-    st.markdown("### Integration Examples")
+    st.markdown("### Authentication")
+    st.markdown(
+        tagline(
+            "SPEC",
+            "There is no authentication in this build. Every route above is open, so do not "
+            "expose this service to a public network.",
+        ),
+        unsafe_allow_html=True,
+    )
 
-    with st.expander("🐍 Python Client"):
+    st.markdown("### Integration examples")
+
+    with st.expander("Python client"):
         st.code(
             """
 import httpx
 
-client = httpx.Client(
-    base_url="https://api.adaptivesignal.io",
-    headers={"Authorization": "Bearer YOUR_KEY"}
-)
+client = httpx.Client(base_url="http://localhost:8000")
 
-# Get signal status
-response = client.get("/api/v1/signals/1")
-signal = response.json()
+# Signal status
+signal = client.get("/api/v1/signals/1").json()
 
-# Update timing
+# Update the timing plan
 client.post("/api/v1/signals/1/timing", json={
     "green_time": 30,
     "yellow_time": 5
@@ -333,36 +395,17 @@ client.post("/api/v1/signals/1/timing", json={
             language="python",
         )
 
-    with st.expander("🌐 JavaScript/TypeScript"):
+    with st.expander("JavaScript / TypeScript"):
         st.code(
             """
-const response = await fetch('/api/v1/signals', {
-  headers: { 'Authorization': 'Bearer YOUR_KEY' }
-});
+const response = await fetch('/api/v1/signals/');
 const signals = await response.json();
         """,
             language="typescript",
         )
 
-    with st.expander("📊 WebSocket Stream"):
-        st.code(
-            """
-const ws = new WebSocket('wss://api.adaptivesignal.io/api/v1/stream');
-ws.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  console.log('Live detection:', data);
-};
-        """,
-            language="javascript",
-        )
-
-    st.markdown("### Webhook Configuration")
-    st.text_input("Webhook URL", placeholder="https://your-system.com/webhook")
-    st.multiselect(
-        "Subscribe to Events",
-        ["signal_change", "detection_alert", "traffic_anomaly", "system_health", "evp_activated"],
-        default=["signal_change", "traffic_anomaly"],
+    st.markdown("### Webhooks")
+    st.markdown(
+        "Not built in this release. The API exposes analytics ingest "
+        "(`POST /api/v1/analytics/ingest`) if you need to push events in."
     )
-
-    if st.button("💾 Save Webhook"):
-        st.success("Webhook configured!")
