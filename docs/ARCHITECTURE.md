@@ -153,6 +153,28 @@ core/domain.py ← ports ← adapters
   - UI/API import services and `config.settings` only
   - No cross-imports between UI/API/engine internals
 
+### Dashboard (Streamlit) internals
+
+`src/adaptive_traffic/ui/` follows the same rule: it reads files and config, never engine internals.
+
+| Module | Role |
+|---|---|
+| `app.py` | Entry point, sidebar (city, nav, model badge, last-run badge), page routing |
+| `theme.py` | Design system: palette, SVG icons, `card()`, `chip()`, `tagline()`, `banner()`, BASE_CSS |
+| `_facts.py` | Measured truth read from disk: registry `metadata.json` + eval scorecards (no hand-typed numbers) |
+| `_india.py` | Indian rates, dated and attributed: per-city petrol/diesel, USD/INR, carbon value, value of time, Indian number formatting |
+| `views/` | The six pages (System Overview, Dashboard, Live Demo, Comparison, Impact Metrics, Settings) |
+
+**Truth grammar** — every block is tagged, and the tag is the contract:
+`MEASURED` (read from disk) · `ILLUSTRATION` (modelled) · `SPEC` (not built in this release).
+
+**Units** — litres, rupees, tonnes. No dollars, no gallons (enforced by
+`tests/unit/test_ui_india_costs.py`).
+
+**The real run**: the Live Demo page shells out to `scripts/demo_sgp.py` in a worker thread
+(cancellable, per-second refresh, frame source parsed from its own output). The only engine
+seam is that subprocess — the UI never imports the engine.
+
 ## City Profile System
 
 Single source of truth for city-specific parameters:

@@ -37,6 +37,8 @@
 | `tests/unit/test_bench_footage.py` (6) | `load_frames` sort/limit/corrupt-skip, histogram quantiles, weather-tag parse, RMSE/MAE/bias, YOLO-GT counting, hand-count CSV parse | Pure helpers, no model. Keep. |
 | `tests/unit/test_policies.py` (10) | weighted discharge math, class aliases + city override, factory defaults/legacy escape, clockwise skip/hold, argmax parity + starvation, demand-share cap, route-scoped manual-suppresses-EVP, estimator `by_class`, mixed-class engine green, manual hold | Proves policy seams without model/camera. Keep. |
 | `tests/security/test_security.py` (4) | masking toy dicts, protocol allow-list, log-pattern scan, sanitizer unit | Generic helpers only — does NOT prove API input validation or auth (no auth exists on the API). Needs dedicated boundary tests. |
+| `tests/unit/test_ui_api_routes.py` (3) | every route the UI lists is served by the FastAPI app, every served route is listed, known HTTP verbs | Locks the UI's API table to the real app in both directions, so the dashboard cannot claim routes that do not exist. Keep. |
+| `tests/unit/test_ui_india_costs.py` (10) | Indian digit grouping (1,23,45,678), lakh/crore compaction, hour units, carbon value derived from the IISD USD figure, per-city fuel coverage incl. tier-2 fallback, rates line carries the as-of date, gallon constant, and **no `$` or `gal` in any rendered view** | Locks the dashboard to Indian units and dated rates, and keeps US dollars/gallons out of the UI. Keep. |
 
 ## Known gaps (lab-only status)
 

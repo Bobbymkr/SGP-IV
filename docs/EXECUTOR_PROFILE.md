@@ -299,7 +299,7 @@ Unknown. We do not have proof in the repo, so we stop here.
 - Start findings: `docs/MASTER_PLAN.md:38-53`
 - Phase board and dates: `docs/MASTER_PLAN.md:190-223`
 - Single check system: `AGENTS.md:14-27`
-- Gates 38 passed 7 skipped, 11 of 11, 4.98 fps, 1.11 and 1.83ms: `AGENTS.md:51-56`
+- Gates 122 passed 1 skipped, 11 of 11, 5.1-8.2 fps fp32, 1.11 and 1.83ms: `AGENTS.md:61-66`
 - Dependency walls: `AGENTS.md:99-103`
 - Training chain and finale steps: `AGENTS.md:29-73`
 - Bench sim 28,503 and target 500: `docs/BENCHMARKS.md:6-13`

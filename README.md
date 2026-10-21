@@ -199,10 +199,18 @@ make docker-up
 
 ```bash
 make run-demo
-# or: streamlit run src/adaptive_traffic/ui/app.py
+# or (Windows, venv interpreter - a bare `streamlit` picks the system install):
+.venv\Scripts\python.exe -m streamlit run src/adaptive_traffic/ui/app.py --server.port 8503
 ```
 
-Open `http://localhost:8501`. Pages: System Overview, real-time Dashboard, Live Demo simulation, Algorithm Comparison, Impact Metrics, Settings.
+Open `http://localhost:8503`. Six pages: System Overview, Dashboard (simulated city),
+Live Demo, Algorithm Comparison, Impact Metrics, Settings.
+
+Every number on screen is labelled **MEASURED** (read from the registry metadata or the eval
+scorecards on disk), **ILLUSTRATION** (modelled) or **SPEC** (not built in this release).
+The Live Demo page runs the real pipeline on real Indian CCTV frames, and the Impact
+Metrics page prices its projections in rupees using dated Indian rates
+(`src/adaptive_traffic/ui/_india.py`).
 
 ### API Server
 

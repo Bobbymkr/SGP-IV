@@ -271,6 +271,35 @@ lengths. The real adapter had therefore never sent a complete timing plan;
 val frames: 8/8 actuated (mock STMP), det 6–8 → queue 6–8 → demands [6–8, 0],
 cycle breathing 61–66s with demand. Screenshot-flow proven on real pixels.
 
+## Dashboard review (Streamlit UI, 2026-10-21)
+
+Measured, not asserted. Reproduce with `.venv\Scripts\python.exe -m streamlit run
+src/adaptive_traffic/ui/app.py --server.port 8503` and the impeccable detector.
+
+| Check | Before | After |
+|---|---|---|
+| Impeccable heuristic score (10 heuristics, 0–4 each) | 23/40 | **28/40** |
+| Impeccable audit score (a11y / perf / theming / responsive / integrity) | 10/20 | **16/20** |
+| Deterministic detector findings per view (desktop + mobile) | 8–10 | **0–1** (advisory only) |
+| Skipped heading levels | 5 pages | **0** |
+| Caption text contrast | 2.3:1 (fail) | **7.24:1** |
+| Selected tab label contrast | 3.3:1 (fail) | **4.94:1** |
+| Interactive elements without an accessible name | — | **0** |
+| Unlabelled / fabricated numbers on screen | 94.2 % "System Accuracy", 42 % prediction, 30 % EVP, US gallons and dollars | **none** (every number tagged MEASURED / ILLUSTRATION / SPEC) |
+| Tests | 102 passed | **122 passed, 1 skipped** (13 new: API route truth both ways, India rate + unit guards) |
+
+Pipeline run in the UI (TrafficCAM val frames, 8 photos): 52 cars found, 3/3 actuated,
+cancellable, last-run + session history kept. Frame source is parsed from the run output
+rather than asserted, because BMD-45 is the training set, not the demo footage.
+
+India rates used by the Impact Metrics page (all dated 21 Oct 2026, source
+`src/adaptive_traffic/ui/_india.py`): petrol Rs 111.21/L (Mumbai), Rs 102.12 (Delhi),
+Rs 111.68 (Bangalore), Rs 101.82 (Surat); diesel Rs 97.83 / 95.20 / 99.56 / 97.95;
+1 USD = Rs 94.77; carbon Rs 8,150/t (IISD social cost of carbon for India, 2018);
+value of time Rs 100/vehicle-hour (our stated assumption). Quantities remain modelled —
+an impact-model-v2 work item (traffic-derived volumes) is DECIDED, not built
+(`docs/MASTER_PLAN.md` section 7, row I).
+
 ## Deliberate skips (measured, not deferred)
 
 - orjson: scorecards ~6KB, API payloads tiny — D10's "when payloads grow"
