@@ -9,47 +9,9 @@ import streamlit as st
 
 from adaptive_traffic.config.city_profiles import get_city_profile_or_default
 from adaptive_traffic.config.settings import get_settings
+from adaptive_traffic.ui._api_routes import API_ROUTES
 from adaptive_traffic.ui._facts import get_eval_table, get_model_facts
 from adaptive_traffic.ui.theme import ACCENT, banner, card, heading, svg, tagline
-
-# Real routes served by src/adaptive_traffic/api (see api/main.py).
-API_ROUTES = [
-    ("GET", "/", "Service root"),
-    ("GET", "/api/v1/health", "Health summary"),
-    ("GET", "/api/v1/health/live", "Liveness probe"),
-    ("GET", "/api/v1/health/ready", "Readiness probe"),
-    ("GET", "/api/v1/metrics", "Service metrics"),
-    ("GET", "/api/v1/version", "Build version"),
-    ("GET", "/api/v1/signals/", "List signal controllers"),
-    ("GET", "/api/v1/signals/{signal_id}", "Signal status and timing"),
-    ("GET", "/api/v1/signals/{signal_id}/status", "Current phase state"),
-    ("GET", "/api/v1/signals/{signal_id}/health", "NTCIP health of one signal"),
-    ("GET", "/api/v1/signals/{signal_id}/ntcip/timing", "Live NTCIP timing plan"),
-    ("POST", "/api/v1/signals/{signal_id}/timing", "Update the timing plan"),
-    ("GET", "/api/v1/signals/{signal_id}/v2x/queue-refinement", "V2X queue refinement"),
-    ("POST", "/api/v1/signals/{signal_id}/v2x/spat", "Publish SPAT to vehicles"),
-    ("GET", "/api/v1/signals/plans/", "List timing plans"),
-    ("POST", "/api/v1/signals/plans/", "Create a timing plan"),
-    ("GET", "/api/v1/signals/plans/{plan_id}", "One timing plan"),
-    ("PUT", "/api/v1/signals/plans/{plan_id}", "Replace a timing plan"),
-    ("DELETE", "/api/v1/signals/plans/{plan_id}", "Delete a timing plan"),
-    ("GET", "/api/v1/detection/cameras/", "List cameras"),
-    ("POST", "/api/v1/detection/cameras/", "Add a camera"),
-    ("GET", "/api/v1/detection/cameras/{camera_id}", "One camera"),
-    ("PUT", "/api/v1/detection/cameras/{camera_id}", "Update a camera"),
-    ("DELETE", "/api/v1/detection/cameras/{camera_id}", "Remove a camera"),
-    ("GET", "/api/v1/detection/counts/{camera_id}", "Live vehicle counts"),
-    ("GET", "/api/v1/detection/history", "Detection history"),
-    ("POST", "/api/v1/detection/detect", "Detect vehicles in one frame"),
-    ("POST", "/api/v1/detection/detect/batch", "Detect vehicles in a batch"),
-    ("GET", "/api/v1/analytics/metrics/{intersection_id}", "Performance metrics"),
-    ("GET", "/api/v1/analytics/performance/{intersection_id}", "Timing performance"),
-    ("GET", "/api/v1/analytics/environmental/{intersection_id}", "Environmental impact"),
-    ("GET", "/api/v1/analytics/recommendations/{intersection_id}", "Timing suggestions"),
-    ("POST", "/api/v1/analytics/forecast", "Traffic flow forecast"),
-    ("POST", "/api/v1/analytics/ingest", "Push events in"),
-    ("POST", "/api/v1/analytics/scenario", "Run a scenario"),
-]
 
 
 def show_advanced():
@@ -108,14 +70,12 @@ def show_emergency_priority():
         unsafe_allow_html=True,
     )
 
-    st.markdown(
-        """
+    st.markdown("""
     The planned feature detects emergency vehicles (ambulances, fire trucks, police) by:
     - **Optical detection**: flashing light pattern recognition
     - **Audio detection**: siren classification
     - **V2X message**: direct vehicle-to-infrastructure alert
-    """
-    )
+    """)
 
     model = get_model_facts()
     st.markdown("**What the current model can see**")
@@ -170,9 +130,7 @@ def show_weather_adaptation():
             unsafe_allow_html=True,
         )
 
-    st.markdown(
-        "**Rain and flood scenes in the eval matrix** (real runs, same policy):"
-    )
+    st.markdown("**Rain and flood scenes in the eval matrix** (real runs, same policy):")
     table = get_eval_table()
     rain_scenes = [
         row["Scenario"]
@@ -335,8 +293,14 @@ def show_api_integration():
     groups = [
         ("Health", "/api/v1/health", "/api/v1/version"),
         ("Signals and timing", "/api/v1/signals", "/api/v1/signals/plans"),
-        ("Detection", "/api/v1/detection",),
-        ("Analytics", "/api/v1/analytics",),
+        (
+            "Detection",
+            "/api/v1/detection",
+        ),
+        (
+            "Analytics",
+            "/api/v1/analytics",
+        ),
     ]
     for name, *prefixes in groups:
         st.markdown(f"**{name}**")
@@ -345,13 +309,11 @@ def show_api_integration():
             for m, p, d in API_ROUTES
             if any(p.startswith(pref) for pref in prefixes)
         )
-        st.markdown(
-            f"""
+        st.markdown(f"""
 | Method | Path | What it does |
 |---|---|---|
 {rows}
-"""
-        )
+""")
 
     st.markdown("### Run the API")
     st.code(

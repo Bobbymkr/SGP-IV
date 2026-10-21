@@ -51,7 +51,9 @@ def test_carbon_value_derives_from_iisd_usd_figure():
 
 
 def test_fuel_rates_cover_every_city_profile():
-    profiles = {p.stem for p in (SRC / "adaptive_traffic" / "config" / "city_profiles").glob("*.json")}
+    profiles = {
+        p.stem for p in (SRC / "adaptive_traffic" / "config" / "city_profiles").glob("*.json")
+    }
     for city in profiles:
         petrol, diesel = fuel_rates(city)
         assert 80 < petrol < 130, city

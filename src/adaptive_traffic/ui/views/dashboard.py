@@ -105,9 +105,7 @@ def show_traffic_metrics():
         {"Intersection": intersections, "Current Volume": current_volume, "Capacity": capacity}
     )
     df["Utilization (%)"] = (df["Current Volume"] / df["Capacity"] * 100).round(1)
-    df["Color"] = df["Utilization (%)"].apply(
-        lambda u: BAD if u > 80 else (WARN if u > 60 else OK)
-    )
+    df["Color"] = df["Utilization (%)"].apply(lambda u: BAD if u > 80 else (WARN if u > 60 else OK))
 
     # Bar chart
     chart = (
@@ -148,18 +146,10 @@ def show_traffic_metrics():
             "Intersection": sum([[i] * 24 for i in intersections], []),
             "Volume": np.concatenate(
                 [
-                    150
-                    + 100 * np.sin((np.array(hours) - 8) * np.pi / 12)
-                    + rng.normal(0, 10, 24),
-                    120
-                    + 80 * np.sin((np.array(hours) - 9) * np.pi / 12)
-                    + rng.normal(0, 8, 24),
-                    100
-                    + 60 * np.sin((np.array(hours) - 7) * np.pi / 12)
-                    + rng.normal(0, 6, 24),
-                    80
-                    + 40 * np.sin((np.array(hours) - 10) * np.pi / 12)
-                    + rng.normal(0, 5, 24),
+                    150 + 100 * np.sin((np.array(hours) - 8) * np.pi / 12) + rng.normal(0, 10, 24),
+                    120 + 80 * np.sin((np.array(hours) - 9) * np.pi / 12) + rng.normal(0, 8, 24),
+                    100 + 60 * np.sin((np.array(hours) - 7) * np.pi / 12) + rng.normal(0, 6, 24),
+                    80 + 40 * np.sin((np.array(hours) - 10) * np.pi / 12) + rng.normal(0, 5, 24),
                 ]
             ),
         }

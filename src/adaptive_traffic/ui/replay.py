@@ -6,6 +6,7 @@ One 4-way loop; mock STMP (lab-safe). Manual holds auto-release at 120s
 """
 
 from pathlib import Path
+
 import numpy as np
 
 REPO = Path(__file__).resolve().parents[3]
@@ -31,15 +32,18 @@ def get_state():
     if _state is not None:
         return _state
     import sys
+
     sys.path.insert(0, str(REPO / "scripts"))
     from footage import load_frames
+
+    from adaptive_traffic.adapters import create_ntcip_adapter
     from adaptive_traffic.config.city_profile import get_city_profile
     from adaptive_traffic.core.analytics.queue_estimator import QueueEstimator
-    from adaptive_traffic.core.closed_loop import create_loop, run_frame as _run_frame
+    from adaptive_traffic.core.closed_loop import create_loop
+    from adaptive_traffic.core.closed_loop import run_frame as _run_frame
     from adaptive_traffic.core.control.policies import ManualProtocol, ManualRegistry
     from adaptive_traffic.core.detection.base import DetectorPort
     from adaptive_traffic.core.pipeline import StagedPipeline
-    from adaptive_traffic.adapters import create_ntcip_adapter
 
     val_dir = resolve_val_dir()
     frames, names, skipped = load_frames(val_dir, max_frames=60) if val_dir else ([], [], 0)
@@ -49,6 +53,7 @@ def get_state():
         names = [f"synth-{i}" for i in range(20)]
 
     from adaptive_traffic.config.device_tier import read_tier
+
     tier, det_cfg = read_tier()
     detector = DetectorPort.create(det_cfg)
     profile = get_city_profile("bangalore")
@@ -56,11 +61,20 @@ def get_state():
     sim, ix_id = create_loop(city_profile=profile)
     stmp = create_ntcip_adapter({"ntcip_controller_ip": "127.0.0.1"}, mock=True)
     _state = {
-        "pipe": pipe, "sim": sim, "ix": ix_id, "stmp": stmp,
-        "manual": ManualRegistry(), "frames": frames, "names": names,
-        "skipped": skipped, "val_dir": val_dir, "idx": 0,
-        "tier": tier, "det_cfg": det_cfg,
-        "run_frame": _run_frame, "ManualProtocol": ManualProtocol,
+        "pipe": pipe,
+        "sim": sim,
+        "ix": ix_id,
+        "stmp": stmp,
+        "manual": ManualRegistry(),
+        "frames": frames,
+        "names": names,
+        "skipped": skipped,
+        "val_dir": val_dir,
+        "idx": 0,
+        "tier": tier,
+        "det_cfg": det_cfg,
+        "run_frame": _run_frame,
+        "ManualProtocol": ManualProtocol,
     }
     return _state
 
@@ -108,10 +122,16 @@ def tick():
 
 def hold(group_idx: int = 0, operator: str = "traffic-police"):
     s = get_state()
-    s["manual"].activate(s["ManualProtocol"](
-        route_id="review-route", intersection_ids=[s["ix"]],
-        group_idxs=[group_idx], approval_id=f"hold-{s['ix']}-{group_idx}",
-        signer_role="traffic-police", operator=operator))
+    s["manual"].activate(
+        s["ManualProtocol"](
+            route_id="review-route",
+            intersection_ids=[s["ix"]],
+            group_idxs=[group_idx],
+            approval_id=f"hold-{s['ix']}-{group_idx}",
+            signer_role="traffic-police",
+            operator=operator,
+        )
+    )
 
 
 def release():

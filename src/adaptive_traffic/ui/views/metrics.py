@@ -21,15 +21,13 @@ from adaptive_traffic.ui._india import (
 from adaptive_traffic.ui.theme import ACCENT, OK, WARN, card, heading, svg, tagline
 
 
-
-
 def _show_breakdowns(total_litres, total_co2, total_economic, total_fuel_value, total_time_value):
     """The modelled detail behind the cards: pollutants, money split, 5-year view."""
     # Environmental breakdown
     st.markdown(
-            heading("leaf", "Environmental Impact Breakdown"),
-            unsafe_allow_html=True,
-        )
+        heading("leaf", "Environmental Impact Breakdown"),
+        unsafe_allow_html=True,
+    )
     st.markdown(
         tagline("ILLUSTRATION", "Pollutant split from the same modelled tonnage."),
         unsafe_allow_html=True,
@@ -71,9 +69,9 @@ def _show_breakdowns(total_litres, total_co2, total_economic, total_fuel_value, 
 
     # Economic breakdown
     st.markdown(
-            heading("gauge", "Economic Benefit Breakdown"),
-            unsafe_allow_html=True,
-        )
+        heading("gauge", "Economic Benefit Breakdown"),
+        unsafe_allow_html=True,
+    )
     st.markdown(
         tagline("ILLUSTRATION", "Value split of the modelled economic benefit."),
         unsafe_allow_html=True,
@@ -129,9 +127,9 @@ def _show_breakdowns(total_litres, total_co2, total_economic, total_fuel_value, 
 
     # Time-series projection
     st.markdown(
-            heading("pulse", "5-Year Cumulative Impact"),
-            unsafe_allow_html=True,
-        )
+        heading("pulse", "5-Year Cumulative Impact"),
+        unsafe_allow_html=True,
+    )
     st.markdown(
         tagline("ILLUSTRATION", "The same projection, three years further on."),
         unsafe_allow_html=True,
@@ -165,11 +163,11 @@ def _show_breakdowns(total_litres, total_co2, total_economic, total_fuel_value, 
 
     st.altair_chart(proj_chart, use_container_width=True)
 
+
 def show_metrics():
     """Display environmental and economic impact metrics"""
     st.markdown(
-        f"<h1 class='main-header'>{svg('leaf', 32, OK)} "
-        "Environmental & Economic Impact</h1>",
+        f"<h1 class='main-header'>{svg('leaf', 32, OK)} " "Environmental & Economic Impact</h1>",
         unsafe_allow_html=True,
     )
 
@@ -253,9 +251,9 @@ def show_metrics():
 
     # Key impact metrics
     st.markdown(
-            heading("leaf", "Key Impact Metrics (Per Intersection / Year)"),
-            unsafe_allow_html=True,
-        )
+        heading("leaf", "Key Impact Metrics (Per Intersection / Year)"),
+        unsafe_allow_html=True,
+    )
     st.markdown(
         tagline(
             "ILLUSTRATION",
@@ -321,9 +319,9 @@ def show_metrics():
 
     # City-scale impact
     st.markdown(
-            heading("car", "City-Scale Impact Projection"),
-            unsafe_allow_html=True,
-        )
+        heading("car", "City-Scale Impact Projection"),
+        unsafe_allow_html=True,
+    )
     st.markdown(
         tagline(
             "ILLUSTRATION",
@@ -404,8 +402,7 @@ def show_metrics():
 
     st.markdown("---")
 
-    st.info(
-        f"""
+    st.info(f"""
     **Methodology Notes (honest):**
     - Measured: eval matrix 11/11 wins + Surat 15/15, decide p95, 5-8 fps CPU (see Comparison page)
     - Projected here: modelled quantities (ILLUSTRATION) priced with real, dated rates
@@ -420,5 +417,4 @@ def show_metrics():
       not a published MoRTH rate
     - Planned next: a traffic-derived model (impact model v2) replaces these constants
     - Actual results vary by city geometry, traffic patterns, and adoption rate
-    """
-    )
+    """)

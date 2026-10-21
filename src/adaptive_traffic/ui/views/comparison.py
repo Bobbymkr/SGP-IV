@@ -132,8 +132,7 @@ def show_comparison():
     st.caption("Incidents are model approximations, not field events.")
     st.caption(f"Brain decides in {ev['dec95']} (limit 10 ms).")
     st.caption(
-        f"Eye: {model['name']} {model['overall']:.4f} mAP50 "
-        f"({model['overall'] * 100:.1f}%)."
+        f"Eye: {model['name']} {model['overall']:.4f} mAP50 " f"({model['overall'] * 100:.1f}%)."
     )
     st.caption(f"Small-fast int8 {model['int8']}.")
 

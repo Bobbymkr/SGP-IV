@@ -87,8 +87,7 @@ def show_overview():
 
         st.markdown("---")
 
-        st.markdown(
-            f"""
+        st.markdown(f"""
         ## System Architecture
 
         - **Eye (detect)**: YOLOv8 `{model['name']}` — {model['overall']:.4f} mAP50, fp32
@@ -96,8 +95,7 @@ def show_overview():
         - **Hands (actuate)**: NTCIP STMP to signal box + J2735 SPAT to cars
         - **API Layer**: FastAPI RESTful services
         - **Dashboard**: Streamlit real-time monitoring
-        """
-        )
+        """)
 
     with col2:
         st.markdown(heading("cpu", "Our AI Model"), unsafe_allow_html=True)
@@ -127,8 +125,7 @@ def show_overview():
         st.markdown(heading("gauge", "Configuration"), unsafe_allow_html=True)
         city = st.session_state.get("city", "mumbai")
         profile = get_city_profile_or_default(city)
-        st.markdown(
-            f"""
+        st.markdown(f"""
 | Setting | Value |
 |---|---|
 | City | {city.title()} |
@@ -137,8 +134,7 @@ def show_overview():
 | Weather profile | {_pretty(profile.weather_profile)} |
 | Green time bounds | {profile.signal_bounds.min_green}-{profile.signal_bounds.max_green} s |
 | Environment | {settings.environment} |
-"""
-        )
+""")
 
         st.markdown(heading("pulse", "Quick Actions"), unsafe_allow_html=True)
         if st.button("Reload Configuration"):
@@ -147,8 +143,7 @@ def show_overview():
         st.info("Use Navigate on the left to open the Dashboard or the Live Demo.")
 
     with st.expander("Words used on this dashboard (plain English)"):
-        st.markdown(
-            """
+        st.markdown("""
 | Word | What it means here |
 |---|---|
 | mAP50 | How accurate the AI is at finding vehicles, 0 to 100. 84.8% = 0.8477. |
@@ -158,5 +153,4 @@ def show_overview():
 | SPAT | A message broadcast to cars telling them what the light is doing. |
 | DQN / Webster / Fuzzy | Older timing ideas kept in the code. Not used, not evaluated. |
 | int8 / fp32 | A smaller, faster model build versus the full-size one that ships. |
-"""
-        )
+""")

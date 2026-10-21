@@ -20,7 +20,9 @@ def test_unknown_signal_gets_live_default_not_404():
 
 
 def test_timing_write_returns_200_with_last_timing():
-    r = client.post(f"{BASE}/demo-1/timing", json={"signal_id": "demo-1", "green_times": {"NS": 30, "EW": 25}})
+    r = client.post(
+        f"{BASE}/demo-1/timing", json={"signal_id": "demo-1", "green_times": {"NS": 30, "EW": 25}}
+    )
     assert r.status_code == 200, r.text
     body = r.json()
     assert body["last_timing"]["green_times"] == {"NS": 30.0, "EW": 25.0}
@@ -31,7 +33,9 @@ def test_timing_write_returns_200_with_last_timing():
 def test_out_of_bounds_green_rejected_422():
     r = client.post(f"{BASE}/demo-1/timing", json={"signal_id": "demo-1", "green_times": {"NS": 5}})
     assert r.status_code == 422
-    r = client.post(f"{BASE}/demo-1/timing", json={"signal_id": "demo-1", "green_times": {"NS": 200}})
+    r = client.post(
+        f"{BASE}/demo-1/timing", json={"signal_id": "demo-1", "green_times": {"NS": 200}}
+    )
     assert r.status_code == 422
     r = client.post(f"{BASE}/demo-1/timing", json={"signal_id": "demo-1", "green_times": {}})
     assert r.status_code == 422

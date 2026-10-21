@@ -27,8 +27,11 @@ def read_tier(path: Path = DEVICE_YAML) -> Tuple[str, Dict[str, Any]]:
         tier = _detect()
     if tier not in TIERS:
         tier = "low"  # ponytail: fail safe, don't fail loud on a review box
-    det = ((raw.get("detection") or {}).get(tier) or {})
-    return tier, {"backend": det.get("backend", "onnx"), **{k: v for k, v in det.items() if k != "backend"}}
+    det = (raw.get("detection") or {}).get(tier) or {}
+    return tier, {
+        "backend": det.get("backend", "onnx"),
+        **{k: v for k, v in det.items() if k != "backend"},
+    }
 
 
 def _detect() -> str:
