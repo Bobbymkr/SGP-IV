@@ -1,0 +1,12 @@
+SGP DEMO: Smart Green Light for India (one command)
+OK: model models\registry\india-yolov8n-final\model.onnx present
+Frames: 8 from data/trafficcam/images/val -> C:\Temp\sgp-demo-frames (clear+rain mix when tagged)
+--- LIVE 1: AI sees cars now. 5 to 8 photos in one second. ---
+AI result: 8 photos, 5.7 per second, 52 cars found
+det_hist={'n': 8, 'min': 6, 'p50': 7, 'p95': 7, 'max': 7, 'zeros': 0} class_counts={'bus': 8, 'auto': 14, 'motorcycle': 21, 'bicycle': 1, 'car': 7, 'truck': 1}
+Look: motorcycle 21, auto 14, bus 8 — India mix (auto/bike present).
+--- LIVE 2: same photos become queue, green time, signal (mumbai). ---
+frame=0 cars=7 queue=7 phase=0_yellow cycle=65s actuated=True
+frame=1 cars=6 queue=6 phase=0_green cycle=62s actuated=True
+frame=2 cars=7 queue=7 phase=0_yellow cycle=63s actuated=True
+Loop: actuated=3/3 phases=['0_green', '0_yellow'] wall=0.6s stmp=mock (same code takes --ntcip-ip for real box)

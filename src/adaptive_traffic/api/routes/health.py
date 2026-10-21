@@ -3,7 +3,9 @@ Health check endpoints
 """
 
 from datetime import datetime
+from pathlib import Path
 
+import yaml
 from fastapi import APIRouter, HTTPException, Response
 
 from adaptive_traffic.config.settings import get_settings
@@ -23,12 +25,25 @@ async def health_check():
 
 @router.get("/health/ready")
 async def readiness_check():
-    """Readiness check for Kubernetes"""
-    # Add database, redis, model checks here
+    """Readiness: registry shipped + tier resolved, no phantom infra claims"""
+    # ponytail: read device.yaml; Settings wrapper when it owns registry
+    repo = Path(__file__).resolve().parents[4]
+    tier, registry_ok = "low", False
+    try:
+        text = (repo / "configs" / "device.yaml").read_text()
+        device = yaml.safe_load(text) or {}
+        tier = str(device.get("active_tier", "low"))
+        if tier == "auto":
+            tier = "low"  # CPU-only box default until auto-detect lands
+        reg = str(((device.get("detection") or {}).get("low") or {}).get(
+            "registry_dir", "models/registry/india-yolov8n-final"))
+        registry_ok = (repo / reg).is_dir()
+    except OSError:
+        registry_ok = False
     return {
-        "status": "ready",
+        "status": "ready" if registry_ok else "degraded",
         "timestamp": datetime.utcnow().isoformat(),
-        "checks": {"database": "ok", "redis": "ok", "models": "ok"},
+        "checks": {"models": "ok" if registry_ok else "missing", "tier": tier},
     }
 
 

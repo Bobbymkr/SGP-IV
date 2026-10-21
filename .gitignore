@@ -194,3 +194,9 @@ CLAUDE.md
 data/trafficcam/
 data/trafficcam_raw/
 vault-obsidian/
+
+# Generated artifacts and reviewer scratch (never commit)
+artifacts/
+output/
+.claude-flow/
+sgp-ppt-handoff.zip

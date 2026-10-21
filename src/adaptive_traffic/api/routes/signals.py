@@ -76,6 +76,8 @@ class SignalStatus(BaseModel):
     green_time_remaining: float
     queues: dict[str, int]
     flows: dict[str, float]
+    last_timing: dict | None = None
+    updated_at: datetime | None = None
 
 
 class SignalTimingUpdate(BaseModel):
@@ -127,6 +129,21 @@ signals_db: dict[str, SignalStatus] = {}
 timing_plans_db: dict[str, TimingPlan] = {}
 
 
+def _get_or_create(signal_id: str) -> SignalStatus:
+    # ponytail: lazy live default; explicit registry when city profiles land
+    if signal_id not in signals_db:
+        signals_db[signal_id] = SignalStatus(
+            signal_id=signal_id,
+            intersection_id="default",
+            current_phase="NS_GREEN",
+            phase_timer=0.0,
+            green_time_remaining=30.0,
+            queues={},
+            flows={},
+        )
+    return signals_db[signal_id]
+
+
 @router.get("/", response_model=list[SignalStatus])
 async def list_signals(
     intersection_id: str | None = Query(None, description="Filter by intersection")
@@ -140,19 +157,25 @@ async def list_signals(
 
 @router.get("/{signal_id}", response_model=SignalStatus)
 async def get_signal(signal_id: str):
-    """Get signal status"""
-    if signal_id not in signals_db:
-        raise HTTPException(status_code=404, detail="Signal not found")
-    return signals_db[signal_id]
+    """Get signal status (live default for unknown ids)"""
+    return _get_or_create(signal_id)
 
 
 @router.post("/{signal_id}/timing", response_model=SignalStatus)
 async def update_signal_timing(signal_id: str, timing: SignalTimingUpdate):
     """Update signal timing plan and push to NTCIP controller via STMP"""
-    if signal_id not in signals_db:
-        raise HTTPException(status_code=404, detail="Signal not found")
+    settings = get_settings()
+    if not timing.green_times or any(
+        not (settings.min_green_time <= g <= settings.max_green_time)
+        for g in timing.green_times.values()
+    ):
+        raise HTTPException(
+            status_code=422,
+            detail=f"green_times must be non-empty within "
+            f"[{settings.min_green_time}, {settings.max_green_time}]s",
+        )
 
-    signal = signals_db[signal_id]
+    signal = _get_or_create(signal_id)
 
     # Build NTCIP cycle config from timing update
     cycle_length = timing.cycle_length or sum(timing.green_times.values()) + len(
@@ -181,8 +204,8 @@ async def update_signal_timing(signal_id: str, timing: SignalTimingUpdate):
         logger.warning(f"NTCIP STMP SET failed for signal {signal_id} - falling back to local")
         # Graceful degradation: log but don't fail the request
 
-    # Update local state
-    signal.queues = timing.green_times
+    # Update local state (queues stay vehicle counts — never timings)
+    signal.last_timing = {"green_times": timing.green_times}
     signal.updated_at = datetime.utcnow()
 
     return signal
@@ -211,8 +234,7 @@ async def get_signal_status(signal_id: str):
 @router.get("/{signal_id}/health", response_model=NTCIPHealthResponse)
 async def get_signal_health(signal_id: str):
     """Get NTCIP controller health via SNMP monitoring"""
-    if signal_id not in signals_db:
-        raise HTTPException(status_code=404, detail="Signal not found")
+    _get_or_create(signal_id)
 
     adapter = get_ntcip_adapter()
 

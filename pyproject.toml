@@ -26,6 +26,8 @@ requires-python = ">=3.10"
 dependencies = [
     # Core web framework
     "fastapi>=0.104.0",
+    # required by the detection routes (File/Form uploads)
+    "python-multipart>=0.0.9",
     "uvicorn[standard]>=0.24.0",
 
     # UI / Dashboard -> pip install -e ".[ui]"

@@ -23,7 +23,7 @@
     "layout": "NCHW",
     "color": "RGB"
   },
-  "quantization": "int8",
+  "quantization": "fp32 (int8 export staged, not used)",
   "source_run": "2026-09-13",
   "metrics": {
     "mAP50_overall": 0.8477,
