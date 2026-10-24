@@ -2,6 +2,10 @@
 
 [![A real held-out TrafficCAM frame with FP32 detections](media/film-cctv.gif)](https://github.com/Bobbymkr/SGP-IV/releases/tag/film-v1)
 
+[45-second trailer](https://github.com/Bobbymkr/SGP-IV/releases/tag/trailer-v1): a silent-tolerant
+cut (music + kinetic type, no narration) that points here. Real held-out TrafficCAM frame, then
+the evidence with MEASURED / SIMULATED tags — no claims the 15-minute film doesn't back.
+
 A 15-minute, 37-chapter explanation of what this project built, what the measurements
 actually say, what failed, and what is still missing before a field pilot.
 
