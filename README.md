@@ -10,6 +10,15 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![CI](https://github.com/Bobbymkr/SGP-IV/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Bobbymkr/SGP-IV/actions)
 
+## Watch the film
+
+[![A real held-out TrafficCAM frame with FP32 detections](docs/media/film-cctv.gif)](https://github.com/Bobbymkr/SGP-IV/releases/tag/film-v1)
+
+A 15-minute, 37-chapter evidence film: what was built, what the measurements say, what
+failed, and what is still missing before a field pilot. No field deployment or ROI claims.
+
+[Watch the primary cut](https://github.com/Bobbymkr/SGP-IV/releases/download/film-v1/Adaptive_Traffic_Signal_Timer_Hyperframes.mp4) · [Chapter guide and claim limits](docs/FILM.md)
+
 ## How it works (30 seconds)
 
 ```mermaid

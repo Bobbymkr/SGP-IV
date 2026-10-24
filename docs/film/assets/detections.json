@@ -1,0 +1,67 @@
+{
+  "source": "data\\trafficcam\\images\\val\\BLR_1651660139.868193_frame16.jpg",
+  "model": "india-yolov8n-final FP32",
+  "count": 6,
+  "detections": [
+    {
+      "class": "car",
+      "confidence": 0.9390659332275391,
+      "bbox": [
+        0,
+        765,
+        163,
+        894
+      ]
+    },
+    {
+      "class": "bus",
+      "confidence": 0.9267871379852295,
+      "bbox": [
+        338,
+        551,
+        589,
+        755
+      ]
+    },
+    {
+      "class": "auto",
+      "confidence": 0.9198929071426392,
+      "bbox": [
+        786,
+        527,
+        840,
+        587
+      ]
+    },
+    {
+      "class": "auto",
+      "confidence": 0.8747787475585938,
+      "bbox": [
+        966,
+        590,
+        1031,
+        670
+      ]
+    },
+    {
+      "class": "motorcycle",
+      "confidence": 0.7759060859680176,
+      "bbox": [
+        569,
+        502,
+        602,
+        546
+      ]
+    },
+    {
+      "class": "motorcycle",
+      "confidence": 0.7009849548339844,
+      "bbox": [
+        205,
+        628,
+        273,
+        710
+      ]
+    }
+  ]
+}

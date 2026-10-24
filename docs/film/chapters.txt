@@ -1,0 +1,37 @@
+00:00:00 A signal that responds
+00:00:23 Why this problem matters
+00:00:48 The developed parts
+00:01:16 Architecture mapped with graphify
+00:01:44 From frame to timing plan
+00:02:07 Perception on real CCTV imagery
+00:02:30 Estimating the waiting queue
+00:02:54 Green time follows vehicle mix
+00:03:16 One scheduler, several geometries
+00:03:41 Operator and emergency priority
+00:04:03 Tune a city through data
+00:04:28 A controlled world for hard cases
+00:04:55 Evaluation against fixed-time
+00:05:21 All eleven reduce average wait
+00:05:47 Measure before optimising
+00:06:11 What data was actually used
+00:06:39 One contract, stable class IDs
+00:07:07 BMD-45: scale without disk failure
+00:07:33 Eight cumulative training loops
+00:07:57 The finale and its packaged model
+00:08:20 Six classes, six measured results
+00:08:44 Model history: compare like with like
+00:09:09 TrafficCAM exposed the domain gap
+00:09:36 The first INT8 failure changed the plan
+00:10:02 Repaired INT8 still missed the gate
+00:10:28 Real pixels found contract bugs
+00:10:53 An evidence-led development loop
+00:11:20 Scheduling learned from failed ideas
+00:11:44 Controller wire tests caught defects
+00:12:07 Freshness, monitoring and device tiers
+00:12:32 Interfaces are built; wiring varies
+00:12:58 Analytics and V2X: accurate status
+00:13:26 What the project has achieved
+00:13:53 What remains before a field pilot
+00:14:23 Why industry should pay attention
+00:14:50 A disciplined path to the road
+00:15:13 A prototype built to earn trust

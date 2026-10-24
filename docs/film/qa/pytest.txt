@@ -1,0 +1,35 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\Admin\OneDrive\Desktop\IDEA\Adaptive-Traffic-Signal-Timer
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.14.2, asyncio-1.4.0, cov-7.1.0, mock-3.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 110 items
+
+tests\integration\test_closed_loop.py ....                               [  3%]
+tests\integration\test_health.py .                                       [  4%]
+tests\integration\test_integration.py .......s                           [ 11%]
+tests\integration\test_ntcip.py ....................                     [ 30%]
+tests\integration\test_signals_api.py ....                               [ 33%]
+tests\integration\test_stmp_wire.py .........                            [ 41%]
+tests\performance\test_performance.py ...                                [ 44%]
+tests\security\test_security.py ....                                     [ 48%]
+tests\unit\test_bench_footage.py ......                                  [ 53%]
+tests\unit\test_device_tier.py ....                                      [ 57%]
+tests\unit\test_estimator_geometry.py ..                                 [ 59%]
+tests\unit\test_eval_runner.py ..                                        [ 60%]
+tests\unit\test_monitoring.py ....                                       [ 64%]
+tests\unit\test_onnx_adapter.py ...                                      [ 67%]
+tests\unit\test_pipeline.py .......                                      [ 73%]
+tests\unit\test_policies.py ..........                                   [ 82%]
+tests\unit\test_prepare_dataset.py ...........                           [ 92%]
+tests\unit\test_tensorrt.py ........                                     [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\Admin\OneDrive\Desktop\IDEA\Adaptive-Traffic-Signal-Timer\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================= 109 passed, 1 skipped, 1 warning in 59.23s ==================
