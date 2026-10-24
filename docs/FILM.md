@@ -6,7 +6,7 @@ A 15-minute, 37-chapter explanation of what this project built, what the measure
 actually say, what failed, and what is still missing before a field pilot.
 
 **Runtime** 15:39.6 · **1920 × 1080, 24 fps** · H.264 / AAC · English narration · burned
-captions plus a selectable subtitle track · 37 embedded chapters.
+captions (the alternate cut adds a selectable subtitle track) · 37 embedded chapters.
 
 ## Watch
 
